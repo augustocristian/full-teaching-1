@@ -9,6 +9,9 @@ import static org.openqa.selenium.remote.DesiredCapabilities.chrome;
 import static org.slf4j.LoggerFactory.getLogger;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +28,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -41,8 +45,9 @@ import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 
 import io.github.bonigarcia.seljup.DriverCapabilities;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
 
-@Disabled
+//@Disabled
 public class LoggedVideoSession{
 
 	//1 teacher
@@ -89,17 +94,26 @@ public class LoggedVideoSession{
 	public void setUp() throws BadUserException, ElementNotFoundException, NotLoggedException, TimeOutExeception {
 
 		 	log.info("[INI setUP]");
-
+		 	System.setProperty("webdriver.chrome.driver",
+	    	           "C:/chromedriver_win32/chromedriver.exe");
 	    	host = SetUp.getHost();
-
+	    	users_data=loadStudentsData("src/test/resources/inputs/default_user_LoggedVideoStudents.csv");
 	        log.info("Test over url: "+host);
 
 	        //teacher setUp
 	        
-	        teacher = teacher_data.split(":")[0];
+	        teacher ="teacher@gmail.com";
+	        teacher_pass= "pass";
+	        teacherDriver = new ChromeDriver();
+	        courseName="Pseudoscientific course for treating the evil eye";
+	        teacherDriver.manage().window().maximize();
+	        
+	        /*ORIGINAL
+	         *  teacher = teacher_data.split(":")[0];
 	        teacher_pass= teacher_data.split(":")[1];
 	        teacherDriver = UserLoader.allocateNewBrowser(teacher_data.split(":")[2]);
 	        
+	         * */
 	    	//check if logged with correct user
 	        teacherDriver = SetUp.loginUser(teacherDriver, host, teacher , teacher_pass);
 	        teacherDriver = UserUtilities.checkLogin(teacherDriver, teacher);
@@ -119,12 +133,14 @@ public class LoggedVideoSession{
 	        	String userpass = students_data[i].split(":")[1];
 	        	studentPass.add(userpass);
 	        	
-	        	WebDriver studentD = UserLoader.allocateNewBrowser(students_data[i].split(":")[2]);
-	        	
+	        	//WebDriver studentD = UserLoader.allocateNewBrowser(students_data[i].split(":")[2]);
+	        	WebDriver studentD = new ChromeDriver();
+	        	studentD.manage().window().maximize();
 	        	studentD = SetUp.loginUser(studentD, host, userid , userpass);
 	        	studentD = UserUtilities.checkLogin(studentD, userid);
 	        	studentNames.add(UserUtilities.getUserName(studentD, true, host));	        	
 	        	studentDriver.add(studentD);
+	        	
 	        }
 	        
 	    	/* Dedicated set up to Forum tests*/
@@ -203,6 +219,12 @@ public class LoggedVideoSession{
 	    	modal.findElement(SESSIONLIST_NEWSESSION_MODAL_DATE).sendKeys(sessionDate);
 	    	modal.findElement(SESSIONLIST_NEWSESSION_MODAL_TIME).sendKeys(sessionHour);
 	    	teacherDriver = Click.element(teacherDriver, modal.findElement(SESSIONLIST_NEWSESSION_MODAL_POSTBUTTON));
+	    	try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
 	    	//teacherDriver = Click.element(teacherDriver, SESSIONLIST_NEWSESSION_MODAL_DATE);
 	    	//check if session has been created
 	    	List <String> session_titles = SessionNavigationUtilities.getFullSessionList(teacherDriver);
@@ -265,7 +287,12 @@ public class LoggedVideoSession{
     	//Students Leave Sessions
     	try {
     		for(WebDriver student_d: studentDriver) {
-		    			
+		    	try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
 		    	//student to: LEAVE SESSION.
     			student_d = Click.element(student_d, SESSION_LEFT_MENU_BUTTON);
 				
@@ -316,4 +343,32 @@ public class LoggedVideoSession{
     	
     	
     }
+	public String loadStudentsData(String path) {
+		 FileReader file;
+		 String key = "";
+		try {
+			file = new FileReader(path);
+	
+		    BufferedReader reader = new BufferedReader(file);
+
+		    // **** key is declared here in this block of code
+		  
+		    String line = reader.readLine();
+
+		    while (line != null) {
+		        key += line;
+		        line = reader.readLine();
+		    }
+		    System.out.println(key); // so key works
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		    return key;	
+	}
+		
+	
 }

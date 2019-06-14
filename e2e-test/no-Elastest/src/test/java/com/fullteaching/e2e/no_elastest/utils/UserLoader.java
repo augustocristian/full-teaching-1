@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.WebDriver;
-
-
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
@@ -101,11 +101,21 @@ public class UserLoader {
 		WebDriver driver = null;
 		switch (browser){
 			case "chrome":
-				ChromeDriverManager.getInstance(CHROME).setup();
+				//Nuestros navegadores por defecto
+				System.setProperty("webdriver.chrome.driver",
+		    	           "C:/chromedriver_win32/chromedriver.exe");
+				driver = new ChromeDriver();
+				//ChromeDriverManager.getInstance(CHROME).setup();
 				//TODO: driver = ChromeFactory.newWebDriver();
 				break;
 			case "firefox":
-				FirefoxDriverManager.getInstance(FIREFOX).setup();
+				
+				//IDEM
+				System.setProperty("webdriver.gecko.driver",
+		     	           "C:/chromedriver_win32/geckodriver.exe");
+		 		driver = new FirefoxDriver();
+				
+				//FirefoxDriverManager.getInstance(FIREFOX).setup();
 				//TODO: driver = FirefoxFactory.newWebDriver();
 		}
 		return driver;

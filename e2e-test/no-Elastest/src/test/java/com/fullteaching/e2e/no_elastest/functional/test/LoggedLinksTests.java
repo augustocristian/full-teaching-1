@@ -36,12 +36,17 @@ public class LoggedLinksTests extends BaseLoggedTest {
 	public static Stream<Arguments> data() throws IOException {
 		return ParameterLoader.getTestUsers();
 	}
-
+    /**
+     * This test get logged the user and checks the navigation by URL works correctly.First
+     * get all the possible URLS for the current user for after it iterate over them checking
+     * that the response of the rest service was KO
+     * 
+     */ 
 	@ParameterizedTest
 	@MethodSource("data")
 	public void spiderLoggedTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		driver = rwd;
+	//	driver = rwd;
 		driver = loginAndValidate(driver,user,password);
 
 		/*navigate from home*/

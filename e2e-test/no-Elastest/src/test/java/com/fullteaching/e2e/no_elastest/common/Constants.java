@@ -6,7 +6,7 @@ import org.openqa.selenium.Keys;
 
 public final class Constants {
 
-	public static final String LOCALHOST = "https://192.168.1.92:5000";
+	public static final String LOCALHOST = "https://localhost:5001";
 
 	public static final String COURSES_URL = "__HOST__/courses";
 	   
@@ -44,10 +44,15 @@ public final class Constants {
     public static final String EDITCOURSE_MODAL_NAMEFIELD_ID = "input-put-course-name";
     public static final String EDITCOURSE_MODAL_SAVE_ID="submit-put-course-btn";
     public static final String EDITCOURSE_DELETE_CHECK_ID="label-delete-checkbox";
+    public static final String EDITCOURSE_DELETE_BUTTON_ID="delete-course-btn";
 
     public static final String COURSE_BACK_TO_DASHBOARD_CLASS = "btn-floating";
-        
-    public static final String COURSE_TABS_TAG = "mat-tab-group";
+    public static final String COURSE_TABS_TAG = "tabs-course-details";
+    
+    
+    //Its the original, i change because dont work
+    //public static final String COURSE_TABS_TAG = "md-tab-group";
+  
     
     /*FROM mat-tab-group*/
     public static final String HOMETAB_XPATH ="./div[1]/div[1]";
@@ -112,8 +117,8 @@ public final class Constants {
     public static final String SESSIONLIST_NEWSESSION_MODAL_ID = "course-details-modal";
     public static final String SESSIONLIST_NEWSESSION_MODAL_TITLE_ID = "input-post-title";
     public static final String SESSIONLIST_NEWSESSION_MODAL_CONTENT_ID = "input-post-comment";
-    public static final String SESSIONLIST_NEWSESSION_MODAL_DATE_ID = "inputDate";
-    public static final String SESSIONLIST_NEWSESSION_MODAL_TIME_ID = "inputTime";
+    public static final String SESSIONLIST_NEWSESSION_MODAL_DATE_ID = "input-post-date";
+    public static final String SESSIONLIST_NEWSESSION_MODAL_TIME_ID = "input-post-time";
     public static final String SESSIONLIST_NEWSESSION_MODAL_POSTBUTTON_ID = "post-modal-btn";
     public static final String SESSIONLIST_SESSION_ROW_CLASS = "session-data";
     public static final String SESSIONLIST_SESSION_NAME_CLASS = "session-title";
@@ -184,8 +189,12 @@ public final class Constants {
     
     public static final By COURSESDASHBOARD_TITLE = By.className(COURSESDASHBOARD_TITLE_CLASS);
     public static final By COURSELIST = By.className(COURSELIST_CLASS);
-    public static final By COURSE_TABS = By.tagName(COURSE_TABS_TAG);
+    
+    //Error puede ser el id aqui el viejo
+    //	public static final By COURSE_TABS = By.tagName(COURSE_TABS_TAG);
+    public static final By COURSE_TABS = By.id(COURSE_TABS_TAG);
     public static final By EDITCOURSE_DELETE_CHECK = By.id(EDITCOURSE_DELETE_CHECK_ID);
+    public static final By EDITCOURSE_DELETE_BUTTON = By.id(EDITCOURSE_DELETE_BUTTON_ID);
     public static final By NEWCOURSE_MODAL_NAMEFIELD = By.id(NEWCOURSE_MODAL_NAMEFIELD_ID);
     public static final By FORUMENTRYLIST_ENTRYTITLE = By.className(FORUMENTRYLIST_ENTRYTITLE_CLASS);
     public static final By FORUMENTRYLIST_ENTRIESUL = By.className(FORUMENTRYLIST_ENTRIESUL_CLASS);

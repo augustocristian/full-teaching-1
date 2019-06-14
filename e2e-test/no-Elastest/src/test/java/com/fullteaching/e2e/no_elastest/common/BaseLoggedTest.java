@@ -11,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -34,9 +36,11 @@ public class BaseLoggedTest {
 
     //protected common attributes
     protected static final String BROWSER_VERSION_LATEST = "latest";
-
-    protected static final String host= SetUp.getHost();
-
+// For use another host
+    //protected static final String host= SetUp.getHost();
+    
+    protected static final String host= "https://localhost:5001";
+    
     protected static String userName;
     protected static String user;
     protected static String password;
@@ -70,6 +74,28 @@ public class BaseLoggedTest {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        
+        //Driver por defecto no contenerizado para depuracion
+        boolean chrome=true;
+    	if(chrome) {
+    	System.setProperty("webdriver.chrome.driver",
+    	           "C:/chromedriver_win32/chromedriver.exe");
+		driver = new ChromeDriver();}
+    	else {
+    		System.setProperty("webdriver.gecko.driver",
+     	           "C:/chromedriver_win32/geckodriver.exe");
+ 		driver = new FirefoxDriver();
+ 		driver.navigate().to(host) ;
+    		
+    		
+    	}
+    	driver.manage().window().maximize();
+    	//driver.navigate().to(host);
+
+    	// driver.get(host);
+    	
+    	//ELIMINAR?
+        
     }
 
     @AfterEach
@@ -88,6 +114,10 @@ public class BaseLoggedTest {
                     new Date(entry.getTimestamp()), entry.getLevel(),
                     entry.getMessage()));
         }
+        //TEMPORAL SOLUTION TO MULTIPLE WINDOWS CREATION
+        
+        driver.close();
+        
 
     }
 

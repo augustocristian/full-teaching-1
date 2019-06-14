@@ -163,9 +163,13 @@ public class CourseNavigationUtilities {
 			//wait for edit modal
 			WebElement edit_modal = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(EDITDELETE_MODAL));
 
-			//press delete
+			//Allow delete
 			WebElement delete_check = Wait.aLittle(wd).until(ExpectedConditions.visibilityOfElementLocated(EDITCOURSE_DELETE_CHECK));
 			wd = Click.element(wd, delete_check);
+			
+			//press delete
+			WebElement delete_button = Wait.aLittle(wd).until(ExpectedConditions.visibilityOfElementLocated(EDITCOURSE_DELETE_BUTTON));
+			wd = Click.element(wd, delete_button);
 
 			//save
 			wd = Click.element(wd, EDITCOURSE_MODAL_SAVE);
@@ -235,9 +239,15 @@ public class CourseNavigationUtilities {
 		
 		
 		WebElement tab = getTabElementFromIcon(wd, icon);
+		//prueba
+		//tab = DOMMannager.getParent(wd,tab );
+		
 		String id = tab.getAttribute("id");
+		System.out.println("El valor de tab es : " + tab);
+		System.out.println("El valor del id es : " + id);
 		wd = Click.element(wd,tab);
-		Wait.aLittle(wd).until(ExpectedConditions.visibilityOfElementLocated(By.id(id.replace("label", "content"))));	
+		id=id.replace("label", "content");
+		Wait.aLittle(wd).until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));	
 		
 		return wd;
 	
@@ -263,7 +273,12 @@ public class CourseNavigationUtilities {
 
 	public static WebElement getTabElementFromIcon(WebDriver wd, By icon){
 		WebElement icon_element = wd.findElement(COURSE_TABS).findElement(icon);
-		return DOMMannager.getParent(wd, DOMMannager.getParent(wd, DOMMannager.getParent(wd, icon_element)));
+		
+		WebElement parent1=DOMMannager.getParent(wd, icon_element);
+		
+		WebElement parent2 =DOMMannager.getParent(wd, parent1);
+		WebElement parent3= DOMMannager.getParent(wd,parent2 );
+		return parent2 ;
 	}
 
 	public static boolean isUserInAttendersList(WebDriver wd, String user_name) throws ElementNotFoundException {

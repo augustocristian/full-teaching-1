@@ -47,12 +47,17 @@ public class CourseTeacherTest extends BaseLoggedTest {
         return ParameterLoader.getTestTeachers();
     }
 	
-    
+    /**
+     * This tests get the login the user, go the the courses and select the default
+     * course.Once the user its here, it clicks upon the different tabs(Corse info,sessions,Forum,Files
+     * and attenders), checking that the navigation its possible.
+     * 
+     */
     @ParameterizedTest
 	@MethodSource("data")
     public void teacherCourseMainTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-    driver = rwd;
+  //  driver = rwd;
 
 		String courseName = properties.getProperty("forum.test.course");
 
@@ -103,12 +108,19 @@ public class CourseTeacherTest extends BaseLoggedTest {
     	
     }
     
-    
+    /**
+     * This tests get the login the user, go the the courses  and press the button of a 
+     * new course, creating a new course(each course have a time stap that avoids
+     * overlapping between different test).After that, we proceed to delete thoose courses, click
+     * into the edit icon, check the box that allows it and clicking into the delete button
+     * After that, we proceed to check if the course dont appears in the list. 
+     * 
+     */ 
     @ParameterizedTest
 	@MethodSource("data")
     public void teacherCreateAndDeleteCourseTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-    	driver = rwd;
+//    	driver = rwd;
 
 		String courseName = properties.getProperty("forum.test.course");
 
@@ -172,6 +184,8 @@ public class CourseTeacherTest extends BaseLoggedTest {
     	//DELETE
         try {
         	CourseNavigationUtilities.deleteCourse(driver, course_title);
+        	
+        	Thread.sleep(3000);
         	assertFalse(CourseNavigationUtilities.checkIfCourseExists(driver, course_title), "the course still exists");
 
 		}catch(Exception e){
@@ -183,12 +197,20 @@ public class CourseTeacherTest extends BaseLoggedTest {
 
     }
 
-
+    /**
+     * This tests get the login the user, go the the courses  and in first place, edits the 
+     * course title, change its name for EDIT_+ one timestamp to avoid test overlapping.After that, we proceed
+     * to edit course details, deletes the details title, subtitle and content adding new values
+     * for thoose fields.Second checks if this content was correctly added.In second place, checks if the
+     * course forum is enabled/disbled, to proceed to check if allows disable/enable it.Finally
+     * this test check if the current user, that is accessing to the course, is included
+     * in the Attenders list( check if the user is in it)
+     */ 
 	@ParameterizedTest
 	@MethodSource("data")
     public void teacherEditCourseValues(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		driver = rwd;
+	//	driver = rwd;
 
 		String courseName = properties.getProperty("forum.test.course");
       
@@ -300,9 +322,13 @@ public class CourseTeacherTest extends BaseLoggedTest {
     		editor = driver.findElement(By.className("ql-editor"));
     		editor.sendKeys("This is the normal content");
     		editor.sendKeys(NEWLINE);
+    		////*[@id="textEditorRowButtons"]/a[2]
+    		
     		
     		//preview? /html/body/app/div/main/app-course-details/div/div[4]/md-tab-group/div[2]/div[1]/div/div[2]/div/a[2]
-    		driver.findElement(By.xpath(EDITDESCRIPTION_PREVIEWBUTTON_XPATH)).click();
+    		//driver.findElement(By.xpath(EDITDESCRIPTION_PREVIEWBUTTON_XPATH)).click();
+    		driver.findElement(By.xpath("//*[@id=\"textEditorRowButtons\"]/a[2]")).click();
+    		
     		
     		WebElement preview = Wait.notTooMuch(driver).until(ExpectedConditions.visibilityOfElementLocated(By.className("ql-editor-custom")));
     		//chech heading
@@ -404,7 +430,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
 	@MethodSource("data")
     public void teacherDeleteCourseTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		driver = rwd;
+	//	driver = rwd;
 
 		driver = loginAndValidate(driver,  user, password);
     	String courseName="";

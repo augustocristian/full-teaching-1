@@ -36,19 +36,27 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SeleniumExtension.class)
 public class LoggedForumTest extends BaseLoggedTest {
-	protected static WebDriver driver;
+	//We comment this because we instantiate it in the SetUp
+	//protected static WebDriver driver;
 	
 	protected String courseName="Pseudoscientific course for treating the evil eye";
 
 	public static Stream<Arguments> data() throws IOException {
 		return ParameterLoader.getTestUsers();
 	}
-
+    /**
+     * This test get login and navigate to the courses zone checking if there are 
+     * any courses. Second and go to the Pseudo... course accessing to the forum
+     *  and looks if its enable.If its enable, load all the entries and checks for 
+     *  someone that have comments on it.Finally, with the two previous conditions,
+     *  makes a assertequals to ensure that both are accomplisment
+     
+     */ 
     @ParameterizedTest
 	  @MethodSource("data")
     public void forumLoadEntriesTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		driver = rwd;
+		//driver = rwd;
 		
 	 	String courseName = properties.getProperty("forum.test.course");
 
@@ -86,6 +94,7 @@ public class LoggedForumTest extends BaseLoggedTest {
     	    				WebElement entry = ForumNavigationUtilities.getEntry(driver, entry_name);
     	    				driver = Click.element(driver, entry.findElement(FORUMENTRYLIST_ENTRYTITLE));
     	    				//Load comments
+    	    				
     	        	    	Wait.notTooMuch(driver).until(ExpectedConditions.visibilityOfElementLocated(FORUMCOMMENTLIST));
     	        	    	List<WebElement>comments = ForumNavigationUtilities.getComments(driver);
     	    				if(comments.size()>0) {
@@ -109,12 +118,18 @@ public class LoggedForumTest extends BaseLoggedTest {
     	
     	
     }
-
+    /**
+     * This test get login and create an custom title and content with the current date.
+     * After that, navigate to courses for access the forum section.In the forum creates
+     * a new entry with the previous created title and content. Secondly, we ensure that
+     * the entry was created correctly and ensures that there are only one comment that 
+     * correponds with the body of that entry. 
+     */ 
 	@ParameterizedTest
 	@MethodSource("data")
     public void forumNewEntryTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		driver = rwd;
+	//	driver = rwd;
 
 		driver = loginAndValidate(driver,  user, password);
 
@@ -144,7 +159,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 	    	assertEquals(ForumNavigationUtilities.isForumEnabled(CourseNavigationUtilities.getTabContent(driver,FORUM_ICON)), true, "Forum not activated");
 	    	
 	    	driver = ForumNavigationUtilities.newEntry(driver, newEntryTitle, newEntryContent);
-    		
+	       
 	    	//Check entry... 
 	    	WebElement newEntry = ForumNavigationUtilities.getEntry(driver, newEntryTitle);
 
@@ -153,6 +168,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 	    	driver = Click.element(driver, newEntry.findElement(FORUMENTRYLIST_ENTRYTITLE));
 	    	Wait.notTooMuch(driver).until(ExpectedConditions.visibilityOfElementLocated(FORUMCOMMENTLIST));
 	    	WebElement entryTitleRow = driver.findElement(FORUMCOMMENTLIST_ENTRY_TITLE);
+	    	
 	    	assertEquals( entryTitleRow.getText().split("\n")[0], newEntryTitle,"Incorrect Entry Title");
 	    	assertEquals( entryTitleRow.findElement(FORUMCOMMENTLIST_ENTRY_USER).getText(), userName, "Incorrect User for Entry");
 	    	
@@ -162,19 +178,35 @@ public class LoggedForumTest extends BaseLoggedTest {
 	    	
 	    	WebElement newComment = comments.get(0);
 	    	assertEquals(newComment.findElement(FORUMCOMMENTLIST_COMMENT_CONTENT).getText(),newEntryContent,"Bad content of comment");
-	    	assertEquals(newComment.findElement(FORUMCOMMENTLIST_COMMENT_USER).getText(),userName,"Bad user in comment");
+	    	try {
+				Thread.sleep(4000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	    	
+	    	String comentario =newComment.findElement(FORUMCOMMENTLIST_COMMENT_USER).getText();
+
+	    	assertEquals(comentario,userName,"Bad user in comment");
 	    	
     	}catch(ElementNotFoundException enfe) {
     		fail("Failed to navigate to course forum:: "+ enfe.getClass()+ ": "+enfe.getLocalizedMessage());
     	}
     	
     }
-
+    /**
+     * This test get login and create an custom title and content with the current date.
+     * After that, navigate to courses for access the forum section.If in the forum
+     * there are not any entries create an new entry and gets into it.In the other hand
+     * if there are  any created previuously entry get into the first of them. Secondly,
+     * once we are into the entry, we looks for the new comment button, making a new comment
+     * in this entry with the custom content(the current date and hour).Finally, we iterate 
+     * over all comments looking for the comment that previously we create. 
+     */ 
 	@ParameterizedTest
 	@MethodSource("data")
     public void forumNewCommentTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		driver = rwd;
+	//	driver = rwd;
 
 		driver = loginAndValidate(driver,  user, password);
 
@@ -246,11 +278,19 @@ public class LoggedForumTest extends BaseLoggedTest {
     	}
 
     }
-
+    /**
+     * This test get login and create like the previosly a custom content to make a comment
+     * We proceed navigate to the courses forum zone, and check if there are any entries.
+     * In the case that there are not entries, create a new entry and  replies to the 
+     * first comment of it ( the content of it).In the other hand if there are entries
+     * previously created, go to the first and replies to the same comment.After it, we check
+     * that the comment was correctly published.
+     * 
+     */ 
 	@ParameterizedTest
 	@MethodSource("data")
     public void forumNewReply2CommentTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
-		driver = rwd;
+	//	driver = rwd;
 
 		driver = loginAndValidate(driver,  user, password);
 
@@ -305,19 +345,24 @@ public class LoggedForumTest extends BaseLoggedTest {
 			WebElement textField = driver.findElement(FORUMCOMMENTLIST_MODAL_NEWREPLY_TEXTFIELD);
 			textField.sendKeys(newReplyContent);
 			driver = Click.element(driver, FORUM_NEWCOMMENT_MODAL_POSTBUTTON);
+	
 			commentList = Wait.notTooMuch(driver).until(ExpectedConditions.visibilityOfElementLocated(FORUMCOMMENTLIST));
 			comments = ForumNavigationUtilities.getComments(driver);
 
 			//getComment replies 
-			List <WebElement> replies = ForumNavigationUtilities.getReplies(driver,comments.get(0)); 
+			List <WebElement> replies = ForumNavigationUtilities.getReplies(driver,comments.get(0)); //ESTAMOS
+			
 			WebElement newReply = null;
 			for(WebElement reply: replies) {
-				if(reply.findElement(FORUMCOMMENTLIST_COMMENT_CONTENT).getText().equals(newReplyContent))
+				String text=reply.findElement(FORUMCOMMENTLIST_COMMENT_CONTENT).getText();
+				
+				if(text.equals(newReplyContent))
 					newReply= reply;				
 			}
 			//assert reply
 			assertNotNull(newReply,"Reply not found");
-	    	assertEquals(newReply.findElement(FORUMCOMMENTLIST_COMMENT_USER).getText(),userName,"Bad user in comment");
+			boolean asserto=newReply.findElement(FORUMCOMMENTLIST_COMMENT_USER).getText().equals(userName);
+	    	assertTrue(asserto,"Bad user in comment");
 	    	
 			//nested reply
 	    	

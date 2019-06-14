@@ -5,6 +5,7 @@ import static java.lang.invoke.MethodHandles.lookup;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.OutputType.BASE64;
 import static org.openqa.selenium.logging.LogType.BROWSER;
@@ -70,6 +71,14 @@ public class SetUp {
             logEntries.forEach((entry) -> log.info("[{}] {} {}",
                     new Date(entry.getTimestamp()), entry.getLevel(),
                     entry.getMessage()));
+            System.out.print("Toy en paralelo!");
+            try {
+				TimeUnit.SECONDS.sleep(300);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
         }
 	}
 	
