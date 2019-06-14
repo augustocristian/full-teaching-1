@@ -21,14 +21,13 @@ import java.util.Properties;
 
 import com.fullteaching.e2e.no_elastest.common.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -44,29 +43,32 @@ import com.fullteaching.e2e.no_elastest.utils.SetUp;
 import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 
-import io.github.bonigarcia.seljup.DriverCapabilities;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-
 //@Disabled
 public class LoggedVideoSession{
 
 	//1 teacher
 	protected WebDriver teacherDriver;
 	
+	public static final String CHROME = "chrome";
+	public static final String FIREFOX = "firefox";
+	private static String TEACHER_BROWSER;
+	private static String STUDENT_BROWSER;
+	private static String APP_URL;
+	
 	//at least 1 student;
 	protected List<WebDriver> studentDriver;
-	
+	protected static WebDriver teacher;
 	public String teacher_data;
-		
+	
 	public String users_data;
 	
 	public String courseName;
 
 	protected String teacherName;
-	protected String teacher;
+	protected String teachermail;
 	protected String teacher_pass;
 	
-	protected List<String>students;
+	protected List<String>studentsmails;
 	protected List<String>studentPass;
 	protected List<String>studentNames;
 	
@@ -75,20 +77,58 @@ public class LoggedVideoSession{
 	
 	protected Properties properties; 
 	
-	final  Logger log = getLogger(lookup().lookupClass());
+	final static  Logger log = getLogger(lookup().lookupClass());
 
 	private String sessionName = "Today's Session";
 	private String sessionDescription= "Wow today session will be amazing";
 	private String sessionDate;
 	private String sessionHour;
 	
-	@DriverCapabilities
+	//@DriverCapabilities
 	 DesiredCapabilities capabilities = chrome();
 	 {
 	        LoggingPreferences logPrefs = new LoggingPreferences();
 	        logPrefs.enable(BROWSER, ALL);
 	        capabilities.setCapability(LOGGING_PREFS, logPrefs);
 	    }
+	 
+	 
+	 
+	  
+	  @BeforeAll()
+		static void setupAll() {
+			System.setProperty("webdriver.chrome.driver",
+	 	           "C:/chromedriver_win32/chromedriver.exe");
+			if (System.getenv("ET_EUS_API") == null) {
+				// Outside ElasTest
+				/*ChromeDriverManager.getInstance().setup();
+				FirefoxDriverManager.getInstance().setup();*/
+				//teacher=new ChromeDriver();
+			}
+
+			if (System.getenv("ET_SUT_HOST") != null) {
+				APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5001/";
+			} else {
+				APP_URL = System.getProperty("app.url");
+				if (APP_URL == null) {
+					APP_URL = "https://localhost:5001/";
+				}
+			}
+
+			TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
+			STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
+
+			if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
+				TEACHER_BROWSER = CHROME;
+			}
+
+			if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
+				STUDENT_BROWSER = CHROME;
+			}
+
+			log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
+		}
+
 
 	@BeforeEach
 	public void setUp() throws BadUserException, ElementNotFoundException, NotLoggedException, TimeOutExeception {
@@ -102,11 +142,12 @@ public class LoggedVideoSession{
 
 	        //teacher setUp
 	        
-	        teacher ="teacher@gmail.com";
+	        teachermail ="teacher@gmail.com";
 	        teacher_pass= "pass";
-	        teacherDriver = new ChromeDriver();
+	        BrowserUser bronteacher= UserLoader.setupBrowser("chrome","BrowserTeacher",teachermail,100,APP_URL,log);
+	        teacherDriver = bronteacher.getDriver();
 	        courseName="Pseudoscientific course for treating the evil eye";
-	        teacherDriver.manage().window().maximize();
+	       
 	        
 	        /*ORIGINAL
 	         *  teacher = teacher_data.split(":")[0];
@@ -115,12 +156,12 @@ public class LoggedVideoSession{
 	        
 	         * */
 	    	//check if logged with correct user
-	        teacherDriver = SetUp.loginUser(teacherDriver, host, teacher , teacher_pass);
-	        teacherDriver = UserUtilities.checkLogin(teacherDriver, teacher);
+	        teacherDriver = SetUp.loginUser(teacherDriver, host, teachermail , teacher_pass);
+	        teacherDriver = UserUtilities.checkLogin(teacherDriver, teachermail);
 	        teacherName = UserUtilities.getUserName(teacherDriver, true, host);
 	    	
 	        //students setUp
-	        students = new ArrayList<String>();
+	        studentsmails = new ArrayList<String>();
 	    	studentPass = new ArrayList<String>();
 	    	studentNames = new ArrayList<String>();
 	    	studentDriver = new ArrayList<WebDriver>();
@@ -129,13 +170,13 @@ public class LoggedVideoSession{
 	        
 	        for(int i=0; i< students_data.length; i++) {
 	        	String userid = students_data[i].split(":")[0];
-	        	students.add(userid);
+	        	studentsmails.add(userid);
 	        	String userpass = students_data[i].split(":")[1];
 	        	studentPass.add(userpass);
 	        	
 	        	//WebDriver studentD = UserLoader.allocateNewBrowser(students_data[i].split(":")[2]);
-	        	WebDriver studentD = new ChromeDriver();
-	        	studentD.manage().window().maximize();
+	        	WebDriver studentD = setupBrowser("chrome","BrowserStudent"+i,userid,100);;
+	        	
 	        	studentD = SetUp.loginUser(studentD, host, userid , userpass);
 	        	studentD = UserUtilities.checkLogin(studentD, userid);
 	        	studentNames.add(UserUtilities.getUserName(studentD, true, host));	        	
@@ -163,7 +204,13 @@ public class LoggedVideoSession{
 	    	log.info("[End setUP]");
 	    }
 	
-	 @AfterEach
+	 private WebDriver setupBrowser(String string, String string2, String userid, int i) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@AfterEach
 	 public void teardown() throws IOException {
 		//TODO delete tested test if it is last test.
         SetUp.tearDown(teacherDriver);

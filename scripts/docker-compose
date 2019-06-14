@@ -1,0 +1,4 @@
+git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+cd full-teaching-tunon-tests/e2e-test/no-Elastest;
+git checkout DevelopmentOpenViduTests;
+mvn -Dtest=LoggedLinksTests -B test;

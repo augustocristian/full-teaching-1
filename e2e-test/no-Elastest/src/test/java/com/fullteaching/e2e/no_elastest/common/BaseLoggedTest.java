@@ -5,14 +5,12 @@ import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundExceptio
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.SetUp;
-import io.github.bonigarcia.seljup.DriverCapabilities;
+//import io.github.bonigarcia.seljup.DriverCapabilities;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -51,7 +49,7 @@ public class BaseLoggedTest {
 
     protected Properties properties;
 
-    @DriverCapabilities
+    //@DriverCapabilities
     DesiredCapabilities capabilities = chrome();
 
     {
@@ -75,26 +73,7 @@ public class BaseLoggedTest {
             ex.printStackTrace();
         }
         
-        //Driver por defecto no contenerizado para depuracion
-        boolean chrome=true;
-    	if(chrome) {
-    	System.setProperty("webdriver.chrome.driver",
-    	           "C:/chromedriver_win32/chromedriver.exe");
-		driver = new ChromeDriver();}
-    	else {
-    		System.setProperty("webdriver.gecko.driver",
-     	           "C:/chromedriver_win32/geckodriver.exe");
- 		driver = new FirefoxDriver();
- 		driver.navigate().to(host) ;
-    		
-    		
-    	}
-    	driver.manage().window().maximize();
-    	//driver.navigate().to(host);
 
-    	// driver.get(host);
-    	
-    	//ELIMINAR?
         
     }
 

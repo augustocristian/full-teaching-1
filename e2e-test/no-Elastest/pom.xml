@@ -39,7 +39,7 @@
 		<!-- Test dependencies version -->
 		<junit.jupiter.version>5.0.0</junit.jupiter.version>
 		<junit.platform.version>1.0.0</junit.platform.version>
-		<selenium-jupiter.version>3.1.1</selenium-jupiter.version>
+		<selenium-jupiter.version>1.1.2</selenium-jupiter.version>
 		<slf4j.version>1.7.25</slf4j.version>
 
 		<!-- Plugins versions -->
@@ -96,12 +96,14 @@
 			<version>${selenium-jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
 
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
 			<version>3.3.0</version>
 		</dependency>
+
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -129,6 +131,80 @@
 					<excludes>com.fullteaching.e2e.no_elastest.common.*</excludes>
 				</configuration>
 			</plugin>
+			
+			<!--Added-->
+			<plugin>
+			
+			
+							<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+
+				<!-- ONLY ON DEVELOPMENT -->
+				<dependencies>
+					<dependency>
+						<groupId>org.springframework</groupId>
+						<artifactId>springloaded</artifactId>
+						<version>1.2.6.RELEASE</version>
+					</dependency>
+				</dependencies>
+				<!-- ONLY ON DEVELOPMENT -->
+
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<configuration>
+					<mainClass>com.fullteaching.backend.Application</mainClass>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.4.13</version>
+				<configuration>
+					<imageName>codeurjc/${project.artifactId}</imageName>
+					<imageTags>
+						<imageTag>latest</imageTag>
+					</imageTags>
+					<serverId>docker-hub</serverId>
+					<dockerDirectory>src/main/docker</dockerDirectory>
+					<resources>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>${project.build.directory}</directory>
+							<include>${project.build.finalName}.war</include>
+						</resource>
+						<resource>
+							<targetPath>/</targetPath>
+							<directory>src/main/docker</directory>
+							<include>init.sh</include>
+						</resource>
+					</resources>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<webResources>
+						<resource>
+							<directory>src/main/ebextensions</directory>
+							<targetPath>.ebextensions</targetPath>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven-surefire-plugin.version}</version>
+</plugin>
+
+<!-- Added -->
 		</plugins>
 	</build>
 
