@@ -46,7 +46,8 @@ public class LoggedLinksTests extends BaseLoggedTest {
 	@MethodSource("data")
 	public void spiderLoggedTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-	//	driver = rwd;
+		driver = rwd;
+		driver.manage().window().maximize();
 		driver = loginAndValidate(driver,user,password);
 
 		/*navigate from home*/

@@ -1,5 +1,6 @@
 package com.fullteaching.e2e.no_elastest.common;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.utils.Click;
+import com.fullteaching.e2e.no_elastest.utils.SetUp;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
@@ -40,7 +42,7 @@ public class NavigationUtilities {
 	public static WebDriver getUrlAndWaitFooter(WebDriver wd, String url) {
 		
 		wd = getUrl( wd,  url);
-		
+	
 		Wait.notTooMuch(wd).until(ExpectedConditions.presenceOfElementLocated(FOOTER));
 		
 		return wd;

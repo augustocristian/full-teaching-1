@@ -239,8 +239,7 @@ public class CourseNavigationUtilities {
 		
 		
 		WebElement tab = getTabElementFromIcon(wd, icon);
-		//prueba
-		//tab = DOMMannager.getParent(wd,tab );
+	
 		
 		String id = tab.getAttribute("id");
 		System.out.println("El valor de tab es : " + tab);

@@ -56,7 +56,8 @@ public class LoggedForumTest extends BaseLoggedTest {
 	  @MethodSource("data")
     public void forumLoadEntriesTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		//driver = rwd;
+		driver = rwd;
+		driver.manage().window().maximize();
 		
 	 	String courseName = properties.getProperty("forum.test.course");
 
@@ -129,7 +130,8 @@ public class LoggedForumTest extends BaseLoggedTest {
 	@MethodSource("data")
     public void forumNewEntryTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-	//	driver = rwd;
+		driver = rwd;
+		driver.manage().window().maximize();
 
 		driver = loginAndValidate(driver,  user, password);
 
@@ -178,12 +180,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 	    	
 	    	WebElement newComment = comments.get(0);
 	    	assertEquals(newComment.findElement(FORUMCOMMENTLIST_COMMENT_CONTENT).getText(),newEntryContent,"Bad content of comment");
-	    	try {
-				Thread.sleep(4000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}	    	
+	        	
 	    	String comentario =newComment.findElement(FORUMCOMMENTLIST_COMMENT_USER).getText();
 
 	    	assertEquals(comentario,userName,"Bad user in comment");
@@ -206,7 +203,8 @@ public class LoggedForumTest extends BaseLoggedTest {
 	@MethodSource("data")
     public void forumNewCommentTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-	//	driver = rwd;
+		driver = rwd;
+		driver.manage().window().maximize();
 
 		driver = loginAndValidate(driver,  user, password);
 
@@ -290,7 +288,8 @@ public class LoggedForumTest extends BaseLoggedTest {
 	@ParameterizedTest
 	@MethodSource("data")
     public void forumNewReply2CommentTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
-	//	driver = rwd;
+		driver = rwd;
+		driver.manage().window().maximize();
 
 		driver = loginAndValidate(driver,  user, password);
 

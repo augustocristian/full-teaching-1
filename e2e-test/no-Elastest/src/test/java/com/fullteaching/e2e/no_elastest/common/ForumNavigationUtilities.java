@@ -79,13 +79,7 @@ public class ForumNavigationUtilities {
 	}
 	
 	public static List<WebElement> getComments(WebDriver wd){
-		
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
 		return wd.findElements(FORUMCOMMENTLIST_COMMENT);
 	}
 	

@@ -1,0 +1,43 @@
+#Compose 1
+git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+cd full-teaching-tunon-tests/e2e-test/no-Elastest;
+git checkout SincTestDockerV1_5_0
+mvn -Dtest=LoggedForumTest -B test;
+
+#Compose 2
+git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+cd full-teaching-tunon-tests/e2e-test/no-Elastest;
+git checkout SincTestDockerV1_5_0
+mvn -Dtest=LoggedLinksTests -B test;
+
+#Compose 3
+git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+cd full-teaching-tunon-tests;
+git checkout SincTestDockerV1_5_0
+mvn -Dtest=UnLoggedLinksTests -B test;
+
+#Compose 4
+git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+cd full-teaching-tunon-tests/e2e-test/no-Elastest;
+git checkout SincTestDockerV1_5_0
+mvn -Dtest=UserTest -B test;
+
+#Compose 5
+git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+cd full-teaching-tunon-tests/e2e-test/no-Elastest;
+git checkout SincTestDockerV1_5_0
+mvn -Dtest=LoggedVideoSession -B test;
+
+#Compose 6
+git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+cd full-teaching-tunon-tests/e2e-test/no-Elastest;
+git checkout SincTestDockerV1_5_0
+mvn -Dtest=CourseTeacherTest -B test;
+
+#Compose 7
+git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+cd full-teaching-tunon-tests/e2e-test/no-Elastest;
+git checkout SincTestDockerV1_5_0
+mvn -Dtest=CourseStudentTest -B test;
+
+

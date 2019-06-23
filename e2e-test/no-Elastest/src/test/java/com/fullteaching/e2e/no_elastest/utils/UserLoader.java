@@ -12,9 +12,12 @@ import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
+import io.github.bonigarcia.seljup.DockerBrowser;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
+
 
 import static io.github.bonigarcia.wdm.DriverManagerType.*;
 
@@ -102,22 +105,29 @@ public class UserLoader {
 		switch (browser){
 			case "chrome":
 				//Nuestros navegadores por defecto
-				System.setProperty("webdriver.chrome.driver",
-		    	           "C:/chromedriver_win32/chromedriver.exe");
-				driver = new ChromeDriver();
-				//ChromeDriverManager.getInstance(CHROME).setup();
+				//System.setProperty("webdriver.chrome.driver",
+		    	  //         "C:/chromedriver_win32/chromedriver.exe");
+				
+				ChromeDriverManager.getInstance(CHROME).setup();
+				
+				
 				//TODO: driver = ChromeFactory.newWebDriver();
+				
 				break;
 			case "firefox":
 				
 				//IDEM
-				System.setProperty("webdriver.gecko.driver",
-		     	           "C:/chromedriver_win32/geckodriver.exe");
-		 		driver = new FirefoxDriver();
+			//	System.setProperty("webdriver.gecko.driver",
+		     	  //         "C:/chromedriver_win32/geckodriver.exe");
+		 		//driver = new FirefoxDriver();
 				
-				//FirefoxDriverManager.getInstance(FIREFOX).setup();
+				FirefoxDriverManager.getInstance(FIREFOX).setup();
+				driver=new FirefoxDriver();
 				//TODO: driver = FirefoxFactory.newWebDriver();
 		}
+		
 		return driver;
 	}
+	
+
 }

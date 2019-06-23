@@ -53,19 +53,9 @@ public class CourseStudentTest extends BaseLoggedTest {
     @ParameterizedTest
 	@MethodSource("data")
     public void studentCourseMainTest(String user, String password, String role, WebDriver rwd)throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
-    	/*boolean chrome=true;
-    	if(chrome) {
-    	System.setProperty("webdriver.chrome.driver",
-    	           "C:/chromedriver_win32/chromedriver.exe");
-		driver = new ChromeDriver();}
-    	else {
-    		System.setProperty("webdriver.gecko.driver",
-     	           "C:/chromedriver_win32/geckodriver.exe");
- 		driver = new FirefoxDriver();
-    		
-    		
-    	}
-    	driver.manage().window().maximize();*/
+ 
+    	driver=rwd;
+    	driver.manage().window().maximize();
 		driver = loginAndValidate(driver,  user, password);
 
     	try {
@@ -90,8 +80,7 @@ public class CourseStudentTest extends BaseLoggedTest {
     	//Home tab 
     	try {
     
-    		//WebDriverWait wait = new WebDriverWait(driver, 10); 
-    		//wait.until(ExpectedConditions.presenceOfElementLocated(By.id(HOME_ICON_ID)));
+    	
     	
     		driver = CourseNavigationUtilities.go2Tab(driver, HOME_ICON);
     		

@@ -3,6 +3,8 @@ package com.fullteaching.e2e.no_elastest.common;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.io.IOException;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
@@ -16,6 +18,7 @@ import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundExceptio
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.Click;
+import com.fullteaching.e2e.no_elastest.utils.SetUp;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
@@ -32,6 +35,7 @@ public class UserUtilities {
 		NavigationUtilities.getUrlAndWaitFooter(wd, login_url.replace("__HOST__", host));
 		
 		try {
+		
 			Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LOGINMENU_XPATH)));
 						
 			wd = Click.withNRetries(wd, By.xpath(LOGINMENU_XPATH), 3, LOGIN_MODAL );
@@ -44,7 +48,7 @@ public class UserUtilities {
 			
 			user_field.sendKeys(user);
 			pass_field.sendKeys(password);
-			
+		
 			wd = Click.element(wd, submit_field);
 			
 		}

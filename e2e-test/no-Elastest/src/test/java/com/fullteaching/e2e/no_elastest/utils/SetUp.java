@@ -5,6 +5,7 @@ import static java.lang.invoke.MethodHandles.lookup;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.OutputType.BASE64;
@@ -30,6 +31,11 @@ public class SetUp {
 	protected static String host=LOCALHOST;
 
 	public static String getHost() {
+		//TO-DO  SOLVE this
+		Properties props = System.getProperties();
+		props.setProperty("fullTeachingUrl", LOCALHOST);
+		
+		
 		String appHost = getProperty("fullTeachingUrl");
         if (appHost != null) {
             host = appHost;

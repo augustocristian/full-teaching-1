@@ -98,22 +98,24 @@ public class LoggedVideoSession{
 	    	           "C:/chromedriver_win32/chromedriver.exe");
 	    	host = SetUp.getHost();
 	    	users_data=loadStudentsData("src/test/resources/inputs/default_user_LoggedVideoStudents.csv");
+	    	
 	        log.info("Test over url: "+host);
 
 	        //teacher setUp
 	        
 	        teacher ="teacher@gmail.com";
 	        teacher_pass= "pass";
-	        teacherDriver = new ChromeDriver();
+	       // teacherDriver = new ChromeDriver();
 	        courseName="Pseudoscientific course for treating the evil eye";
-	        teacherDriver.manage().window().maximize();
+	       
 	        
-	        /*ORIGINAL
-	         *  teacher = teacher_data.split(":")[0];
-	        teacher_pass= teacher_data.split(":")[1];
-	        teacherDriver = UserLoader.allocateNewBrowser(teacher_data.split(":")[2]);
+	      //TO-DO quit and use files 
+	        //  teacher = teacher_data.split(":")[0];
+	        //teacher_pass= teacher_data.split(":")[1];
+	       // teacherDriver = UserLoader.allocateNewBrowser(teacher_data.split(":")[2]);
 	        
-	         * */
+	        teacherDriver.manage().window().maximize(); 
+	        
 	    	//check if logged with correct user
 	        teacherDriver = SetUp.loginUser(teacherDriver, host, teacher , teacher_pass);
 	        teacherDriver = UserUtilities.checkLogin(teacherDriver, teacher);
@@ -133,8 +135,8 @@ public class LoggedVideoSession{
 	        	String userpass = students_data[i].split(":")[1];
 	        	studentPass.add(userpass);
 	        	
-	        	//WebDriver studentD = UserLoader.allocateNewBrowser(students_data[i].split(":")[2]);
-	        	WebDriver studentD = new ChromeDriver();
+	        	WebDriver studentD = UserLoader.allocateNewBrowser(students_data[i].split(":")[2]);
+	        	//WebDriver studentD = new ChromeDriver();
 	        	studentD.manage().window().maximize();
 	        	studentD = SetUp.loginUser(studentD, host, userid , userpass);
 	        	studentD = UserUtilities.checkLogin(studentD, userid);
@@ -219,12 +221,13 @@ public class LoggedVideoSession{
 	    	modal.findElement(SESSIONLIST_NEWSESSION_MODAL_DATE).sendKeys(sessionDate);
 	    	modal.findElement(SESSIONLIST_NEWSESSION_MODAL_TIME).sendKeys(sessionHour);
 	    	teacherDriver = Click.element(teacherDriver, modal.findElement(SESSIONLIST_NEWSESSION_MODAL_POSTBUTTON));
+	    	/*TO-DO DELETE SLEEPS
 	    	try {
 						Thread.sleep(2000);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}	
+					}	*/
 	    	//teacherDriver = Click.element(teacherDriver, SESSIONLIST_NEWSESSION_MODAL_DATE);
 	    	//check if session has been created
 	    	List <String> session_titles = SessionNavigationUtilities.getFullSessionList(teacherDriver);
@@ -287,12 +290,13 @@ public class LoggedVideoSession{
     	//Students Leave Sessions
     	try {
     		for(WebDriver student_d: studentDriver) {
-		    	try {
+		    /*TO-DO DELETE SLEEP *try {
+		    	 
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}	
+				}	*/
 		    	//student to: LEAVE SESSION.
     			student_d = Click.element(student_d, SESSION_LEFT_MENU_BUTTON);
 				
