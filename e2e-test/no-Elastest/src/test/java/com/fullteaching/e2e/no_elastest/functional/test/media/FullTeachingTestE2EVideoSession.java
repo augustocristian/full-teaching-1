@@ -74,6 +74,8 @@ public class FullTeachingTestE2EVideoSession extends FullTeachingTestE2E {
 
         if (System.getenv("ET_EUS_API") == null) {
             // Outside ElasTest
+        	System.setProperty("webdriver.chrome.driver",
+      	           "C:/chromedriver_win32/chromedriver.exe");
             ChromeDriverManager.getInstance(chrome).setup();
             FirefoxDriverManager.getInstance(firefox).setup();
         }

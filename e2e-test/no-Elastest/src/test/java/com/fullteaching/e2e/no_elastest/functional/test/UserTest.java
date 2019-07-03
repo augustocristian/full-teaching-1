@@ -69,6 +69,10 @@ public class UserTest extends BaseLoggedTest {
 	private static String TEACHER_BROWSER;
 	private static String STUDENT_BROWSER;
 	private static String APP_URL;
+	
+    static Class<? extends WebDriver> chrome = ChromeDriver.class;
+    static Class<? extends WebDriver> firefox = FirefoxDriver.class;
+	
 	final static  Logger log = getLogger(lookup().lookupClass());
 	
 
@@ -78,13 +82,14 @@ public class UserTest extends BaseLoggedTest {
 	
 	 @BeforeAll()
 		static void setupAll() {
-			System.setProperty("webdriver.chrome.driver",
-	 	           "C:/chromedriver_win32/chromedriver.exe");
+			
 			if (System.getenv("ET_EUS_API") == null) {
 				// Outside ElasTest
-				/*ChromeDriverManager.getInstance().setup();
-				FirefoxDriverManager.getInstance().setup();*/
-				//teacher=new ChromeDriver();
+				System.setProperty("webdriver.chrome.driver",
+			 	           "C:/chromedriver_win32/chromedriver.exe");
+				ChromeDriverManager.getInstance(chrome).setup();
+				FirefoxDriverManager.getInstance(firefox).setup();
+			
 			}
 
 			if (System.getenv("ET_SUT_HOST") != null) {

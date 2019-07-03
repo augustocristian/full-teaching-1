@@ -85,12 +85,13 @@ public class LoggedForumTest extends BaseLoggedTest {
 	  
 	  @BeforeAll()
 		static void setupAll() {
-			System.setProperty("webdriver.chrome.driver",
-	 	           "C:/chromedriver_win32/chromedriver.exe");
+			
 			if (System.getenv("ET_EUS_API") == null) {
 				// Outside ElasTest
 				ChromeDriverManager.getInstance(chrome).setup();
 				FirefoxDriverManager.getInstance(firefox).setup();
+				System.setProperty("webdriver.chrome.driver",
+			 	           "C:/chromedriver_win32/chromedriver.exe");
 				
 			}
 
