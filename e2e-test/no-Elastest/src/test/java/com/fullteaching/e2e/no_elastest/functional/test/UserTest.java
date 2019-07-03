@@ -122,9 +122,10 @@ public class UserTest extends BaseLoggedTest {
 	@ParameterizedTest
 	@MethodSource("data")
 	public void loginTest(String user, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
-
+		BrowserUser usrbrowser;
 	//	driver = rwd;
-		driver= UserLoader.setupBrowser("chrome",role,user,100);
+		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
+		driver=usrbrowser.getDriver();
 		try {
 			driver = UserUtilities.login(driver, user, password, host);
 		

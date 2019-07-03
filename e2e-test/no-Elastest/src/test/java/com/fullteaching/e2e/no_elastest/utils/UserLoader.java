@@ -9,14 +9,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.slf4j.Logger;
 
+import com.fullteaching.e2e.no_elastest.common.BrowserUser;
+import com.fullteaching.e2e.no_elastest.common.ChromeUser;
 import com.fullteaching.e2e.no_elastest.common.Constants;
+import com.fullteaching.e2e.no_elastest.common.FirefoxUser;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import static org.slf4j.LoggerFactory.getLogger;
 
 import static io.github.bonigarcia.wdm.DriverManagerType.*;
 
@@ -99,29 +105,43 @@ public class UserLoader {
 		return users.values();
 	}
 	
-	 public static WebDriver setupBrowser(String browser, String testName,
-	            String userIdentifier, int secondsOfWait) {
+	 public static BrowserUser setupBrowser(String browser, String testName,
+	            String userIdentifier, int secondsOfWait,String APP_URL,Logger log) {
 
-	        WebDriver u;
-	        
+	        BrowserUser u;
 
-	       
+	        log.info("Starting browser ({})", browser);
 
 	        switch (browser) {
 	        case "chrome":
-	            u = new ChromeDriver();
+	            u = new ChromeUser(userIdentifier, secondsOfWait, testName,
+	                    userIdentifier);
 	            break;
 	        case "firefox":
-	            u = new FirefoxDriver();
+	            u = new FirefoxUser(userIdentifier, secondsOfWait, testName,
+	                    userIdentifier);
 	            break;
 	        default:
-	            u = new ChromeDriver();
+	            u = new ChromeUser(userIdentifier, secondsOfWait, testName,
+	                    userIdentifier);
 	        }
-	        u.navigate().to(Constants.LOCALHOST);
-	        u.manage().window().maximize();
-	        
-	        return u;
 
+	        log.info("Navigating to {}", APP_URL);
+
+	        u.getDriver().get(APP_URL);
+
+	        final String GLOBAL_JS_FUNCTION = "var s = window.document.createElement('script');"
+	                + "s.innerText = 'window.MY_FUNC = function(containerQuerySelector) {"
+	                + "var elem = document.createElement(\"div\");"
+	                + "elem.id = \"video-playing-div\";"
+	                + "elem.innerText = \"VIDEO PLAYING\";"
+	                + "document.body.appendChild(elem);"
+	                + "console.log(\"Video check function successfully added to DOM by Selenium\")}';"
+	                + "window.document.head.appendChild(s);";
+
+	        u.runJavascript(GLOBAL_JS_FUNCTION);
+
+	        return u;
 	    }
 	
 

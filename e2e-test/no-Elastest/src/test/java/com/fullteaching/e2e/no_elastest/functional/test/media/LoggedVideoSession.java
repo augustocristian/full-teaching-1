@@ -150,7 +150,8 @@ public class LoggedVideoSession{
 	        
 	        teachermail ="teacher@gmail.com";
 	        teacher_pass= "pass";
-	        teacherDriver = UserLoader.setupBrowser("chrome","BrowserTeacher",teachermail,100);
+	        BrowserUser bronteacher= UserLoader.setupBrowser("chrome","BrowserTeacher",teachermail,100,APP_URL,log);
+	        teacherDriver = bronteacher.getDriver();
 	        courseName="Pseudoscientific course for treating the evil eye";
 	       
 	        

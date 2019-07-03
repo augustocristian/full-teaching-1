@@ -126,9 +126,10 @@ public class LoggedLinksTests extends BaseLoggedTest {
 	@MethodSource("data")
 	public void spiderLoggedTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-	//	driver = rwd;
-		
-		driver= UserLoader.setupBrowser("chrome",role,user,100);
+		BrowserUser usrbrowser;
+		//	driver = rwd;
+			usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
+			driver=usrbrowser.getDriver();
 		driver = loginAndValidate(driver,user,password);
 
 		/*navigate from home*/

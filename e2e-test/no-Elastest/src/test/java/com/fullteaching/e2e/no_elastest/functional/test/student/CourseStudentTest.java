@@ -125,7 +125,10 @@ public class CourseStudentTest extends BaseLoggedTest {
 	@MethodSource("data")
     public void studentCourseMainTest(String user, String password, String role)throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
     	
-    	driver= UserLoader.setupBrowser("chrome",role,user,100);
+    	BrowserUser usrbrowser;
+		//	driver = rwd;
+		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
+		driver=usrbrowser.getDriver();
     	
 		driver = loginAndValidate(driver,  user, password);
 
