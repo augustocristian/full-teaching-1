@@ -29,6 +29,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -88,6 +89,32 @@ public class LoggedVideoSession{
 	        LoggingPreferences logPrefs = new LoggingPreferences();
 	        logPrefs.enable(BROWSER, ALL);
 	        capabilities.setCapability(LOGGING_PREFS, logPrefs);
+	    }
+	 
+	 
+	  protected WebDriver setupBrowser(String browser, String testName,
+	            String userIdentifier, int secondsOfWait) {
+
+	        WebDriver u;
+	        
+
+	        log.info("Starting browser ({})", browser);
+
+	        switch (browser) {
+	        case "chrome":
+	            u = new ChromeDriver();
+	            break;
+	        case "firefox":
+	            u = new FirefoxDriver();
+	            break;
+	        default:
+	            u = new ChromeDriver();
+	        }
+	        u.navigate().to("https://localhost:5001");
+	        
+	        
+	        return u;
+
 	    }
 
 	@BeforeEach
