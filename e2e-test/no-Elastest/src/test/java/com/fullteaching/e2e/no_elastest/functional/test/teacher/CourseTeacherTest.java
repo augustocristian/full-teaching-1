@@ -1,28 +1,9 @@
 package com.fullteaching.e2e.no_elastest.functional.test.teacher;
 
-import static io.github.bonigarcia.seljup.BrowserType.CHROME;
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.IOException;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Stream;
-
-import com.fullteaching.e2e.no_elastest.common.*;
-import io.github.bonigarcia.seljup.DockerBrowser;
-import io.github.bonigarcia.seljup.SeleniumExtension;
-
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
+import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
+import com.fullteaching.e2e.no_elastest.common.CourseNavigationUtilities;
+import com.fullteaching.e2e.no_elastest.common.ForumNavigationUtilities;
+import com.fullteaching.e2e.no_elastest.common.NavigationUtilities;
 import com.fullteaching.e2e.no_elastest.common.exception.BadUserException;
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.ExceptionsHelper;
@@ -33,6 +14,30 @@ import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import java.io.IOException;
+import java.util.stream.Stream;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import io.github.bonigarcia.SeleniumExtension;
+
+
 @ExtendWith(SeleniumExtension.class)
 public class CourseTeacherTest extends BaseLoggedTest {
 
@@ -42,11 +47,25 @@ public class CourseTeacherTest extends BaseLoggedTest {
 	
 	private static String course_title;
 
+    protected static String APP_URL;
+
+    protected static final String CHROME = "chrome";
+    protected static final String FIREFOX = "firefox";
+    static Class<? extends WebDriver> chrome = ChromeDriver.class;
+    static Class<? extends WebDriver> firefox = FirefoxDriver.class;
+    WebDriver driver;
+    
+
+    
+
+    
 
     public static Stream<Arguments> data() throws IOException {
         return ParameterLoader.getTestTeachers();
     }
 	
+    
+
     /**
      * This tests get the login the user, go the the courses and select the default
      * course.Once the user its here, it clicks upon the different tabs(Corse info,sessions,Forum,Files
@@ -55,13 +74,15 @@ public class CourseTeacherTest extends BaseLoggedTest {
      */
     @ParameterizedTest
 	@MethodSource("data")
-    public void teacherCourseMainTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void teacherCourseMainTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-  //  driver = rwd;
-
+    	
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 		String courseName = properties.getProperty("forum.test.course");
 
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(user, usermail, password);
+
     	
     	try {
     		if(!NavigationUtilities.amIHere(driver,COURSES_URL.replace("__HOST__", host)))
@@ -118,13 +139,16 @@ public class CourseTeacherTest extends BaseLoggedTest {
      */ 
     @ParameterizedTest
 	@MethodSource("data")
-    public void teacherCreateAndDeleteCourseTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void teacherCreateAndDeleteCourseTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-//    	driver = rwd;
+    
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 
 		String courseName = properties.getProperty("forum.test.course");
 
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(user, usermail, password);
+
     	
     	boolean found = false;
     	try {
@@ -185,7 +209,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
         try {
         	CourseNavigationUtilities.deleteCourse(driver, course_title);
         	
-        	Thread.sleep(3000);
+        	Wait.notTooMuch(driver);
         	assertFalse(CourseNavigationUtilities.checkIfCourseExists(driver, course_title), "the course still exists");
 
 		}catch(Exception e){
@@ -208,13 +232,16 @@ public class CourseTeacherTest extends BaseLoggedTest {
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
-    public void teacherEditCourseValues(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void teacherEditCourseValues(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-	//	driver = rwd;
+		
+		
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 
 		String courseName = properties.getProperty("forum.test.course");
       
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(user, usermail, password);
     	
     	try {
 	    	// navigate to courses if not there
@@ -428,11 +455,13 @@ public class CourseTeacherTest extends BaseLoggedTest {
     @Disabled
 	@ParameterizedTest
 	@MethodSource("data")
-    public void teacherDeleteCourseTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void teacherDeleteCourseTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-	//	driver = rwd;
-
-		driver = loginAndValidate(driver,  user, password);
+    
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
+		
+		this.slowLogin(user, usermail, password);
     	String courseName="";
     	// navigate to courses if not there
     	try {

@@ -36,6 +36,7 @@ abstract public class UnLoggedLinksTests {
 	@Test
 	public void spiderUnloggedTest() {
 		/*navigate from home*/
+		
 		NavigationUtilities.getUrlAndWaitFooter(driver, host);
 				
 		List <WebElement> pageLinks = SpiderNavigation.getPageLinks(driver);

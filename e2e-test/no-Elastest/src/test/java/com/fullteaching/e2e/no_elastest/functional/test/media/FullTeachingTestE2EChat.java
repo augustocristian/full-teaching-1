@@ -19,38 +19,42 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-//import io.github.bonigarcia.SeleniumExtension;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
+import com.fullteaching.e2e.no_elastest.common.BrowserUser;
+
+import io.github.bonigarcia.SeleniumExtension;
 
 /**
  * E2E tests for FullTeaching chat in a video session.
  *
  * @author Pablo Fuente (pablo.fuente@urjc.es)
  */
+@Disabled
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching chat")
-//@ExtendWith(SeleniumExtension.class)
-public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
+@ExtendWith(SeleniumExtension.class)
+public class FullTeachingTestE2EChat extends BaseLoggedTest {
 
 	public static final String CHROME = "chrome";
 	public static final String FIREFOX = "firefox";
 	private static String TEACHER_BROWSER;
 	private static String STUDENT_BROWSER;
-	private static String APP_URL;
+
+	
+    static Class<? extends WebDriver> chrome = ChromeDriver.class;
+    static Class<? extends WebDriver> firefox = FirefoxDriver.class;
 
 	static Exception ex = null;
 
@@ -60,52 +64,11 @@ public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
 	final String studentMail = "student1@gmail.com";
 	final String studentPass = "pass";
 	final String studentName = "Student Imprudent";
-	static ChromeDriver teacher;
-	//BrowserUser user;
 
-	@BeforeAll()
-	static void setupAll() {
-		System.setProperty("webdriver.chrome.driver",
- 	           "C:/chromedriver_win32/chromedriver.exe");
-		if (System.getenv("ET_EUS_API") == null) {
-			// Outside ElasTest
-			/*ChromeDriverManager.getInstance().setup();
-			FirefoxDriverManager.getInstance().setup();*/
-			teacher=new ChromeDriver();
-		}
+	BrowserUser user;
 
-		if (System.getenv("ET_SUT_HOST") != null) {
-			APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5001/";
-		} else {
-			APP_URL = System.getProperty("app.url");
-			if (APP_URL == null) {
-				APP_URL = "https://localhost:5001/";
-			}
-		}
+	
 
-		TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-		STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-		if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-			TEACHER_BROWSER = CHROME;
-		}
-
-		if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-			STUDENT_BROWSER = CHROME;
-		}
-
-		log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
-	}
-
-	@AfterEach
-	void dispose(TestInfo info) {
-		try {
-			this.logout(teacher);
-			//driver.dispose();
-		} finally {
-			log.info("##### Finish test: " +  info.getTestMethod().get().getName());
-		}
-	}
 
 	@Test
 	void oneToOneChatInSessionChrome() throws Exception {
@@ -117,62 +80,62 @@ public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
 
 		// TEACHER
 
-		this.teacher = setupBrowser(TEACHER_BROWSER, testName, "Teacher", 30);
+		this.user = setupBrowser(TEACHER_BROWSER, testName, "Teacher", 30);
 
-		this.slowLogin(teacher, teacherMail, teacherPass);
+		this.slowLogin(user, teacherMail, teacherPass);
 
 		waitSeconds(1);
 		
-		//log.info("{} entering first course", user.getClientData());
-		 WebDriverWait wait = new WebDriverWait(teacher, 1);
-		wait.until(ExpectedConditions.presenceOfElementLocated(
+		log.info("{} entering first course", user.getClientData());
+
+		user.getWaiter().until(ExpectedConditions.presenceOfElementLocated(
 				By.cssSelector(("ul.collection li.collection-item:first-child div.course-title"))));
-		teacher.findElement(By.cssSelector("ul.collection li.collection-item:first-child div.course-title"))
+		user.getDriver().findElement(By.cssSelector("ul.collection li.collection-item:first-child div.course-title"))
 				.click();
 
 		waitSeconds(1);
 		
-		//log.info("{} navigating to 'Sessions' tab", user.getClientData());
+		log.info("{} navigating to 'Sessions' tab", user.getClientData());
 
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(("#md-tab-label-0-1"))));
-		teacher.findElement(By.cssSelector("#md-tab-label-0-1")).click();
+		user.getWaiter().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(("#md-tab-label-0-1"))));
+		user.getDriver().findElement(By.cssSelector("#md-tab-label-0-1")).click();
 
 		waitSeconds(1);
 		
-		//log.info("{} getting into first session", user.getClientData());
+		log.info("{} getting into first session", user.getClientData());
 
-		teacher.findElement(By.cssSelector("ul div:first-child li.session-data div.session-ready")).click();
+		user.getDriver().findElement(By.cssSelector("ul div:first-child li.session-data div.session-ready")).click();
 
 		waitSeconds(1);
 
 		// Check connected message
-		teacher.findElement(By.cssSelector("#fixed-icon")).click();
-		//checkSystemMessage("Connected", driver);
+		user.getDriver().findElement(By.cssSelector("#fixed-icon")).click();
+		checkSystemMessage("Connected", user);
 
 		// STUDENT
 
-		ChromeDriver student = setupBrowser(STUDENT_BROWSER, testName, "Student", 30);
+		BrowserUser student = setupBrowser(STUDENT_BROWSER, testName, "Student", 30);
 		this.slowLogin(student, studentMail, studentPass);
 
 		waitSeconds(1);
-		 WebDriverWait waitstudent = new WebDriverWait(student, 1);
-		waitstudent.until(ExpectedConditions.presenceOfElementLocated(
+
+		student.getWaiter().until(ExpectedConditions.presenceOfElementLocated(
 				By.cssSelector(("ul.collection li.collection-item:first-child div.course-title"))));
-		student.findElement(By.cssSelector("ul.collection li.collection-item:first-child div.course-title"))
+		student.getDriver().findElement(By.cssSelector("ul.collection li.collection-item:first-child div.course-title"))
 				.click();
 
-		waitstudent.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(("#md-tab-label-0-1"))));
-		student.findElement(By.cssSelector("#md-tab-label-0-1")).click();
+		student.getWaiter().until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(("#md-tab-label-0-1"))));
+		student.getDriver().findElement(By.cssSelector("#md-tab-label-0-1")).click();
 
 		waitSeconds(1);
 
-		student.findElement(By.cssSelector("ul div:first-child li.session-data div.session-ready")).click();
+		student.getDriver().findElement(By.cssSelector("ul div:first-child li.session-data div.session-ready")).click();
 
 		waitSeconds(1);
 
-		student.findElement(By.cssSelector("#fixed-icon")).click();
+		student.getDriver().findElement(By.cssSelector("#fixed-icon")).click();
 
-		checkSystemMessage(studentName + " has connected", teacher);
+		checkSystemMessage(studentName + " has connected", user);
 		checkSystemMessage(teacherName + " has connected", student);
 
 		// Test chat
@@ -182,77 +145,77 @@ public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
 		String teacherMessage = "TEACHER CHAT MESSAGE";
 		String studentMessage = "STUDENT CHAT MESSAGE";
 
-		WebElement chatInputTeacher = teacher.findElement(By.id("message"));
+		WebElement chatInputTeacher = user.getDriver().findElement(By.id("message"));
 		chatInputTeacher.sendKeys(teacherMessage);
-		wait.until(ExpectedConditions.elementToBeClickable(By.id("send-btn")));
-		teacher.findElement(By.id("send-btn")).click();
+		user.getWaiter().until(ExpectedConditions.elementToBeClickable(By.id("send-btn")));
+		user.getDriver().findElement(By.id("send-btn")).click();
 
 		waitSeconds(1);
 
-		checkOwnMessage(teacherMessage, teacherName, teacher);
+		checkOwnMessage(teacherMessage, teacherName, user);
 		checkStrangerMessage(teacherMessage, teacherName, student);
 
-		WebElement chatInputStudent = student.findElement(By.id("message"));
+		WebElement chatInputStudent = student.getDriver().findElement(By.id("message"));
 		chatInputStudent.sendKeys(studentMessage);
-		waitstudent.until(ExpectedConditions.elementToBeClickable(By.id("send-btn")));
-		student.findElement(By.id("send-btn")).click();
+		student.getWaiter().until(ExpectedConditions.elementToBeClickable(By.id("send-btn")));
+		student.getDriver().findElement(By.id("send-btn")).click();
 
 		waitSeconds(1);
 
-		checkStrangerMessage(studentMessage, studentName, teacher);
+		checkStrangerMessage(studentMessage, studentName, user);
 		checkOwnMessage(studentMessage, studentName, student);
 
 		waitSeconds(2);
 
 		// Logout student
 		this.logout(student);
-	//	student.dispose();
+		student.dispose();
 
-		checkSystemMessage(studentName + " has disconnected", teacher);
+		checkSystemMessage(studentName + " has disconnected", user);
 
 	}
 
-	private void checkOwnMessage(String message, String sender, ChromeDriver user) {
-	//	log.info("Checking own message (\"{}\") for {}", message, user.getClientData());
-		 WebDriverWait wait = new WebDriverWait(user, 1);
-		wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("app-chat-line"), 0));
+	private void checkOwnMessage(String message, String sender, BrowserUser user) {
+		log.info("Checking own message (\"{}\") for {}", message, user.getClientData());
+		
+		user.getWaiter().until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("app-chat-line"), 0));
 
-		List<WebElement> messages = user.findElements(By.tagName("app-chat-line"));
+		List<WebElement> messages = user.getDriver().findElements(By.tagName("app-chat-line"));
 		WebElement lastMessage = messages.get(messages.size() - 1);
 
 		WebElement msgUser = lastMessage.findElement(By.cssSelector(".own-msg .message-header .user-name"));
 		WebElement msgContent = lastMessage.findElement(By.cssSelector(".own-msg .message-content .user-message"));
 
-		wait.until(ExpectedConditions.textToBePresentInElement(msgUser, sender));
-		wait.until(ExpectedConditions.textToBePresentInElement(msgContent, message));
+		user.getWaiter().until(ExpectedConditions.textToBePresentInElement(msgUser, sender));
+		user.getWaiter().until(ExpectedConditions.textToBePresentInElement(msgContent, message));
 	}
 
-	private void checkStrangerMessage(String message, String sender, ChromeDriver user) {
-		//log.info("Checking another user's message (\"{}\") for {}", message, user.getClientData());
-		 WebDriverWait wait = new WebDriverWait(user, 1);
-		wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("app-chat-line"), 0));
+	private void checkStrangerMessage(String message, String sender, BrowserUser user) {
+		log.info("Checking another user's message (\"{}\") for {}", message, user.getClientData());
+		
+		user.getWaiter().until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("app-chat-line"), 0));
 
-		List<WebElement> messages = user.findElements(By.tagName("app-chat-line"));
+		List<WebElement> messages = user.getDriver().findElements(By.tagName("app-chat-line"));
 		WebElement lastMessage = messages.get(messages.size() - 1);
 
 		WebElement msgUser = lastMessage.findElement(By.cssSelector(".stranger-msg .message-header .user-name"));
 		WebElement msgContent = lastMessage.findElement(By.cssSelector(".stranger-msg .message-content .user-message"));
 
-		wait.until(ExpectedConditions.textToBePresentInElement(msgUser, sender));
-		wait.until(ExpectedConditions.textToBePresentInElement(msgContent, message));
+		user.getWaiter().until(ExpectedConditions.textToBePresentInElement(msgUser, sender));
+		user.getWaiter().until(ExpectedConditions.textToBePresentInElement(msgContent, message));
 	}
 
-	private void checkSystemMessage(String message, ChromeDriver user) {
-		//log.info("Checking system message (\"{}\") for {}", message, user.getClientData());
-		 WebDriverWait wait = new WebDriverWait(user, 1);
-		wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("app-chat-line"), 0));
+	private void checkSystemMessage(String message, BrowserUser user) {
+		log.info("Checking system message (\"{}\") for {}", message, user.getClientData());
+		
+		user.getWaiter().until(ExpectedConditions.numberOfElementsToBeMoreThan(By.tagName("app-chat-line"), 0));
 
-		List<WebElement> messages = user.findElements(By.tagName("app-chat-line"));
+		List<WebElement> messages = user.getDriver().findElements(By.tagName("app-chat-line"));
 		WebElement lastMessage = messages.get(messages.size() - 1);
 
 		WebElement msgContent = lastMessage.findElement(By.cssSelector(".system-msg"));
 
-		wait.until(ExpectedConditions.textToBePresentInElement(msgContent, message));
+		user.getWaiter().until(ExpectedConditions.textToBePresentInElement(msgContent, message));
 	}
 
 }

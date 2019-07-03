@@ -10,8 +10,17 @@ import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.Click;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
-import io.github.bonigarcia.seljup.DockerBrowser;
-import io.github.bonigarcia.seljup.SeleniumExtension;
+import static com.fullteaching.e2e.no_elastest.common.Constants.*;
+
+
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.slf4j.LoggerFactory.getLogger;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,29 +30,35 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Stream;
+import io.github.bonigarcia.SeleniumExtension;
 
-import static com.fullteaching.e2e.no_elastest.common.Constants.*;
-import static io.github.bonigarcia.seljup.BrowserType.CHROME;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+
 
 @ExtendWith(SeleniumExtension.class)
 public class CourseStudentTest extends BaseLoggedTest {
 	
 	public String roles;
+    protected static String APP_URL;
+
+    protected static final String CHROME = "chrome";
+    protected static final String FIREFOX = "firefox";
+    static Class<? extends WebDriver> chrome = ChromeDriver.class;
+    static Class<? extends WebDriver> firefox = FirefoxDriver.class;
+    WebDriver driver;
+
 	
+	
+
+    final static Logger log = getLogger(lookup().lookupClass());
 
     public static Stream<Arguments> data() throws IOException {
         return ParameterLoader.getTestStudents();
     }
     
+
     /**
      * This tests get the login the user as student, go the the courses  and check if 
      * there is any course in the list.After it, click in the first course of the list 
@@ -52,21 +67,14 @@ public class CourseStudentTest extends BaseLoggedTest {
      */ 
     @ParameterizedTest
 	@MethodSource("data")
-    public void studentCourseMainTest(String user, String password, String role, WebDriver rwd)throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
-    	/*boolean chrome=true;
-    	if(chrome) {
-    	System.setProperty("webdriver.chrome.driver",
-    	           "C:/chromedriver_win32/chromedriver.exe");
-		driver = new ChromeDriver();}
-    	else {
-    		System.setProperty("webdriver.gecko.driver",
-     	           "C:/chromedriver_win32/geckodriver.exe");
- 		driver = new FirefoxDriver();
-    		
-    		
-    	}
-    	driver.manage().window().maximize();*/
-		driver = loginAndValidate(driver,  user, password);
+    public void studentCourseMainTest(String usermail, String password, String role)throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    
+ 
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
+    	
+		this.slowLogin(user, usermail, password);
+
 
     	try {
     		if(!NavigationUtilities.amIHere(driver,COURSES_URL.replace("__HOST__", host)))

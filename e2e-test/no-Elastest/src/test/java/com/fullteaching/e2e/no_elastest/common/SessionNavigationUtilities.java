@@ -5,7 +5,6 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

@@ -7,29 +7,45 @@ import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundExceptio
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
-import io.github.bonigarcia.seljup.DockerBrowser;
-import io.github.bonigarcia.seljup.SeleniumExtension;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import java.io.IOException;
+import java.util.stream.Stream;
+
+
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import io.github.bonigarcia.SeleniumExtension;
 
-import java.io.IOException;
-import java.util.stream.Stream;
 
-import static io.github.bonigarcia.seljup.BrowserType.CHROME;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
+
 
 @ExtendWith(SeleniumExtension.class)
 public class UserTest extends BaseLoggedTest {
 
+	
+	public static final String CHROME = "chrome";
+	public static final String FIREFOX = "firefox";
 
+	WebDriver driver;
+	
+    static Class<? extends WebDriver> chrome = ChromeDriver.class;
+    static Class<? extends WebDriver> firefox = FirefoxDriver.class;
+	
+
+	
 
 	public static Stream<Arguments> data() throws IOException {
         return ParameterLoader.getTestUsers();
     }
+	
+
 	
     /**
      * This test is a simple logging ackenoledgment, that checks if the current logged user
@@ -37,14 +53,14 @@ public class UserTest extends BaseLoggedTest {
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
-	public void loginTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+	public void loginTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-	//	driver = rwd;
-
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 		try {
-			driver = UserUtilities.login(driver, user, password, host);
+			this.slowLogin(user, usermail, password);
 		
-			driver = UserUtilities.checkLogin(driver, user);
+			driver = UserUtilities.checkLogin(driver, usermail);
 
 			assertTrue(true, "not logged");
 
@@ -58,8 +74,6 @@ public class UserTest extends BaseLoggedTest {
 			e.printStackTrace();
 			fail(e.getLocalizedMessage());
 			
-		}  catch (TimeOutExeception e) {
-			fail(e.getLocalizedMessage());
 		} 
 		
 		try {

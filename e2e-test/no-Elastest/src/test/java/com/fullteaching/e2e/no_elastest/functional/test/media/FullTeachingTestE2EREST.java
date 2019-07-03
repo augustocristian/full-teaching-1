@@ -22,6 +22,7 @@ import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -29,21 +30,22 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-//import io.github.bonigarcia.SeleniumExtension;
+import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
+import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 
+import io.github.bonigarcia.SeleniumExtension;
 /**
  * E2E tests for FullTeaching REST CRUD operations.
  *
  * @author Pablo Fuente (pablo.fuente@urjc.es)
  */
+@Disabled
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching REST CRUD operations")
-//@ExtendWith(SeleniumExtension.class)
-public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
+@ExtendWith(SeleniumExtension.class)
+public class FullTeachingTestE2EREST extends BaseLoggedTest {
 
 	private static String BROWSER;
 
@@ -59,7 +61,7 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 
 	static Exception ex = null;
 
-	ChromeDriver user;
+	BrowserUser userbrowser;
 
 	public FullTeachingTestE2EREST() {
 		super();
@@ -69,8 +71,6 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 
 	@BeforeAll()
 	static void setupAll() {
-		System.setProperty("webdriver.chrome.driver",
-	 	           "C:/chromedriver_win32/chromedriver.exe");
 		BROWSER = System.getenv("BROWSER");
 
 		if ((BROWSER == null) || (!BROWSER.equals(FIREFOX))) {
@@ -93,8 +93,8 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 	void dispose(TestInfo info) {
 		try {
 			this.deleteCourseIfExist();
-			this.logout(user);
-			//user.dispose();
+			this.logout(userbrowser);
+			userbrowser.dispose();
 		} finally {
 			log.info("##### Finish test: " + info.getTestMethod().get().getName());
 		}
@@ -111,40 +111,42 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 
 		COURSE_NAME = COURSE_NAME + EDITED;
 
-		List<WebElement> l = user.findElements(By.className("course-put-icon"));
-		openDialog(l.get(l.size() - 1), user);
-		 WebDriverWait wait = new WebDriverWait(user, 3);
-		wait.until(ExpectedConditions.elementToBeClickable(By.id(("input-put-course-name")))
-			);
-		user.findElement(By.id("input-put-course-name")).clear();
-		user.findElement(By.id("input-put-course-name")).sendKeys(COURSE_NAME);
-		user.findElement(By.id("submit-put-course-btn")).click();
+		List<WebElement> l = userbrowser.getDriver().findElements(By.className("course-put-icon"));
+		openDialog(l.get(l.size() - 1), userbrowser);
 
-		waitForDialogClosed("course-modal", "Edition of course failed", user);
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("input-put-course-name"))),
+				"Input for course name not clickable");
+		userbrowser.getDriver().findElement(By.id("input-put-course-name")).clear();
+		userbrowser.getDriver().findElement(By.id("input-put-course-name")).sendKeys(COURSE_NAME);
+		userbrowser.getDriver().findElement(By.id("submit-put-course-btn")).click();
 
-		wait.until(
+		waitForDialogClosed("course-modal", "Edition of course failed", userbrowser);
+
+		userbrowser.waitUntil(
 				ExpectedConditions.textToBe(
-						By.cssSelector("#course-list .course-list-item:last-child div.course-title span"), COURSE_NAME));
+						By.cssSelector("#course-list .course-list-item:last-child div.course-title span"), COURSE_NAME),
+				"Unexpected course name");
 
 	}
 
 	@Test
 	void courseInfoRestOperations() throws Exception {
-		WebDriverWait wait = new WebDriverWait(user, 1);
+
 		// Empty course info
 		enterCourseAndNavigateTab(COURSE_NAME, "info-tab-icon");
-		wait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(By.cssSelector(".md-tab-body.md-tab-active"),
-				By.cssSelector(".card-panel.warning")));
-		
+		userbrowser.waitUntil(ExpectedConditions.presenceOfNestedElementLocatedBy(By.cssSelector(".md-tab-body.md-tab-active"),
+				By.cssSelector(".card-panel.warning")), "Course info wasn't empty");
+
 		log.info("Editing course information");
 
 		// Edit course info
-		user.findElement(By.id("edit-course-info")).click();
-		user.findElement(By.className("ql-editor")).sendKeys(TEST_COURSE_INFO);
-		user.findElement(By.id("send-info-btn")).click();
+		userbrowser.getDriver().findElement(By.id("edit-course-info")).click();
+		userbrowser.getDriver().findElement(By.className("ql-editor")).sendKeys(TEST_COURSE_INFO);
+		userbrowser.getDriver().findElement(By.id("send-info-btn")).click();
 		waitForAnimations();
 
-		wait.until(ExpectedConditions.textToBe(By.cssSelector(".ql-editor p"), TEST_COURSE_INFO));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector(".ql-editor p"), TEST_COURSE_INFO),
+				"Unexpected course info");
 
 		log.info("Course information succesfully updated");
 
@@ -156,17 +158,16 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 		// Add new session
 
 		enterCourseAndNavigateTab(COURSE_NAME, "sessions-tab-icon");
-		WebDriverWait wait = new WebDriverWait(user, 3);
-		
+
 		log.info("Adding new session");
 
-		openDialog("#add-session-icon", user);
+		openDialog("#add-session-icon", userbrowser);
 
 		// Find form elements
-		WebElement titleField = user.findElement(By.id("input-post-title"));
-		WebElement commentField = user.findElement(By.id("input-post-comment"));
-		WebElement dateField = user.findElement(By.id("input-post-date"));
-		WebElement timeField = user.findElement(By.id("input-post-time"));
+		WebElement titleField = userbrowser.getDriver().findElement(By.id("input-post-title"));
+		WebElement commentField = userbrowser.getDriver().findElement(By.id("input-post-comment"));
+		WebElement dateField = userbrowser.getDriver().findElement(By.id("input-post-date"));
+		WebElement timeField = userbrowser.getDriver().findElement(By.id("input-post-time"));
 
 		String title = "TEST LESSON NAME";
 		String comment = "TEST LESSON COMMENT";
@@ -183,30 +184,32 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 			timeField.sendKeys("15:10");
 		}
 
-		user.findElement(By.id("post-modal-btn")).click();
+		userbrowser.getDriver().findElement(By.id("post-modal-btn")).click();
 
-		waitForDialogClosed("course-details-modal", "Addition of session failed", user);
+		waitForDialogClosed("course-details-modal", "Addition of session failed", userbrowser);
 
 		// Check fields of added session
 
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-title"), title));
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-description"), comment));
-		wait.until(
-				ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-datetime"), "Mar 1, 2018 - 15:10")
-				);
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-title"), title),
+				"Unexpected session title");
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-description"), comment),
+				"Unexpected session description");
+		userbrowser.waitUntil(
+				ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-datetime"), "Mar 1, 2018 - 15:10"),
+				"Unexpected session date-time");
 
 		log.info("New session successfully added");
 
 		// Edit session
 		log.info("Editing session");
 
-		openDialog(".edit-session-icon", user);
+		openDialog(".edit-session-icon", userbrowser);
 
 		// Find form elements
-		titleField = user.findElement(By.id("input-put-title"));
-		commentField = user.findElement(By.id("input-put-comment"));
-		dateField = user.findElement(By.id("input-put-date"));
-		timeField = user.findElement(By.id("input-put-time"));
+		titleField = userbrowser.getDriver().findElement(By.id("input-put-title"));
+		commentField = userbrowser.getDriver().findElement(By.id("input-put-comment"));
+		dateField = userbrowser.getDriver().findElement(By.id("input-put-date"));
+		timeField = userbrowser.getDriver().findElement(By.id("input-put-time"));
 
 		// Clear elements
 		titleField.clear();
@@ -224,34 +227,38 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 			timeField.sendKeys("05:10");
 		}
 
-		user.findElement(By.id("put-modal-btn")).click();
+		userbrowser.getDriver().findElement(By.id("put-modal-btn")).click();
 
-		waitForDialogClosed("put-delete-modal", "Edition of session failed", user);
+		waitForDialogClosed("put-delete-modal", "Edition of session failed", userbrowser);
 
 		// Check fields of edited session
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-title"), title + EDITED)
-				);
-		wait.until(
-				ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-description"), comment + EDITED));
-		wait.until(
-				ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-datetime"), "Apr 2, 2019 - 05:10"));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-title"), title + EDITED),
+				"Unexpected session title");
+		userbrowser.waitUntil(
+				ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-description"), comment + EDITED),
+				"Unexpected session description");
+		userbrowser.waitUntil(
+				ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-datetime"), "Apr 2, 2019 - 05:10"),
+				"Unexpected session date-time");
 
 		log.info("Session succesfully edited");
 
 		// Delete session
 		log.info("Deleting session");
 
-		openDialog(".edit-session-icon", user);
+		openDialog(".edit-session-icon", userbrowser);
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.id(("label-delete-checkbox")))
-				);
-		user.findElement(By.id("label-delete-checkbox")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id(("delete-session-btn"))));
-		user.findElement(By.id("delete-session-btn")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("label-delete-checkbox"))),
+				"Checkbox for session deletion not clickable");
+		userbrowser.getDriver().findElement(By.id("label-delete-checkbox")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("delete-session-btn"))),
+				"Button for session deletion not clickable");
+		userbrowser.getDriver().findElement(By.id("delete-session-btn")).click();
 
-		waitForDialogClosed("put-delete-modal", "Deletion of session failed", user);
+		waitForDialogClosed("put-delete-modal", "Deletion of session failed", userbrowser);
 
-		wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("li.session-data"), 0));
+		userbrowser.waitUntil(ExpectedConditions.numberOfElementsToBe(By.cssSelector("li.session-data"), 0),
+				"Unexpected number of sessions");
 
 		log.info("Session successfully deleted");
 
@@ -266,11 +273,11 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 
 		log.info("Adding new entry to the forum");
 
-		openDialog("#add-entry-icon", user);
-		WebDriverWait wait = new WebDriverWait(user, 1);
+		openDialog("#add-entry-icon", userbrowser);
+
 		// Find form elements
-		WebElement titleField = user.findElement(By.id("input-post-title"));
-		WebElement commentField = user.findElement(By.id("input-post-comment"));
+		WebElement titleField = userbrowser.getDriver().findElement(By.id("input-post-title"));
+		WebElement commentField = userbrowser.getDriver().findElement(By.id("input-post-comment"));
 
 		String title = "TEST FORUM ENTRY";
 		String comment = "TEST FORUM COMMENT";
@@ -280,17 +287,19 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 		titleField.sendKeys(title);
 		commentField.sendKeys(comment);
 
-		user.findElement(By.id("post-modal-btn")).click();
+		userbrowser.getDriver().findElement(By.id("post-modal-btn")).click();
 
-		waitForDialogClosed("course-details-modal", "Addition of entry failed", user);
+		waitForDialogClosed("course-details-modal", "Addition of entry failed", userbrowser);
 
 		// Check fields of new entry
-		WebElement entryEl = user.findElement(By.cssSelector("li.entry-title"));
+		WebElement entryEl = userbrowser.getDriver().findElement(By.cssSelector("li.entry-title"));
 
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("li.entry-title .forum-entry-title"), title));
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("li.entry-title .forum-entry-author"), TEACHER_NAME)
-				);
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("li.entry-title .forum-entry-date"), entryDate));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("li.entry-title .forum-entry-title"), title),
+				"Unexpected entry title in the forum");
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("li.entry-title .forum-entry-author"), TEACHER_NAME),
+				"Unexpected entry author in the forum");
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("li.entry-title .forum-entry-date"), entryDate),
+				"Unexpected entry date in the forum");
 
 		log.info("New entry successfully added to the forum");
 
@@ -298,51 +307,54 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 
 		entryEl.click();
 
-		wait.until(ExpectedConditions.textToBe(
+		userbrowser.waitUntil(ExpectedConditions.textToBe(
 				By.cssSelector(".comment-block > app-comment:first-child > div.comment-div .message-itself"),
-				comment));
-		wait.until(ExpectedConditions.textToBe(
+				comment), "Unexpected entry title in the entry details view");
+		userbrowser.waitUntil(ExpectedConditions.textToBe(
 				By.cssSelector(".comment-block > app-comment:first-child > div.comment-div .forum-comment-author"),
-				TEACHER_NAME));
+				TEACHER_NAME), "Unexpected entry author in the entry details view");
 
 		// Comment reply
 
 		log.info("Adding new replay to the entry's only comment");
 
 		String reply = "TEST FORUM REPLY";
-		openDialog(".replay-icon", user);
-		commentField = user.findElement(By.id("input-post-comment"));
+		openDialog(".replay-icon", userbrowser);
+		commentField = userbrowser.getDriver().findElement(By.id("input-post-comment"));
 		commentField.sendKeys(reply);
 
-		user.findElement(By.id("post-modal-btn")).click();
+		userbrowser.getDriver().findElement(By.id("post-modal-btn")).click();
 
-		waitForDialogClosed("course-details-modal", "Addition of entry reply failed", user);
+		waitForDialogClosed("course-details-modal", "Addition of entry reply failed", userbrowser);
 
-		wait.until(ExpectedConditions.textToBe(By.cssSelector(
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector(
 				".comment-block > app-comment:first-child > div.comment-div div.comment-div .message-itself"),
-				reply));
-		wait.until(ExpectedConditions.textToBe(By.cssSelector(
+				reply), "Unexpected reply message in the entry details view");
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector(
 				".comment-block > app-comment:first-child > div.comment-div div.comment-div .forum-comment-author"),
-				TEACHER_NAME));
+				TEACHER_NAME), "Unexpected reply author in the entry details view");
 
 		log.info("Replay sucessfully added");
 
 		// Forum deactivation
 
-		user.findElement(By.id("entries-sml-btn")).click();
+		userbrowser.getDriver().findElement(By.id("entries-sml-btn")).click();
 
 		log.info("Deactivating forum");
 
-		openDialog("#edit-forum-icon", user);
+		openDialog("#edit-forum-icon", userbrowser);
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.id(("label-forum-checkbox"))));
-		user.findElement(By.id("label-forum-checkbox")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id(("put-modal-btn"))));
-		user.findElement(By.id("put-modal-btn")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("label-forum-checkbox"))),
+				"Checkbox for forum deactivation not clickable");
+		userbrowser.getDriver().findElement(By.id("label-forum-checkbox")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("put-modal-btn"))),
+				"Button for forum deactivation not clickable");
+		userbrowser.getDriver().findElement(By.id("put-modal-btn")).click();
 
-		waitForDialogClosed("put-delete-modal", "Deactivation of forum failed", user);
+		waitForDialogClosed("put-delete-modal", "Deactivation of forum failed", userbrowser);
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.warning")));
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.warning")),
+				"Warning card (forum deactivated) missing");
 
 		log.info("Forum successfully deactivated");
 
@@ -350,50 +362,52 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 
 	@Test
 	void filesRestOperations() throws Exception {
-		WebDriverWait wait = new WebDriverWait(user, 1);
+
 		enterCourseAndNavigateTab(COURSE_NAME, "files-tab-icon");
 
 		log.info("Checking that there are no files in the course");
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.warning")));
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.warning")),
+				"Warning card (course with no files) missing");
 
 		log.info("Adding new file group");
 
-		openDialog("#add-files-icon", user);
+		openDialog("#add-files-icon", userbrowser);
 
 		String fileGroup = "TEST FILE GROUP";
 
 		// Find form elements
-		WebElement titleField = user.findElement(By.id("input-post-title"));
+		WebElement titleField = userbrowser.getDriver().findElement(By.id("input-post-title"));
 		titleField.sendKeys(fileGroup);
 
-		user.findElement(By.id("post-modal-btn")).click();
+		userbrowser.getDriver().findElement(By.id("post-modal-btn")).click();
 
-		waitForDialogClosed("course-details-modal", "Addition of file group failed", user);
+		waitForDialogClosed("course-details-modal", "Addition of file group failed", userbrowser);
 
 		// Check fields of new file group
-		wait.until(ExpectedConditions.textToBe(By.cssSelector(".file-group-title h5"), fileGroup));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector(".file-group-title h5"), fileGroup),
+				"Unexpected file group name");
 
 		log.info("File group successfully added");
 
 		// Edit file group
 		log.info("Editing file group");
 
-		openDialog("#edit-filegroup-icon", user);
+		openDialog("#edit-filegroup-icon", userbrowser);
 
 		// Find form elements
-		titleField = user.findElement(By.id("input-file-title"));
+		titleField = userbrowser.getDriver().findElement(By.id("input-file-title"));
 		titleField.clear();
 		titleField.sendKeys(fileGroup + EDITED);
 
-		user.findElement(By.id("put-modal-btn")).click();
+		userbrowser.getDriver().findElement(By.id("put-modal-btn")).click();
 
-		waitForDialogClosed("put-delete-modal", "Edition of file group failed", user);
+		waitForDialogClosed("put-delete-modal", "Edition of file group failed", userbrowser);
 
 		// Check fields of edited file group
-		wait.until(
-				ExpectedConditions.textToBe(By.cssSelector("app-file-group .file-group-title h5"), fileGroup + EDITED)
-				);
+		userbrowser.waitUntil(
+				ExpectedConditions.textToBe(By.cssSelector("app-file-group .file-group-title h5"), fileGroup + EDITED),
+				"Unexpected file group name");
 
 		log.info("File group successfully edited");
 
@@ -401,84 +415,87 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 		log.info("Adding new file sub-group");
 
 		String fileSubGroup = "TEST FILE SUBGROUP";
-		openDialog(".add-subgroup-btn", user);
-		titleField = user.findElement(By.id("input-post-title"));
+		openDialog(".add-subgroup-btn", userbrowser);
+		titleField = userbrowser.getDriver().findElement(By.id("input-post-title"));
 		titleField.sendKeys(fileSubGroup);
 
-		user.findElement(By.id("post-modal-btn")).click();
+		userbrowser.getDriver().findElement(By.id("post-modal-btn")).click();
 
-		waitForDialogClosed("course-details-modal", "Addition of file sub-group failed", user);
+		waitForDialogClosed("course-details-modal", "Addition of file sub-group failed", userbrowser);
 
 		// Check fields of new file subgroup
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("app-file-group app-file-group .file-group-title h5"),
-				fileSubGroup));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("app-file-group app-file-group .file-group-title h5"),
+				fileSubGroup), "Unexpected file sub-group name");
 
 		log.info("File sub-group successfully added");
 
 		log.info("Adding new file to sub-group");
 
-		openDialog("app-file-group app-file-group .add-file-btn", user);
+		openDialog("app-file-group app-file-group .add-file-btn", userbrowser);
 
-		WebElement fileUploader = user.findElement(By.className("input-file-uploader"));
+		WebElement fileUploader = userbrowser.getDriver().findElement(By.className("input-file-uploader"));
 
 		String fileName = "testFile.txt";
 
 		log.info("Uploading file located on path '{}'",
 				System.getProperty("user.dir") + "/src/test/resources/" + fileName);
-//TO-DO
-//		user.runJavascript("arguments[0].setAttribute('style', 'display:block')", fileUploader);
-		user.executeScript("arguments[0].setAttribute('style', 'display:block')", fileUploader);
-		wait.until(
+
+		userbrowser.runJavascript("arguments[0].setAttribute('style', 'display:block')", fileUploader);
+		userbrowser.waitUntil(
 				ExpectedConditions.presenceOfElementLocated(By.xpath(
-						"//input[contains(@class, 'input-file-uploader') and contains(@style, 'display:block')]")));
+						"//input[contains(@class, 'input-file-uploader') and contains(@style, 'display:block')]")),
+				"Waiting for the input file to be displayed");
 
 		fileUploader.sendKeys(System.getProperty("user.dir") + "/src/test/resources/" + fileName);
 
-		user.findElement(By.id("upload-all-btn")).click();
+		userbrowser.getDriver().findElement(By.id("upload-all-btn")).click();
 
 		// Wait for upload
-		wait.until(
+		userbrowser.waitUntil(
 				ExpectedConditions.presenceOfElementLocated(
-						By.xpath("//div[contains(@class, 'determinate') and contains(@style, 'width: 100')]")));
+						By.xpath("//div[contains(@class, 'determinate') and contains(@style, 'width: 100')]")),
+				"Upload process not completed. Progress bar not filled");
 
-		wait.until(ExpectedConditions.textToBe(By.xpath("//i[contains(@class, 'icon-status-upload')]"), "done"));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.xpath("//i[contains(@class, 'icon-status-upload')]"), "done"),
+				"Upload process failed");
 
 		log.info("File upload successful");
 
 		// Close dialog
-		user.findElement(By.id("close-upload-modal-btn")).click();
-		waitForDialogClosed("course-details-modal", "Upload of file failed", user);
+		userbrowser.getDriver().findElement(By.id("close-upload-modal-btn")).click();
+		waitForDialogClosed("course-details-modal", "Upload of file failed", userbrowser);
 
 		// Check new uploaded file
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("app-file-group app-file-group .chip .file-name-div"),
-				fileName));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("app-file-group app-file-group .chip .file-name-div"),
+				fileName), "Unexpected uploaded file name");
 
 		log.info("File succesfully added");
 
 		// Edit file
 		log.info("Editing file");
 
-		openDialog("app-file-group app-file-group .edit-file-name-icon", user);
-		titleField = user.findElement(By.id("input-file-title"));
+		openDialog("app-file-group app-file-group .edit-file-name-icon", userbrowser);
+		titleField = userbrowser.getDriver().findElement(By.id("input-file-title"));
 		titleField.clear();
 
 		String editedFileName = "testFileEDITED.txt";
 
 		titleField.sendKeys(editedFileName);
-		user.findElement(By.id("put-modal-btn")).click();
-		waitForDialogClosed("put-delete-modal", "Edition of file failed", user);
+		userbrowser.getDriver().findElement(By.id("put-modal-btn")).click();
+		waitForDialogClosed("put-delete-modal", "Edition of file failed", userbrowser);
 
 		// Check edited file name
-		wait.until(ExpectedConditions.textToBe(By.cssSelector("app-file-group app-file-group .chip .file-name-div"),
-				editedFileName));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("app-file-group app-file-group .chip .file-name-div"),
+				editedFileName), "Unexpected uploaded file name");
 
 		log.info("File successfully edited");
 
 		// Delete file group
 		log.info("Deleting file-group");
 
-		user.findElement(By.cssSelector("app-file-group .delete-filegroup-icon")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.warning")));
+		userbrowser.getDriver().findElement(By.cssSelector("app-file-group .delete-filegroup-icon")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.warning")),
+				"Warning card (course with no files) missing");
 
 		log.info("File group successfully deleted");
 
@@ -486,64 +503,72 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 
 	@Test
 	void attendersRestOperations() throws Exception {
-		WebDriverWait wait = new WebDriverWait(user, 1);
+
 		enterCourseAndNavigateTab(COURSE_NAME, "attenders-tab-icon");
 
 		log.info("Checking that there is only one attender to the course");
 
-		wait.until(ExpectedConditions.numberOfElementsToBe(By.className("attender-row-div"), 1));
+		userbrowser.waitUntil(ExpectedConditions.numberOfElementsToBe(By.className("attender-row-div"), 1),
+				"Unexpected number of attenders for the course");
 
-		wait.until(ExpectedConditions.textToBe(By.cssSelector(".attender-row-div .attender-name-p"), TEACHER_NAME));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector(".attender-row-div .attender-name-p"), TEACHER_NAME),
+				"Unexpected name for the attender");
 
 		// Add attender fail
 		log.info("Adding attender (should FAIL)");
 
-		openDialog("#add-attenders-icon", user);
+		openDialog("#add-attenders-icon", userbrowser);
 
 		String attenderName = "studentFail@gmail.com";
 
-		WebElement titleField = user.findElement(By.id("input-attender-simple"));
+		WebElement titleField = userbrowser.getDriver().findElement(By.id("input-attender-simple"));
 		titleField.sendKeys(attenderName);
 
-		user.findElement(By.id("put-modal-btn")).click();
-		waitForDialogClosed("put-delete-modal", "Addition of attender fail", user);
+		userbrowser.getDriver().findElement(By.id("put-modal-btn")).click();
+		waitForDialogClosed("put-delete-modal", "Addition of attender fail", userbrowser);
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.fail")));
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.fail")),
+				"Error card (attender not added to the course) missing");
 
-		wait.until(ExpectedConditions.numberOfElementsToBe(By.className("attender-row-div"), 1));
+		userbrowser.waitUntil(ExpectedConditions.numberOfElementsToBe(By.className("attender-row-div"), 1),
+				"Unexpected number of attenders for the course");
 
-		user.findElement(By.cssSelector("app-error-message .card-panel.fail .material-icons")).click();
+		userbrowser.getDriver().findElement(By.cssSelector("app-error-message .card-panel.fail .material-icons")).click();
 
 		log.info("Attender addition successfully failed");
 
 		// Add attender success
 		log.info("Adding attender (should SUCCESS)");
 
-		openDialog("#add-attenders-icon", user);
+		openDialog("#add-attenders-icon", userbrowser);
 
 		attenderName = "student1@gmail.com";
 
-		titleField = user.findElement(By.id("input-attender-simple"));
+		titleField = userbrowser.getDriver().findElement(By.id("input-attender-simple"));
 		titleField.sendKeys(attenderName);
 
-		user.findElement(By.id("put-modal-btn")).click();
-		waitForDialogClosed("put-delete-modal", "Addition of attender failed", user);
+		userbrowser.getDriver().findElement(By.id("put-modal-btn")).click();
+		waitForDialogClosed("put-delete-modal", "Addition of attender failed", userbrowser);
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.correct")));
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.cssSelector("app-error-message .card-panel.correct")),
+				"Success card (attender properly added to the course) missing");
 
-		wait.until(ExpectedConditions.numberOfElementsToBe(By.className("attender-row-div"), 2));
+		userbrowser.waitUntil(ExpectedConditions.numberOfElementsToBe(By.className("attender-row-div"), 2),
+				"Unexpected number of attenders for the course");
 
-		user.findElement(By.cssSelector("app-error-message .card-panel.correct .material-icons")).click();
+		userbrowser.getDriver().findElement(By.cssSelector("app-error-message .card-panel.correct .material-icons")).click();
 
 		log.info("Attender addition successfully finished");
 
 		// Remove attender
 		log.info("Removing attender");
 
-		user.findElement(By.id("edit-attenders-icon")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".del-attender-icon")));
-		user.findElement(By.cssSelector(".del-attender-icon")).click();
-		wait.until(ExpectedConditions.numberOfElementsToBe(By.className("attender-row-div"), 1));
+		userbrowser.getDriver().findElement(By.id("edit-attenders-icon")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.cssSelector(".del-attender-icon")),
+				"Button for attender deletion not clickable");
+		userbrowser.getDriver().findElement(By.cssSelector(".del-attender-icon")).click();
+		userbrowser.waitUntil(ExpectedConditions.numberOfElementsToBe(By.className("attender-row-div"), 1),
+				"Unexpected number of attenders for the course");
 
 		log.info("Attender successfully removed");
 
@@ -552,36 +577,36 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 	/*** Auxiliary methods ***/
 
 	private void loginTeacher(TestInfo info) {
-		this.user = setupBrowser(BROWSER, info, "TestUser", 15);
-		this.quickLogin(user, TEACHER_MAIL, TEACHER_PASS);
+		this.userbrowser = setupBrowser(BROWSER, info, "TestUser", 15);
+		this.quickLogin(userbrowser, TEACHER_MAIL, TEACHER_PASS);
 	}
 
 	private void addCourse(String courseName) {
-		WebDriverWait wait = new WebDriverWait(user, 1);
 		log.info("Adding test course");
 
-		int numberOfCourses = user.findElements(By.className("course-list-item")).size();
+		int numberOfCourses = userbrowser.getDriver().findElements(By.className("course-list-item")).size();
 
-		openDialog("#add-course-icon", user);
+		openDialog("#add-course-icon", userbrowser);
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.id(("input-post-course-name"))));
-		user.findElement(By.id("input-post-course-name")).sendKeys(courseName);
-		user.findElement(By.id("submit-post-course-btn")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("input-post-course-name"))),
+				"Input for course name not clickable");
+		userbrowser.getDriver().findElement(By.id("input-post-course-name")).sendKeys(courseName);
+		userbrowser.getDriver().findElement(By.id("submit-post-course-btn")).click();
 
-		waitForDialogClosed("course-modal", "Addition of course failed", user);
+		waitForDialogClosed("course-modal", "Addition of course failed", userbrowser);
 
-		wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("#course-list .course-list-item"),
-				numberOfCourses + 1));
-		wait.until(
+		userbrowser.waitUntil(ExpectedConditions.numberOfElementsToBe(By.cssSelector("#course-list .course-list-item"),
+				numberOfCourses + 1), "Unexpected number of courses");
+		userbrowser.waitUntil(
 				ExpectedConditions.textToBe(
-						By.cssSelector("#course-list .course-list-item:last-child div.course-title span"), courseName));
+						By.cssSelector("#course-list .course-list-item:last-child div.course-title span"), courseName),
+				"Unexpected name for the new course");
 	}
 
 	private void deleteCourse(String courseName) {
 		log.info("Deleting test course");
-		WebDriverWait wait = new WebDriverWait(user, 1);
 
-		List<WebElement> allCourses = user.findElements(By.className("course-list-item"));
+		List<WebElement> allCourses = userbrowser.getDriver().findElements(By.className("course-list-item"));
 		int numberOfCourses = allCourses.size();
 		WebElement course = null;
 		for (WebElement c : allCourses) {
@@ -593,27 +618,30 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 		}
 
 		WebElement editIcon = course.findElement(By.className("course-put-icon"));
-		openDialog(editIcon, user);
+		openDialog(editIcon, userbrowser);
 
-		wait.until(ExpectedConditions.elementToBeClickable(By.id(("label-delete-checkbox"))));
-		user.findElement(By.id("label-delete-checkbox")).click();
-		wait.until(ExpectedConditions.elementToBeClickable(By.id(("delete-course-btn"))));
-		user.findElement(By.id("delete-course-btn")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("label-delete-checkbox"))),
+				"Checkbox for course deletion not clickable");
+		userbrowser.getDriver().findElement(By.id("label-delete-checkbox")).click();
+		userbrowser.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("delete-course-btn"))),
+				"Button for course deletion not clickable");
+		userbrowser.getDriver().findElement(By.id("delete-course-btn")).click();
 
-		waitForDialogClosed("put-delete-course-modal", "Deletion of course failed", user);
+		waitForDialogClosed("put-delete-course-modal", "Deletion of course failed", userbrowser);
 
-		wait.until(ExpectedConditions.numberOfElementsToBe(By.cssSelector("#course-list .course-list-item"),
-				numberOfCourses - 1));
-		wait.until(
+		userbrowser.waitUntil(ExpectedConditions.numberOfElementsToBe(By.cssSelector("#course-list .course-list-item"),
+				numberOfCourses - 1), "Unexpected number of courses");
+		userbrowser.waitUntil(
 				ExpectedConditions.not(ExpectedConditions.textToBe(
-						By.cssSelector("#course-list .course-list-item:last-child div.course-title span"), courseName)));
+						By.cssSelector("#course-list .course-list-item:last-child div.course-title span"), courseName)),
+				"Unexpected name for the last of the courses");
 	}
 
 	private void enterCourseAndNavigateTab(String courseName, String tabId) {
 
 		log.info("Entering course {}", courseName);
-		WebDriverWait wait = new WebDriverWait(user, 1);
-		List<WebElement> allCourses = user
+
+		List<WebElement> allCourses = userbrowser.getDriver()
 				.findElements(By.cssSelector("#course-list .course-list-item div.course-title span"));
 		WebElement courseSpan = null;
 		for (WebElement c : allCourses) {
@@ -625,21 +653,20 @@ public class FullTeachingTestE2EREST extends FullTeachingTestE2E {
 
 		courseSpan.click();
 
-		wait.until(ExpectedConditions.textToBe(By.id("main-course-title"), courseName));
+		userbrowser.waitUntil(ExpectedConditions.textToBe(By.id("main-course-title"), courseName), "Unexpected course title");
 
 		log.info("Navigating to tab by clicking icon with id '{}'", tabId);
 
-		user.findElement(By.id(tabId)).click();
+		userbrowser.getDriver().findElement(By.id(tabId)).click();
 
 		waitForAnimations();
 	}
 
 	private void deleteCourseIfExist() {
-		WebDriverWait wait = new WebDriverWait(user, 1);
-		user.get(APP_URL);
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id(("course-list"))));
+		userbrowser.getDriver().get(APP_URL);
+		userbrowser.waitUntil(ExpectedConditions.presenceOfElementLocated(By.id(("course-list"))), "Course list not present");
 
-		List<WebElement> allCourses = user.findElements(By.className("course-list-item"));
+		List<WebElement> allCourses = userbrowser.getDriver().findElements(By.className("course-list-item"));
 		WebElement course = null;
 		for (WebElement c : allCourses) {
 			WebElement innerTitleSpan = c.findElement(By.cssSelector("div.course-title span"));
