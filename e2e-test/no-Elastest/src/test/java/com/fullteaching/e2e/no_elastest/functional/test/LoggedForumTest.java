@@ -17,7 +17,6 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
 
 import static java.lang.invoke.MethodHandles.lookup;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,30 +27,22 @@ import static org.slf4j.LoggerFactory.getLogger;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
-import com.fullteaching.e2e.no_elastest.common.ChromeUser;
-import com.fullteaching.e2e.no_elastest.common.FirefoxUser;
-
 import io.github.bonigarcia.SeleniumExtension;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;

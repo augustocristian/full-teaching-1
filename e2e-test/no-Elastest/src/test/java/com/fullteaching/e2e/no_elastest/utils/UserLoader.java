@@ -10,21 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
 
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import com.fullteaching.e2e.no_elastest.common.ChromeUser;
-import com.fullteaching.e2e.no_elastest.common.Constants;
 import com.fullteaching.e2e.no_elastest.common.FirefoxUser;
-
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import static org.slf4j.LoggerFactory.getLogger;
-
-import static io.github.bonigarcia.wdm.DriverManagerType.*;
 
 public class UserLoader {
 

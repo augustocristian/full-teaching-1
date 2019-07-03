@@ -23,14 +23,11 @@ import com.fullteaching.e2e.no_elastest.common.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -45,9 +42,6 @@ import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import com.fullteaching.e2e.no_elastest.utils.SetUp;
 import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
-
-//import io.github.bonigarcia.seljup.DriverCapabilities;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
 
 //@Disabled
 public class LoggedVideoSession{
