@@ -46,7 +46,7 @@ import com.fullteaching.e2e.no_elastest.utils.SetUp;
 import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 
-import io.github.bonigarcia.seljup.DriverCapabilities;
+//import io.github.bonigarcia.seljup.DriverCapabilities;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
 //@Disabled
@@ -90,7 +90,7 @@ public class LoggedVideoSession{
 	private String sessionDate;
 	private String sessionHour;
 	
-	@DriverCapabilities
+	//@DriverCapabilities
 	 DesiredCapabilities capabilities = chrome();
 	 {
 	        LoggingPreferences logPrefs = new LoggingPreferences();

@@ -5,7 +5,7 @@ import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundExceptio
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.SetUp;
-import io.github.bonigarcia.seljup.DriverCapabilities;
+//import io.github.bonigarcia.seljup.DriverCapabilities;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
@@ -51,7 +51,7 @@ public class BaseLoggedTest {
 
     protected Properties properties;
 
-    @DriverCapabilities
+    //@DriverCapabilities
     DesiredCapabilities capabilities = chrome();
 
     {

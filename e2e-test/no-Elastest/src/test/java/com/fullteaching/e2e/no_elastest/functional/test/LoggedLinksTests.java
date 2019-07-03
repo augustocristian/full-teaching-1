@@ -1,38 +1,66 @@
 package com.fullteaching.e2e.no_elastest.functional.test;
 
 import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
+import com.fullteaching.e2e.no_elastest.common.CourseNavigationUtilities;
+import com.fullteaching.e2e.no_elastest.common.ForumNavigationUtilities;
 import com.fullteaching.e2e.no_elastest.common.NavigationUtilities;
 import com.fullteaching.e2e.no_elastest.common.SpiderNavigation;
 import com.fullteaching.e2e.no_elastest.common.exception.BadUserException;
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
+import com.fullteaching.e2e.no_elastest.utils.Click;
+import com.fullteaching.e2e.no_elastest.utils.DOMMannager;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import com.fullteaching.e2e.no_elastest.utils.UserLoader;
+import com.fullteaching.e2e.no_elastest.utils.Wait;
+import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
-import io.github.bonigarcia.seljup.DockerBrowser;
-import io.github.bonigarcia.seljup.SeleniumExtension;
 
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.slf4j.LoggerFactory.getLogger;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
+
+import org.junit.Assert;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+import com.fullteaching.e2e.no_elastest.common.BrowserUser;
+import com.fullteaching.e2e.no_elastest.common.ChromeUser;
+import com.fullteaching.e2e.no_elastest.common.FirefoxUser;
 
-import static io.github.bonigarcia.seljup.BrowserType.CHROME;
-import static java.lang.invoke.MethodHandles.lookup;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.slf4j.LoggerFactory.getLogger;
+import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.FirefoxDriverManager;
+
+
 
 @ExtendWith(SeleniumExtension.class)
 public class LoggedLinksTests extends BaseLoggedTest {
@@ -41,6 +69,11 @@ public class LoggedLinksTests extends BaseLoggedTest {
 	public static final String FIREFOX = "firefox";
 	private static String TEACHER_BROWSER;
 	private static String STUDENT_BROWSER;
+	
+	
+    static Class<? extends WebDriver> chrome = ChromeDriver.class;
+    static Class<? extends WebDriver> firefox = FirefoxDriver.class;
+	
 	private static String APP_URL;
 	protected static int DEPTH = 3;
 	
@@ -55,17 +88,17 @@ public class LoggedLinksTests extends BaseLoggedTest {
 	 	           "C:/chromedriver_win32/chromedriver.exe");
 			if (System.getenv("ET_EUS_API") == null) {
 				// Outside ElasTest
-				/*ChromeDriverManager.getInstance().setup();
-				FirefoxDriverManager.getInstance().setup();*/
-				//teacher=new ChromeDriver();
+				ChromeDriverManager.getInstance(chrome).setup();
+				FirefoxDriverManager.getInstance(firefox).setup();
+				
 			}
 
 			if (System.getenv("ET_SUT_HOST") != null) {
-				APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5001/";
+				APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":"+PORT+"/";
 			} else {
 				APP_URL = System.getProperty("app.url");
 				if (APP_URL == null) {
-					APP_URL = "https://localhost:5001/";
+					APP_URL = LOCALHOST;
 				}
 			}
 
