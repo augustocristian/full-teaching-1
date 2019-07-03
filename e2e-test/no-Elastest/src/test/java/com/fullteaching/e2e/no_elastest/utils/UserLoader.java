@@ -13,6 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.fullteaching.e2e.no_elastest.common.Constants;
+
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
@@ -97,27 +99,30 @@ public class UserLoader {
 		return users.values();
 	}
 	
-	public static WebDriver allocateNewBrowser(String browser) {
-		WebDriver driver = null;
-		switch (browser){
-			case "chrome":
-				//Nuestros navegadores por defecto
-				System.setProperty("webdriver.chrome.driver",
-		    	           "C:/chromedriver_win32/chromedriver.exe");
-				driver = new ChromeDriver();
-				//ChromeDriverManager.getInstance(CHROME).setup();
-				//TODO: driver = ChromeFactory.newWebDriver();
-				break;
-			case "firefox":
-				
-				//IDEM
-				System.setProperty("webdriver.gecko.driver",
-		     	           "C:/chromedriver_win32/geckodriver.exe");
-		 		driver = new FirefoxDriver();
-				
-				//FirefoxDriverManager.getInstance(FIREFOX).setup();
-				//TODO: driver = FirefoxFactory.newWebDriver();
-		}
-		return driver;
-	}
+	 public static WebDriver setupBrowser(String browser, String testName,
+	            String userIdentifier, int secondsOfWait) {
+
+	        WebDriver u;
+	        
+
+	       
+
+	        switch (browser) {
+	        case "chrome":
+	            u = new ChromeDriver();
+	            break;
+	        case "firefox":
+	            u = new FirefoxDriver();
+	            break;
+	        default:
+	            u = new ChromeDriver();
+	        }
+	        u.navigate().to(Constants.LOCALHOST);
+	        u.manage().window().maximize();
+	        
+	        return u;
+
+	    }
+	
+
 }

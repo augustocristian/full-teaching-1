@@ -75,26 +75,7 @@ public class BaseLoggedTest {
             ex.printStackTrace();
         }
         
-        //Driver por defecto no contenerizado para depuracion
-        boolean chrome=true;
-    	if(chrome) {
-    	System.setProperty("webdriver.chrome.driver",
-    	           "C:/chromedriver_win32/chromedriver.exe");
-		driver = new ChromeDriver();}
-    	else {
-    		System.setProperty("webdriver.gecko.driver",
-     	           "C:/chromedriver_win32/geckodriver.exe");
- 		driver = new FirefoxDriver();
- 		driver.navigate().to(host) ;
-    		
-    		
-    	}
-    	driver.manage().window().maximize();
-    	//driver.navigate().to(host);
 
-    	// driver.get(host);
-    	
-    	//ELIMINAR?
         
     }
 

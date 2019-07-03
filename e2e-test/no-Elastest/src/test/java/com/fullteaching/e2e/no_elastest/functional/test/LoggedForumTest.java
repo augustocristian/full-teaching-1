@@ -11,9 +11,12 @@ import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.Click;
 import com.fullteaching.e2e.no_elastest.utils.DOMMannager;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
+import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 import io.github.bonigarcia.seljup.DockerBrowser;
 import io.github.bonigarcia.seljup.SeleniumExtension;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,8 +24,11 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -32,7 +38,9 @@ import java.util.stream.Stream;
 
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 import static io.github.bonigarcia.seljup.BrowserType.CHROME;
+import static java.lang.invoke.MethodHandles.lookup;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.slf4j.LoggerFactory.getLogger;
 
 @ExtendWith(SeleniumExtension.class)
 public class LoggedForumTest extends BaseLoggedTest {
@@ -40,10 +48,57 @@ public class LoggedForumTest extends BaseLoggedTest {
 	//protected static WebDriver driver;
 	
 	protected String courseName="Pseudoscientific course for treating the evil eye";
-
+	public static final String CHROME = "chrome";
+	public static final String FIREFOX = "firefox";
+	private static String TEACHER_BROWSER;
+	private static String STUDENT_BROWSER;
+	private static String APP_URL;
+	final static  Logger log = getLogger(lookup().lookupClass());
 	public static Stream<Arguments> data() throws IOException {
 		return ParameterLoader.getTestUsers();
 	}
+	
+	
+	
+	  
+	  @BeforeAll()
+		static void setupAll() {
+			System.setProperty("webdriver.chrome.driver",
+	 	           "C:/chromedriver_win32/chromedriver.exe");
+			if (System.getenv("ET_EUS_API") == null) {
+				// Outside ElasTest
+				/*ChromeDriverManager.getInstance().setup();
+				FirefoxDriverManager.getInstance().setup();*/
+				//teacher=new ChromeDriver();
+			}
+
+			if (System.getenv("ET_SUT_HOST") != null) {
+				APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5001/";
+			} else {
+				APP_URL = System.getProperty("app.url");
+				if (APP_URL == null) {
+					APP_URL = "https://localhost:5001/";
+				}
+			}
+
+			TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
+			STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
+
+			if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
+				TEACHER_BROWSER = CHROME;
+			}
+
+			if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
+				STUDENT_BROWSER = CHROME;
+			}
+
+			log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
+		}
+
+
+	
+	
+	
     /**
      * This test get login and navigate to the courses zone checking if there are 
      * any courses. Second and go to the Pseudo... course accessing to the forum
@@ -54,9 +109,10 @@ public class LoggedForumTest extends BaseLoggedTest {
      */ 
     @ParameterizedTest
 	  @MethodSource("data")
-    public void forumLoadEntriesTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void forumLoadEntriesTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
 		//driver = rwd;
+    	driver= UserLoader.setupBrowser("chrome",role,user,100);
 		
 	 	String courseName = properties.getProperty("forum.test.course");
 
@@ -127,10 +183,10 @@ public class LoggedForumTest extends BaseLoggedTest {
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
-    public void forumNewEntryTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void forumNewEntryTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
 	//	driver = rwd;
-
+		driver= UserLoader.setupBrowser("chrome",role,user,100);
 		driver = loginAndValidate(driver,  user, password);
 
     	Calendar calendar = Calendar.getInstance();
@@ -204,10 +260,10 @@ public class LoggedForumTest extends BaseLoggedTest {
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
-    public void forumNewCommentTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void forumNewCommentTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
 	//	driver = rwd;
-
+		driver= UserLoader.setupBrowser("chrome",role,user,100);
 		driver = loginAndValidate(driver,  user, password);
 
     	Calendar calendar = Calendar.getInstance();
@@ -289,9 +345,10 @@ public class LoggedForumTest extends BaseLoggedTest {
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
-    public void forumNewReply2CommentTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void forumNewReply2CommentTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 	//	driver = rwd;
-
+		driver= UserLoader.setupBrowser("chrome",role,user,100);
+		
 		driver = loginAndValidate(driver,  user, password);
 
     	Calendar calendar = Calendar.getInstance();
