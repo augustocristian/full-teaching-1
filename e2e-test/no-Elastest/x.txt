@@ -23,7 +23,7 @@
 [INFO] Changes detected - recompiling the module!
 [INFO] Compiling 29 source files to C:\Users\crist\OneDrive\Escritorio\full-teaching-tunon-tests\e2e-test\no-Elastest\target\test-classes
 [WARNING] /C:/Users/crist/OneDrive/Escritorio/full-teaching-tunon-tests/e2e-test/no-Elastest/src/test/java/com/fullteaching/e2e/no_elastest/utils/ParameterLoader.java: C:\Users\crist\OneDrive\Escritorio\full-teaching-tunon-tests\e2e-test\no-Elastest\src\test\java\com\fullteaching\e2e\no_elastest\utils\ParameterLoader.java uses unchecked or unsafe operations.
-[WARNING] /C:/Users/crist/OneDrive/Escritorio/full-teaching-tunon-tests/e2e-test/no-Elastest/src/test/java/com/fullteaching/e2e/no_elastest/utils/ParameterLoader.java: Recompile with -Xlint:unchecked for details.
+[WARNING] /C:/Users/crist/OneDrive/Escritorsfio/full-teaching-tunon-tests/e2e-test/no-Elastest/src/test/java/com/fullteaching/e2e/no_elastest/utils/ParameterLoader.java: Recompile with -Xlint:unchecked for details.
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.22.1:test (default-test) @ e2e.no-elastest ---
 [INFO] 
