@@ -45,7 +45,7 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.*;
  *
  * @author Pablo Fuente (pablo.fuente@urjc.es)
  */
-@Disabled
+
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching video session")
 @ExtendWith(SeleniumExtension.class)
