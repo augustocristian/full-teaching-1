@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-
+import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 import java.util.Date;
 import java.util.Properties;
 
@@ -37,7 +37,7 @@ public class BaseLoggedTest {
 // For use another host
     //protected static final String host= SetUp.getHost();
     
-    protected static final String host= "https://localhost:5001";
+    protected static final String host=LOCALHOST;
     
     protected static String userName;
     protected static String user;
