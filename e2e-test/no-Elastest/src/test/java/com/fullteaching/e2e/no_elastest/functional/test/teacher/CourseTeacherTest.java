@@ -209,7 +209,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
         try {
         	CourseNavigationUtilities.deleteCourse(driver, course_title);
         	
-        	Thread.sleep(3000);
+        	Wait.notTooMuch(driver);
         	assertFalse(CourseNavigationUtilities.checkIfCourseExists(driver, course_title), "the course still exists");
 
 		}catch(Exception e){

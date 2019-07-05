@@ -227,12 +227,7 @@ public class LoggedVideoSession extends BaseLoggedTest {
 	    	modal.findElement(SESSIONLIST_NEWSESSION_MODAL_DATE).sendKeys(sessionDate);
 	    	modal.findElement(SESSIONLIST_NEWSESSION_MODAL_TIME).sendKeys(sessionHour);
 	    	teacherDriver = Click.element(teacherDriver, modal.findElement(SESSIONLIST_NEWSESSION_MODAL_POSTBUTTON));
-	    	try {
-						Thread.sleep(2000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}	
+	    	Wait.notTooMuch(teacherDriver);
 	    	//teacherDriver = Click.element(teacherDriver, SESSIONLIST_NEWSESSION_MODAL_DATE);
 	    	//check if session has been created
 	    	List <String> session_titles = SessionNavigationUtilities.getFullSessionList(teacherDriver);
