@@ -95,7 +95,7 @@ public class BaseLoggedTest {
         }
         //TEMPORAL SOLUTION TO MULTIPLE WINDOWS CREATION
         
-        driver.close();
+        //driver.close();
         
 
     }
