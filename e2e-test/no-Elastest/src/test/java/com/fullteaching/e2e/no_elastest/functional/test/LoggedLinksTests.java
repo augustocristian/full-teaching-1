@@ -23,7 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -61,40 +63,48 @@ public class LoggedLinksTests extends BaseLoggedTest {
 	public static Stream<Arguments> data() throws IOException {
 		return ParameterLoader.getTestUsers();
 	}
-	 @BeforeAll()
-		static void setupAll() {
-		
-			if (System.getenv("ET_EUS_API") == null) {
-				// Outside ElasTest
-				System.setProperty("webdriver.chrome.driver",
-			 	           "C:/chromedriver_win32/chromedriver.exe");
-				ChromeDriverManager.getInstance(chrome).setup();
-				FirefoxDriverManager.getInstance(firefox).setup();
-				
-			}
+	@BeforeAll()
+	static void setupAll() {
 
-			if (System.getenv("ET_SUT_HOST") != null) {
-				APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":"+PORT+"/";
-			} else {
-				APP_URL = System.getProperty("app.url");
-				if (APP_URL == null) {
-					APP_URL = LOCALHOST;
-				}
-			}
-
-			TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-			STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-			if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-				TEACHER_BROWSER = CHROME;
-			}
-
-			if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-				STUDENT_BROWSER = CHROME;
-			}
-
-			log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
+		if (System.getenv("ET_EUS_API") == null) {
+			// Outside ElasTest
+			ChromeDriverManager.getInstance(chrome).setup();
+			FirefoxDriverManager.getInstance(firefox).setup();
 		}
+
+		if (System.getenv("ET_SUT_HOST") != null) {
+			APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5000/";
+		} else {
+			APP_URL = System.getProperty("app.url");
+			if (APP_URL == null) {
+				APP_URL = "https://localhost:5000/";
+			}
+		}
+
+		TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
+		STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
+
+		if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
+			TEACHER_BROWSER = CHROME;
+		}
+
+		if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
+			STUDENT_BROWSER = CHROME;
+		}
+
+		log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
+	}
+
+/*	@AfterEach
+	void dispose(TestInfo info) {
+		try {
+			this.logout(user);
+			user.dispose();
+		} finally {
+			log.info("##### Finish test: " +  info.getTestMethod().get().getName());
+		}
+	}*/
+
     /**
      * This test get logged the user and checks the navigation by URL works correctly.First
      * get all the possible URLS for the current user for after it iterate over them checking
@@ -106,9 +116,9 @@ public class LoggedLinksTests extends BaseLoggedTest {
 	public void spiderLoggedTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
 		BrowserUser usrbrowser;
-		//	driver = rwd;
-			usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-			driver=usrbrowser.getDriver();
+		
+		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
+		driver=usrbrowser.getDriver();
 		driver = loginAndValidate(driver,user,password);
 
 		/*navigate from home*/

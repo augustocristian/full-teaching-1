@@ -2,6 +2,9 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 import static java.lang.invoke.MethodHandles.lookup;
 import static org.slf4j.LoggerFactory.getLogger;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -20,6 +23,7 @@ import org.slf4j.Logger;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import com.fullteaching.e2e.no_elastest.common.ChromeUser;
 import com.fullteaching.e2e.no_elastest.common.FirefoxUser;
+import com.fullteaching.e2e.no_elastest.common.UserUtilities;
 
 import io.github.bonigarcia.SeleniumExtension;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
@@ -33,16 +37,18 @@ public class FullTeachingTestE2E {
 
     protected static final String CHROME = "chrome";
     protected static final String FIREFOX = "firefox";
+    protected Properties properties;
+    protected static String userName;
+
     Class<? extends WebDriver> chrome = ChromeDriver.class;
     Class<? extends WebDriver> firefox = FirefoxDriver.class;
 
     final static Logger log = getLogger(lookup().lookupClass());
 
     public FullTeachingTestE2E() {
+    	
         if (System.getenv("ET_EUS_API") == null) {
-            // Outside ElasTest
-        	System.setProperty("webdriver.chrome.driver",
-      	           "C:/chromedriver_win32/chromedriver.exe");
+    
             ChromeDriverManager.getInstance(chrome).setup();
             FirefoxDriverManager.getInstance(firefox).setup();
         }
@@ -55,6 +61,18 @@ public class FullTeachingTestE2E {
                 APP_URL = LOCALHOST;
             }
         }
+        
+        properties = new Properties();
+        try {
+            // load a properties file for reading
+            properties.load(new FileInputStream("src/test/resources/inputs/test.properties"));
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+       
+        
+        
     }
 
     protected BrowserUser setupBrowser(String browser, TestInfo testInfo,

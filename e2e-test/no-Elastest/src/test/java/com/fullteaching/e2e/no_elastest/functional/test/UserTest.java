@@ -6,6 +6,7 @@ import com.fullteaching.e2e.no_elastest.common.exception.BadUserException;
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
+import com.fullteaching.e2e.no_elastest.functional.test.media.FullTeachingTestE2E;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
@@ -21,8 +22,9 @@ import static org.slf4j.LoggerFactory.getLogger;
 import java.io.IOException;
 import java.util.stream.Stream;
 
-
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -40,7 +42,7 @@ import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
 
 @ExtendWith(SeleniumExtension.class)
-public class UserTest extends BaseLoggedTest {
+public class UserTest extends FullTeachingTestE2E {
 
 	
 	public static final String CHROME = "chrome";
@@ -54,6 +56,7 @@ public class UserTest extends BaseLoggedTest {
 	
 	final static  Logger log = getLogger(lookup().lookupClass());
 	
+	BrowserUser usrbrowser;
 
 	public static Stream<Arguments> data() throws IOException {
         return ParameterLoader.getTestUsers();
@@ -94,6 +97,15 @@ public class UserTest extends BaseLoggedTest {
 			log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
 		}
 	
+		@AfterEach
+		void dispose(TestInfo info) {
+			try {
+				this.logout(usrbrowser);
+				usrbrowser.dispose();
+			} finally {
+				log.info("##### Finish test: " +  info.getTestMethod().get().getName());
+			}
+		}
     /**
      * This test is a simple logging ackenoledgment, that checks if the current logged user
      * was logged correctly
@@ -101,14 +113,14 @@ public class UserTest extends BaseLoggedTest {
 	@ParameterizedTest
 	@MethodSource("data")
 	public void loginTest(String user, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
-		BrowserUser usrbrowser;
+		
 	//	driver = rwd;
 		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
-		try {
-			driver = UserUtilities.login(driver, user, password, host);
 		
-			driver = UserUtilities.checkLogin(driver, user);
+		try {
+		
+			this.slowLogin(usrbrowser, user, password);
+			UserUtilities.checkLogin(usrbrowser.getDriver(), user);
 
 			assertTrue(true, "not logged");
 
@@ -122,20 +134,16 @@ public class UserTest extends BaseLoggedTest {
 			e.printStackTrace();
 			fail(e.getLocalizedMessage());
 			
-		}  catch (TimeOutExeception e) {
-			fail(e.getLocalizedMessage());
 		} 
 		
 		try {
-			driver = UserUtilities.logOut(driver,host);
+			this.logout(usrbrowser);
 			
-			driver = UserUtilities.checkLogOut(driver);
+			UserUtilities.checkLogOut(usrbrowser.getDriver());
 			
 		} catch (ElementNotFoundException enfe) {
 			fail("Still logged");
 			
-		} catch (NotLoggedException e) {
-			assertTrue(true, "Not logged");
 		}
 			
 		assertTrue(true);

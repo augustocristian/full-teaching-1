@@ -8,6 +8,9 @@ public final class Constants {
 
 	public static final String LOCALHOST = "https://156.35.119.57:5000";
 	public static final String PORT = "5000";
+	public static final String STUDENTNAME = "Student Imprudent";
+	public static final String TEACHERNAME = "Teacher Cheater";		
+	
 	public static final String COURSES_URL = "__HOST__/courses";
 	   
     //Xpaths and ids

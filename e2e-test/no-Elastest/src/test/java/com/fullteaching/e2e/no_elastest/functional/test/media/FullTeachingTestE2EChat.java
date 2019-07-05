@@ -75,18 +75,16 @@ public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
 
 		if (System.getenv("ET_EUS_API") == null) {
 			// Outside ElasTest
-			System.setProperty("webdriver.chrome.driver",
-		 	           "C:/chromedriver_win32/chromedriver.exe");
 			ChromeDriverManager.getInstance(chrome).setup();
 			FirefoxDriverManager.getInstance(firefox).setup();
 		}
 
 		if (System.getenv("ET_SUT_HOST") != null) {
-			APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":"+PORT+"/";
+			APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5000/";
 		} else {
 			APP_URL = System.getProperty("app.url");
 			if (APP_URL == null) {
-				APP_URL = LOCALHOST;
+				APP_URL = "https://localhost:5000/";
 			}
 		}
 
@@ -113,6 +111,7 @@ public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
 			log.info("##### Finish test: " +  info.getTestMethod().get().getName());
 		}
 	}
+
 
 	@Test
 	void oneToOneChatInSessionChrome() throws Exception {
