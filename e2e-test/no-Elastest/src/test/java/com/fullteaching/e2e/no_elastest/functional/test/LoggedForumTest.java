@@ -11,7 +11,6 @@ import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.Click;
 import com.fullteaching.e2e.no_elastest.utils.DOMMannager;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
-import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
@@ -29,7 +28,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -42,10 +40,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 
-import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import io.github.bonigarcia.SeleniumExtension;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
 
 
@@ -63,9 +58,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 	static Class<? extends WebDriver> firefox = FirefoxDriver.class;
 
 
-	private static String TEACHER_BROWSER;
-	private static String STUDENT_BROWSER;
-	private static String APP_URL;
+
 	final static  Logger log = getLogger(lookup().lookupClass());
 	public static Stream<Arguments> data() throws IOException {
 		return ParameterLoader.getTestUsers();
@@ -334,7 +327,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 	@MethodSource("data")
 	public void forumNewReply2CommentTest(String usermail, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 	
-		user= UserLoader.setupBrowser("chrome",role,usermail,100,APP_URL,log);
+		user= setupBrowser("chrome",role,usermail,100);
 		driver=user.getDriver();
 
 		this.slowLogin(user, usermail, password);

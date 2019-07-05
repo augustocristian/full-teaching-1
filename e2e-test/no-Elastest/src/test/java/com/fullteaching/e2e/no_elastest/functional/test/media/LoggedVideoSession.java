@@ -21,7 +21,6 @@ import java.util.Properties;
 
 import com.fullteaching.e2e.no_elastest.common.*;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -44,20 +43,18 @@ import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 
 //@Disabled
-public class LoggedVideoSession{
+public class LoggedVideoSession extends BaseLoggedTest {
 
 	//1 teacher
 	protected WebDriver teacherDriver;
 	
 	public static final String CHROME = "chrome";
 	public static final String FIREFOX = "firefox";
-	private static String TEACHER_BROWSER;
-	private static String STUDENT_BROWSER;
-	private static String APP_URL;
+
 	
 	//at least 1 student;
-	protected List<WebDriver> studentDriver;
-	protected static WebDriver teacher;
+	protected List<BrowserUser> studentDriver;
+	protected static BrowserUser teacher;
 	public String teacher_data;
 	
 	public String users_data;
@@ -130,22 +127,23 @@ public class LoggedVideoSession{
 	        studentsmails = new ArrayList<String>();
 	    	studentPass = new ArrayList<String>();
 	    	studentNames = new ArrayList<String>();
-	    	studentDriver = new ArrayList<WebDriver>();
+	    	studentDriver = new ArrayList<BrowserUser>();
 	    	
 	        String[] students_data = users_data.split(";");
 	        
 	        for(int i=0; i< students_data.length; i++) {
-	        	String userid = students_data[i].split(":")[0];
-	        	studentsmails.add(userid);
-	        	String userpass = students_data[i].split(":")[1];
-	        	studentPass.add(userpass);
+	        	String studentemail = students_data[i].split(":")[0];
+	        	studentsmails.add(studentemail);
+	        	String studentpass = students_data[i].split(":")[1];
+	        	studentPass.add(studentpass);
 	        	
 	        	//WebDriver studentD = UserLoader.allocateNewBrowser(students_data[i].split(":")[2]);
-	        	WebDriver studentD = setupBrowser("chrome","BrowserStudent"+i,userid,100);;
+	        	BrowserUser studentD = setupBrowser("chrome","BrowserStudent"+i,studentemail,100);;
 	        	
-	        	studentD = SetUp.loginUser(studentD, host, userid , userpass);
-	        	studentD = UserUtilities.checkLogin(studentD, userid);
-	        	studentNames.add(UserUtilities.getUserName(studentD, true, host));	        	
+	        
+	        	
+	        	this.slowLogin(studentD, studentemail, studentpass);
+	        	studentNames.add(userName);	        	
 	        	studentDriver.add(studentD);
 	        	
 	        }
@@ -170,10 +168,7 @@ public class LoggedVideoSession{
 	    	log.info("[End setUP]");
 	    }
 	
-	 private WebDriver setupBrowser(String string, String string2, String userid, int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 
 	@AfterEach
@@ -181,9 +176,9 @@ public class LoggedVideoSession{
 		//TODO delete tested test if it is last test.
         SetUp.tearDown(teacherDriver);
         teacherDriver.close();
-        for (WebDriver driver: studentDriver) {
-        	SetUp.tearDown(driver);
-        	driver.close();
+        for (BrowserUser driver: studentDriver) {
+        	driver.dispose();
+        	
         }           
     }
 	
@@ -266,28 +261,29 @@ public class LoggedVideoSession{
     	
     	//Students Join Sessions
     	try {
-    		for(WebDriver student_d: studentDriver) {
+    		for(BrowserUser student_d: studentDriver) {
     			
-    			if (!NavigationUtilities.amIHere(student_d, COURSES_URL.replace("__HOST__", host))) {	
-    				student_d = NavigationUtilities.toCoursesHome(student_d);	
+    			WebDriver driverstudent=student_d.getDriver();
+    			if (!NavigationUtilities.amIHere(driverstudent, COURSES_URL.replace("__HOST__", host))) {	
+    				driverstudent = NavigationUtilities.toCoursesHome(driverstudent);	
         		}
-        		List <String> courses = CourseNavigationUtilities.getCoursesList(student_d, host);
+        		List <String> courses = CourseNavigationUtilities.getCoursesList(driverstudent, host);
         		
         		assertTrue(courses.size()>0, "No courses in the list");
         		//Teacher go to Course and create a new session to join
         	
-    			WebElement course = CourseNavigationUtilities.getCourseElement(student_d, courseName);
+    			WebElement course = CourseNavigationUtilities.getCourseElement(driverstudent, courseName);
     			
     			course.findElement(COURSELIST_COURSETITLE).click();
-    	    	Wait.notTooMuch(student_d).until(ExpectedConditions.visibilityOfElementLocated(By.id(TABS_DIV_ID)));
-    	    	student_d = CourseNavigationUtilities.go2Tab(student_d, SESSION_ICON);
+    	    	Wait.notTooMuch(driverstudent).until(ExpectedConditions.visibilityOfElementLocated(By.id(TABS_DIV_ID)));
+    	    	driverstudent = CourseNavigationUtilities.go2Tab(driverstudent, SESSION_ICON);
     	    	
-		    	List <String> session_titles = SessionNavigationUtilities.getFullSessionList(student_d);
+		    	List <String> session_titles = SessionNavigationUtilities.getFullSessionList(driverstudent);
 		    	assertTrue(session_titles.contains(sessionName), "Session has not been created");
 				
 		    	//Student to: JOIN SESSION.
-				WebElement session = SessionNavigationUtilities.getSession(student_d,sessionName );
-				student_d = Click.element(student_d, session.findElement(SESSIONLIST_SESSION_ACCESS));
+				WebElement session = SessionNavigationUtilities.getSession(driverstudent,sessionName );
+				driverstudent = Click.element(driverstudent, session.findElement(SESSIONLIST_SESSION_ACCESS));
 				
 				//assertTrue(condition);
 		    	//Check why this is failing... maybe urls are not correct? configuration on the project?
@@ -299,20 +295,16 @@ public class LoggedVideoSession{
     	
     	//Students Leave Sessions
     	try {
-    		for(WebDriver student_d: studentDriver) {
-		    	try {
-					Thread.sleep(2000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
+    		for(BrowserUser student: studentDriver) {
+    			WebDriver driverstudent=student.getDriver();
+    			Wait.notTooMuch(driverstudent);
 		    	//student to: LEAVE SESSION.
-    			student_d = Click.element(student_d, SESSION_LEFT_MENU_BUTTON);
+    			driverstudent = Click.element(driverstudent, SESSION_LEFT_MENU_BUTTON);
 				
-    			student_d = Click.element(student_d, SESSION_EXIT_ICON);
+    			driverstudent = Click.element(driverstudent, SESSION_EXIT_ICON);
 				
 				//Wait for something
-				Wait.notTooMuch(student_d).until(ExpectedConditions.visibilityOfElementLocated(COURSE_TABS));
+				Wait.notTooMuch(driverstudent).until(ExpectedConditions.visibilityOfElementLocated(COURSE_TABS));
 				//assertTrue(condition);
 		    	//Check why this is failing... maybe urls are not correct? configuration on the project?
     		}

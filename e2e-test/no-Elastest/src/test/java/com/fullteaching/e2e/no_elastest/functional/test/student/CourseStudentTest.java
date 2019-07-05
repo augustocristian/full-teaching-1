@@ -9,7 +9,6 @@ import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.Click;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
-import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -35,10 +33,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 
-import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import io.github.bonigarcia.SeleniumExtension;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
 
 
@@ -72,14 +67,13 @@ public class CourseStudentTest extends BaseLoggedTest {
      */ 
     @ParameterizedTest
 	@MethodSource("data")
-    public void studentCourseMainTest(String user, String password, String role)throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void studentCourseMainTest(String usermail, String password, String role)throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
     	
-    	BrowserUser usrbrowser;
-		//	driver = rwd;
-		usrbrowser= setupBrowser("chrome",role,user,100);
-		driver=usrbrowser.getDriver();
+ 
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
     	
-		this.slowLogin(usrbrowser, user, password);
+		this.slowLogin(user, usermail, password);
 
 
     	try {

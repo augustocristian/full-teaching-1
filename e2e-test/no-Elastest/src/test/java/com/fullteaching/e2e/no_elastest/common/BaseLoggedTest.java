@@ -3,9 +3,9 @@ package com.fullteaching.e2e.no_elastest.common;
 import com.fullteaching.e2e.no_elastest.common.exception.BadUserException;
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
-import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.SetUp;
 
+import io.github.bonigarcia.DriverCapabilities;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
@@ -13,7 +13,6 @@ import org.junit.Assert;
 //import io.github.bonigarcia.seljup.DriverCapabilities;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -72,7 +71,7 @@ public class BaseLoggedTest {
 
 	protected static Properties properties;
 
-	//@DriverCapabilities
+	@DriverCapabilities
 	DesiredCapabilities capabilities = chrome();
 
 	{
@@ -157,7 +156,7 @@ public class BaseLoggedTest {
 				+ "window.document.head.appendChild(s);";
 
 		u.runJavascript(GLOBAL_JS_FUNCTION);
-
+		u.getDriver().manage().window().maximize();
 		return u;
 	}
 
@@ -199,7 +198,8 @@ public class BaseLoggedTest {
 		if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
 			STUDENT_BROWSER = CHROME;
 		}
-
+		
+		
 		//log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
 	}
 
@@ -220,7 +220,7 @@ public class BaseLoggedTest {
 					new Date(entry.getTimestamp()), entry.getLevel(),
 					entry.getMessage()));
 			
-			this.logout(user);
+			//this.logout(user);
 			user.dispose();
 		}
 		//TEMPORAL SOLUTION TO MULTIPLE WINDOWS CREATION
@@ -271,7 +271,13 @@ public class BaseLoggedTest {
 		user.waitUntil(
 				ExpectedConditions.elementToBeClickable(By.id(("course-list"))),
 				"Course list not present");
-
+		   try {
+			userName = UserUtilities.getUserName(user.getDriver(), true, APP_URL);
+		} catch (NotLoggedException | BadUserException | ElementNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		log.info("Logging in successful for user {}", user.getClientData());
 	}
 

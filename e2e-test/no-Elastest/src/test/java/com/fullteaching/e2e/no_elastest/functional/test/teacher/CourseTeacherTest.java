@@ -11,23 +11,18 @@ import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.common.exception.TimeOutExeception;
 import com.fullteaching.e2e.no_elastest.utils.Click;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
-import com.fullteaching.e2e.no_elastest.utils.UserLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
 
-import static java.lang.invoke.MethodHandles.lookup;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.slf4j.LoggerFactory.getLogger;
-
 import java.io.IOException;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -40,12 +35,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.slf4j.Logger;
-
-import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import io.github.bonigarcia.SeleniumExtension;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
 
 
 @ExtendWith(SeleniumExtension.class)
@@ -68,8 +58,6 @@ public class CourseTeacherTest extends BaseLoggedTest {
 
     
 
-    final static Logger log = getLogger(lookup().lookupClass());
-    
     
 
     public static Stream<Arguments> data() throws IOException {
@@ -86,15 +74,14 @@ public class CourseTeacherTest extends BaseLoggedTest {
      */
     @ParameterizedTest
 	@MethodSource("data")
-    public void teacherCourseMainTest(String user, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void teacherCourseMainTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-    	BrowserUser usrbrowser;
-		//	driver = rwd;
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
+    	
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 		String courseName = properties.getProperty("forum.test.course");
 
-		this.slowLogin(usrbrowser, user, password);
+		this.slowLogin(user, usermail, password);
 
     	
     	try {
@@ -152,16 +139,15 @@ public class CourseTeacherTest extends BaseLoggedTest {
      */ 
     @ParameterizedTest
 	@MethodSource("data")
-    public void teacherCreateAndDeleteCourseTest(String user, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void teacherCreateAndDeleteCourseTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-    	BrowserUser usrbrowser;
-		//	driver = rwd;
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
+    
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 
 		String courseName = properties.getProperty("forum.test.course");
 
-		this.slowLogin(usrbrowser, user, password);
+		this.slowLogin(user, usermail, password);
 
     	
     	boolean found = false;
@@ -246,16 +232,16 @@ public class CourseTeacherTest extends BaseLoggedTest {
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
-    public void teacherEditCourseValues(String user, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void teacherEditCourseValues(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		BrowserUser usrbrowser;
-		//	driver = rwd;
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
+		
+		
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 
 		String courseName = properties.getProperty("forum.test.course");
       
-		this.slowLogin(usrbrowser, user, password);
+		this.slowLogin(user, usermail, password);
     	
     	try {
 	    	// navigate to courses if not there
@@ -469,14 +455,13 @@ public class CourseTeacherTest extends BaseLoggedTest {
     @Disabled
 	@ParameterizedTest
 	@MethodSource("data")
-    public void teacherDeleteCourseTest(String user, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+    public void teacherDeleteCourseTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-    	BrowserUser usrbrowser;
-		//	driver = rwd;
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
+    
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 		
-		this.slowLogin(usrbrowser, user, password);
+		this.slowLogin(user, usermail, password);
     	String courseName="";
     	// navigate to courses if not there
     	try {

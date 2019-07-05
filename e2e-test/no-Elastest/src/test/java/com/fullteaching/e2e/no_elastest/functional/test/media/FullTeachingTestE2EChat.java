@@ -19,12 +19,9 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -36,9 +33,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 
 import io.github.bonigarcia.SeleniumExtension;
-import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
 /**
  * E2E tests for FullTeaching chat in a video session.
@@ -54,7 +48,7 @@ public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
 	public static final String FIREFOX = "firefox";
 	private static String TEACHER_BROWSER;
 	private static String STUDENT_BROWSER;
-	private static String APP_URL;
+
 	
     static Class<? extends WebDriver> chrome = ChromeDriver.class;
     static Class<? extends WebDriver> firefox = FirefoxDriver.class;

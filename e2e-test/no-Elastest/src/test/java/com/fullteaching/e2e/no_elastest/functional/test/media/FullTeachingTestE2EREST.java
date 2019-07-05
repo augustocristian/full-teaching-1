@@ -35,7 +35,6 @@ import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 
 import io.github.bonigarcia.SeleniumExtension;
-import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 /**
  * E2E tests for FullTeaching REST CRUD operations.
  *

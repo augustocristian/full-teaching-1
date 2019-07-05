@@ -23,8 +23,6 @@ import org.slf4j.Logger;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import com.fullteaching.e2e.no_elastest.common.ChromeUser;
 import com.fullteaching.e2e.no_elastest.common.FirefoxUser;
-import com.fullteaching.e2e.no_elastest.common.UserUtilities;
-
 import io.github.bonigarcia.SeleniumExtension;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
