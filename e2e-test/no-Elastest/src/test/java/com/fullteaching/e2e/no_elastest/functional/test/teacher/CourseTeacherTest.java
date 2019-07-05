@@ -67,8 +67,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
     
 
     
-    private static String TEACHER_BROWSER;
-	private static String STUDENT_BROWSER;
+
     final static Logger log = getLogger(lookup().lookupClass());
     
     
@@ -78,40 +77,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
     }
 	
     
-    @BeforeAll()
-  	static void setupAll() {
-  	
-  		if (System.getenv("ET_EUS_API") == null) {
-  			// Outside ElasTest
-  			ChromeDriverManager.getInstance(chrome).setup();
-  			FirefoxDriverManager.getInstance(firefox).setup();
-  			System.setProperty("webdriver.chrome.driver",
-  	   	           "C:/chromedriver_win32/chromedriver.exe");
-  			
-  		}
 
-  		if (System.getenv("ET_SUT_HOST") != null) {
-  			APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":"+PORT+"/";
-  		} else {
-  			APP_URL = System.getProperty("app.url");
-  			if (APP_URL == null) {
-  				APP_URL = LOCALHOST;
-  			}
-  		}
-
-  		TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-  		STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-  		if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-  			TEACHER_BROWSER = CHROME;
-  		}
-
-  		if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-  			STUDENT_BROWSER = CHROME;
-  		}
-
-  		log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
-  	}
     /**
      * This tests get the login the user, go the the courses and select the default
      * course.Once the user its here, it clicks upon the different tabs(Corse info,sessions,Forum,Files
@@ -128,7 +94,8 @@ public class CourseTeacherTest extends BaseLoggedTest {
 		driver=usrbrowser.getDriver();
 		String courseName = properties.getProperty("forum.test.course");
 
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(usrbrowser, user, password);
+
     	
     	try {
     		if(!NavigationUtilities.amIHere(driver,COURSES_URL.replace("__HOST__", host)))
@@ -194,7 +161,8 @@ public class CourseTeacherTest extends BaseLoggedTest {
 
 		String courseName = properties.getProperty("forum.test.course");
 
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(usrbrowser, user, password);
+
     	
     	boolean found = false;
     	try {
@@ -287,7 +255,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
 
 		String courseName = properties.getProperty("forum.test.course");
       
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(usrbrowser, user, password);
     	
     	try {
 	    	// navigate to courses if not there
@@ -508,7 +476,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
 		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
 		driver=usrbrowser.getDriver();
 		
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(usrbrowser, user, password);
     	String courseName="";
     	// navigate to courses if not there
     	try {

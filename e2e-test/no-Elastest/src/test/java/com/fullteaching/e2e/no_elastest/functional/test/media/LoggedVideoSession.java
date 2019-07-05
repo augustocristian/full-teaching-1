@@ -94,41 +94,7 @@ public class LoggedVideoSession{
 	 
 	 
 	 
-	  
-	  @BeforeAll()
-		static void setupAll() {
-			System.setProperty("webdriver.chrome.driver",
-	 	           "C:/chromedriver_win32/chromedriver.exe");
-			if (System.getenv("ET_EUS_API") == null) {
-				// Outside ElasTest
-				/*ChromeDriverManager.getInstance().setup();
-				FirefoxDriverManager.getInstance().setup();*/
-				//teacher=new ChromeDriver();
-			}
-
-			if (System.getenv("ET_SUT_HOST") != null) {
-				APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5001/";
-			} else {
-				APP_URL = System.getProperty("app.url");
-				if (APP_URL == null) {
-					APP_URL = "https://localhost:5001/";
-				}
-			}
-
-			TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-			STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-			if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-				TEACHER_BROWSER = CHROME;
-			}
-
-			if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-				STUDENT_BROWSER = CHROME;
-			}
-
-			log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
-		}
-
+	 
 
 	@BeforeEach
 	public void setUp() throws BadUserException, ElementNotFoundException, NotLoggedException, TimeOutExeception {

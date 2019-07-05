@@ -70,47 +70,7 @@ public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
 
 	BrowserUser user;
 
-	@BeforeAll()
-	static void setupAll() {
-
-		if (System.getenv("ET_EUS_API") == null) {
-			// Outside ElasTest
-			ChromeDriverManager.getInstance(chrome).setup();
-			FirefoxDriverManager.getInstance(firefox).setup();
-		}
-
-		if (System.getenv("ET_SUT_HOST") != null) {
-			APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5000/";
-		} else {
-			APP_URL = System.getProperty("app.url");
-			if (APP_URL == null) {
-				APP_URL = "https://localhost:5000/";
-			}
-		}
-
-		TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-		STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-		if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-			TEACHER_BROWSER = CHROME;
-		}
-
-		if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-			STUDENT_BROWSER = CHROME;
-		}
-
-		log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
-	}
-
-	@AfterEach
-	void dispose(TestInfo info) {
-		try {
-			this.logout(user);
-			user.dispose();
-		} finally {
-			log.info("##### Finish test: " +  info.getTestMethod().get().getName());
-		}
-	}
+	
 
 
 	@Test

@@ -32,6 +32,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 
 import io.github.bonigarcia.SeleniumExtension;
@@ -46,7 +47,7 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching video session")
 @ExtendWith(SeleniumExtension.class)
-public class FullTeachingTestE2EVideoSession extends FullTeachingTestE2E {
+public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
 
     private static String TEACHER_BROWSER;
     private static String STUDENT_BROWSER;

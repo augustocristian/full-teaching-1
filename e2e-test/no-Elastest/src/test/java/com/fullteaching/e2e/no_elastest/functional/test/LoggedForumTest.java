@@ -74,42 +74,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 
 
 
-	@BeforeAll()
-	static void setupAll() {
-
-		if (System.getenv("ET_EUS_API") == null) {
-			// Outside ElasTest
-			ChromeDriverManager.getInstance(chrome).setup();
-			FirefoxDriverManager.getInstance(firefox).setup();
-			System.setProperty("webdriver.chrome.driver",
-					"C:/chromedriver_win32/chromedriver.exe");
-
-		}
-
-		if (System.getenv("ET_SUT_HOST") != null) {
-			APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":"+PORT+"/";
-		} else {
-			APP_URL = System.getProperty("app.url");
-			if (APP_URL == null) {
-				APP_URL = "https://localhost:"+PORT+"/";
-			}
-		}
-
-		TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-		STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-		if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-			TEACHER_BROWSER = CHROME;
-		}
-
-		if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-			STUDENT_BROWSER = CHROME;
-		}
-
-		log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
-	}
-
-
+	
 
 
 
@@ -123,16 +88,17 @@ public class LoggedForumTest extends BaseLoggedTest {
 	 */ 
 	@ParameterizedTest
 	@MethodSource("data")
-	public void forumLoadEntriesTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+	public void forumLoadEntriesTest(String usermail, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		BrowserUser usrbrowser;
-		//	driver = rwd;
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
+	
+		this.user = setupBrowser("chrome", role, usermail, 30);
+		
+		driver=user.getDriver();
 
 		String courseName = properties.getProperty("forum.test.course");
 
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(user, usermail, password);
+
 
 		try {
 			//navigate to courses.
@@ -199,14 +165,15 @@ public class LoggedForumTest extends BaseLoggedTest {
 	 */ 
 	@ParameterizedTest
 	@MethodSource("data")
-	public void forumNewEntryTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+	public void forumNewEntryTest(String usermail, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		BrowserUser usrbrowser;
+	
 
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
 
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(user, usermail, password);
+
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
@@ -278,13 +245,13 @@ public class LoggedForumTest extends BaseLoggedTest {
 	 */ 
 	@ParameterizedTest
 	@MethodSource("data")
-	public void forumNewCommentTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+	public void forumNewCommentTest(String usermail, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
-		BrowserUser usrbrowser;
-		//	driver = rwd;
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
-		driver = loginAndValidate(driver,  user, password);
+		
+		user= setupBrowser("chrome",role,usermail,100);
+		driver=user.getDriver();
+		this.slowLogin(user, usermail, password);
+
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());
@@ -365,13 +332,13 @@ public class LoggedForumTest extends BaseLoggedTest {
 	 */ 
 	@ParameterizedTest
 	@MethodSource("data")
-	public void forumNewReply2CommentTest(String user, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
-		BrowserUser usrbrowser;
-		//	driver = rwd;
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
-		driver=usrbrowser.getDriver();
+	public void forumNewReply2CommentTest(String usermail, String password, String role)  throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+	
+		user= UserLoader.setupBrowser("chrome",role,usermail,100,APP_URL,log);
+		driver=user.getDriver();
 
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(user, usermail, password);
+
 
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTimeInMillis(System.currentTimeMillis());

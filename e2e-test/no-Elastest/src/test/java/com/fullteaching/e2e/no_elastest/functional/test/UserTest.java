@@ -59,40 +59,7 @@ public class UserTest extends BaseLoggedTest {
         return ParameterLoader.getTestUsers();
     }
 	
-	 @BeforeAll()
-		static void setupAll() {
-			
-			if (System.getenv("ET_EUS_API") == null) {
-				// Outside ElasTest
-				System.setProperty("webdriver.chrome.driver",
-			 	           "C:/chromedriver_win32/chromedriver.exe");
-				ChromeDriverManager.getInstance(chrome).setup();
-				FirefoxDriverManager.getInstance(firefox).setup();
-			
-			}
 
-			if (System.getenv("ET_SUT_HOST") != null) {
-				APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":"+PORT+"/";
-			} else {
-				APP_URL = System.getProperty("app.url");
-				if (APP_URL == null) {
-					APP_URL = LOCALHOST;
-				}
-			}
-
-			TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-			STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-			if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-				TEACHER_BROWSER = CHROME;
-			}
-
-			if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-				STUDENT_BROWSER = CHROME;
-			}
-
-			log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
-		}
 	
     /**
      * This test is a simple logging ackenoledgment, that checks if the current logged user

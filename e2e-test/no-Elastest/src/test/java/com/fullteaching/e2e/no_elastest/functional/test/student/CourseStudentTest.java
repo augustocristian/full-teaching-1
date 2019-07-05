@@ -53,8 +53,7 @@ public class CourseStudentTest extends BaseLoggedTest {
     static Class<? extends WebDriver> chrome = ChromeDriver.class;
     static Class<? extends WebDriver> firefox = FirefoxDriver.class;
     
-    private static String TEACHER_BROWSER;
-	private static String STUDENT_BROWSER;
+
 	
 	
 
@@ -64,41 +63,7 @@ public class CourseStudentTest extends BaseLoggedTest {
         return ParameterLoader.getTestStudents();
     }
     
-    @BeforeAll()
-	static void setupAll() {
-	
-		if (System.getenv("ET_EUS_API") == null) {
-			// Outside ElasTest
-			System.setProperty("webdriver.chrome.driver",
-		 	           "C:/chromedriver_win32/chromedriver.exe");
-			ChromeDriverManager.getInstance(chrome).setup();
-			FirefoxDriverManager.getInstance(firefox).setup();
-			
-		}
 
-		if (System.getenv("ET_SUT_HOST") != null) {
-			APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":"+PORT+"/";
-		} else {
-			APP_URL = System.getProperty("app.url");
-			if (APP_URL == null) {
-				APP_URL = LOCALHOST;
-			}
-		}
-
-		TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-		STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-		if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-			TEACHER_BROWSER = CHROME;
-		}
-
-		if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-			STUDENT_BROWSER = CHROME;
-		}
-
-		log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
-	}
-    
     /**
      * This tests get the login the user as student, go the the courses  and check if 
      * there is any course in the list.After it, click in the first course of the list 
@@ -111,10 +76,11 @@ public class CourseStudentTest extends BaseLoggedTest {
     	
     	BrowserUser usrbrowser;
 		//	driver = rwd;
-		usrbrowser= UserLoader.setupBrowser("chrome",role,user,100,APP_URL,log);
+		usrbrowser= setupBrowser("chrome",role,user,100);
 		driver=usrbrowser.getDriver();
     	
-		driver = loginAndValidate(driver,  user, password);
+		this.slowLogin(usrbrowser, user, password);
+
 
     	try {
     		if(!NavigationUtilities.amIHere(driver,COURSES_URL.replace("__HOST__", host)))
