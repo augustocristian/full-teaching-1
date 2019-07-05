@@ -31,6 +31,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 
 import io.github.bonigarcia.SeleniumExtension;
@@ -44,7 +45,7 @@ import io.github.bonigarcia.SeleniumExtension;
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching chat")
 @ExtendWith(SeleniumExtension.class)
-public class FullTeachingTestE2EChat extends FullTeachingTestE2E {
+public class FullTeachingTestE2EChat extends BaseLoggedTest {
 
 	public static final String CHROME = "chrome";
 	public static final String FIREFOX = "firefox";
