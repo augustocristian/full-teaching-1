@@ -5,42 +5,44 @@ import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundExceptio
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.utils.SetUp;
 
-import io.github.bonigarcia.DriverCapabilities;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
+import static java.lang.invoke.MethodHandles.lookup;
+import static org.slf4j.LoggerFactory.getLogger;
+
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+
+import io.github.bonigarcia.SeleniumExtension;
 //import io.github.bonigarcia.seljup.DriverCapabilities;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.TestInfo;
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.slf4j.Logger;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 import java.util.Date;
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
-
-import static java.lang.invoke.MethodHandles.lookup;
 import static java.util.logging.Level.ALL;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 import static org.openqa.selenium.remote.CapabilityType.LOGGING_PREFS;
 import static org.openqa.selenium.remote.DesiredCapabilities.chrome;
-import static org.slf4j.LoggerFactory.getLogger;
 
+@ExtendWith(SeleniumExtension.class)
 public class BaseLoggedTest {
 
 	//protected common attributes
@@ -67,11 +69,11 @@ public class BaseLoggedTest {
 	protected BrowserUser user;
 	protected final static Logger log = getLogger(lookup().lookupClass());
 
-	public WebDriver driver;
+	
 
 	protected static Properties properties;
 
-	@DriverCapabilities
+	//@DriverCapabilities
 	DesiredCapabilities capabilities = chrome();
 
 	{
@@ -208,14 +210,14 @@ public class BaseLoggedTest {
 	void tearDown(TestInfo testInfo) throws IOException {
 		String testName = testInfo.getTestMethod().get().getName();
 
-		log.info("##### Finish test: {} - Driver {}", testName, driver);
+		log.info("##### Finish test: {} - Driver {}", testName, user.getDriver());
 
-		if (driver != null) {
-			log.info("url:"+driver.getCurrentUrl()+"\nScreenshot (in Base64) at the end of the test:\n{}",
-					SetUp.getBase64Screenshot(driver));
+		if (user != null) {
+			log.info("url:"+user.getDriver().getCurrentUrl()+"\nScreenshot (in Base64) at the end of the test:\n{}",
+					SetUp.getBase64Screenshot(user.getDriver()));
 
 			log.info("Browser console at the end of the test");
-			LogEntries logEntries = driver.manage().logs().get(BROWSER);
+			LogEntries logEntries = user.getDriver().manage().logs().get(BROWSER);
 			logEntries.forEach((entry) -> log.info("[{}] {} {}",
 					new Date(entry.getTimestamp()), entry.getLevel(),
 					entry.getMessage()));

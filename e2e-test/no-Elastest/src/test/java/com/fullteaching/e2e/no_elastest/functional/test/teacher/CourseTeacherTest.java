@@ -53,7 +53,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
     protected static final String FIREFOX = "firefox";
     static Class<? extends WebDriver> chrome = ChromeDriver.class;
     static Class<? extends WebDriver> firefox = FirefoxDriver.class;
-
+    WebDriver driver;
     
 
     

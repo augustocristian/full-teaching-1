@@ -39,7 +39,7 @@ public class LoggedLinksTests extends BaseLoggedTest {
 	public static final String CHROME = "chrome";
 	public static final String FIREFOX = "firefox";
 
-	
+	WebDriver driver;
 	
     static Class<? extends WebDriver> chrome = ChromeDriver.class;
     static Class<? extends WebDriver> firefox = FirefoxDriver.class;
