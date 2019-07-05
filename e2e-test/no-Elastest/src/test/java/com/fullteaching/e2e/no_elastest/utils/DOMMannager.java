@@ -6,9 +6,9 @@ import org.openqa.selenium.WebElement;
 
 public class DOMMannager {
 
-	public static WebElement getParent(WebDriver wd, WebElement childElement) {
-		JavascriptExecutor executor = (JavascriptExecutor)wd;
-		WebElement parentElement = (WebElement)executor.executeScript("return arguments[0].parentNode;", childElement);
-		return parentElement;
-	}
+    public static WebElement getParent(WebDriver wd, WebElement childElement) {
+        JavascriptExecutor executor = (JavascriptExecutor) wd;
+        WebElement parentElement = (WebElement) executor.executeScript("return arguments[0].parentNode;", childElement);
+        return parentElement;
+    }
 }

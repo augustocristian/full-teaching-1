@@ -1,211 +1,224 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.fullteaching</groupId>
-	<artifactId>e2e.no-elastest</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+    <groupId>com.fullteaching</groupId>
+    <artifactId>e2e.no-elastest</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
 
-	<name>${project.groupId}:${project.artifactId}</name>
-	<description>Non Elastest E2E (end-to-end) for FullTeaching.</description>
-	<url>https://github.com/elastest/full-teaching/tree/no-Elastest/e2e-test</url>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Non Elastest E2E (end-to-end) for FullTeaching.</description>
+    <url>https://github.com/elastest/full-teaching/tree/no-Elastest/e2e-test</url>
 
-	<!-- Organization & developers -->
-	<organization>
-		<name>Elastest</name>
-		<url>http://elastest.io</url>
-	</organization>
+    <!-- Organization & developers -->
+    <organization>
+        <name>Elastest</name>
+        <url>http://elastest.io</url>
+    </organization>
 
-	<developers>
-		<developer>
-			<id>gtunon</id>
-			<organization>NAEVATEC</organization>
-			<organizationUrl>https://www.naevatec.com/</organizationUrl>
-		</developer>
-	</developers>
+    <developers>
+        <developer>
+            <id>gtunon</id>
+            <organization>NAEVATEC</organization>
+            <organizationUrl>https://www.naevatec.com/</organizationUrl>
+        </developer>
+    </developers>
+    <!-- RETORCH repository -->
+    <repositories>
+        <repository>
+            <id>giis</id>
+            <url>https://in4test.lsi.uniovi.es/xlib/maven/</url>
+        </repository>
 
+    </repositories>
+    <!-- ENDRETORCH repository -->
 
-	<properties>
-		<!-- Java 8 -->
-		<java.version>1.8</java.version>
-		<maven.compiler.source>${java.version}</maven.compiler.source>
-		<maven.compiler.target>${java.version}</maven.compiler.target>
+    <properties>
+        <!-- Java 8 -->
+        <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
-		<!-- Encoding -->
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- Encoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<!-- Test dependencies version -->
-		<junit.jupiter.version>5.0.0</junit.jupiter.version>
-		<junit.platform.version>1.0.0</junit.platform.version>
-		<selenium-jupiter.version>1.1.2</selenium-jupiter.version>
-		<slf4j.version>1.7.25</slf4j.version>
+        <!-- Test dependencies version -->
+        <junit.jupiter.version>5.5.2</junit.jupiter.version>
+        <junit.platform.version>1.0.0</junit.platform.version>
+        <selenium-jupiter.version>3.3.4</selenium-jupiter.version>
+        <slf4j.version>1.7.25</slf4j.version>
 
-		<!-- Plugins versions -->
-		<maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
-		<jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
-	</properties>
+        <!-- Plugins versions -->
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+        <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
 
-	<scm>
-		<url>https://github.com/elastest/full-teaching</url>
-		<connection>scm:git:https://github.com/elastest/full-teaching</connection>
-		<developerConnection>scm:git://git@github.com:elastest/full-teaching</developerConnection>
-		<tag>no-Elastest</tag>
-	</scm>
+    </properties>
 
-	<!-- Distribution management -->
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
+    <scm>
+        <url>https://github.com/elastest/full-teaching</url>
+        <connection>scm:git:https://github.com/elastest/full-teaching</connection>
+        <developerConnection>scm:git://git@github.com:elastest/full-teaching</developerConnection>
+        <tag>no-Elastest</tag>
+    </scm>
 
-	<dependencies>
-		<!-- Test dependencies -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>5.4.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-params</artifactId>
-			<version>5.4.0</version>
-		</dependency>
+    <!-- Distribution management -->
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
-
-		<!-- SELENIUM <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-java</artifactId> 
-			<version>3.14.0</version> <scope>test</scope> </dependency> <dependency> 
-			<groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-remote-driver</artifactId> 
-			<version>3.14.0</version> </dependency> -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.github.bonigarcia</groupId>
-			<artifactId>selenium-jupiter</artifactId>
-			<version>${selenium-jupiter.version}</version>
-			<scope>test</scope>
-		</dependency>
-		
-
-		<dependency>
-			<groupId>io.github.bonigarcia</groupId>
-			<artifactId>webdrivermanager</artifactId>
-			<version>3.3.0</version>
-		</dependency>
+    <dependencies>
+        <!-- Test dependencies -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>5.4.0</version>
+        </dependency>
 
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency>
+        <!-- SELENIUM <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-java</artifactId>
+            <version>3.14.0</version> <scope>test</scope> </dependency> <dependency>
+            <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-remote-driver</artifactId>
+            <version>3.14.0</version> </dependency> -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>selenium-jupiter</artifactId>
+            <version>3.3.4</version>
+            <scope>test</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency>
 
-	</dependencies>
-	<!-- Plugins -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>3.8.0</version>
+            <scope>test</scope>
+        </dependency>
 
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven-surefire-plugin.version}</version>
-				<configuration>
-					<excludes>com.fullteaching.e2e.no_elastest.common.*</excludes>
-				</configuration>
-			</plugin>
-			
-			<!--Added-->
-			<plugin>
-			
-			
-							<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
 
-				<!-- ONLY ON DEVELOPMENT -->
-				<dependencies>
-					<dependency>
-						<groupId>org.springframework</groupId>
-						<artifactId>springloaded</artifactId>
-						<version>1.2.6.RELEASE</version>
-					</dependency>
-				</dependencies>
-				<!-- ONLY ON DEVELOPMENT -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
+        </dependency>
 
-			</plugin>
 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.6.0</version>
-				<configuration>
-					<mainClass>com.fullteaching.backend.Application</mainClass>
-				</configuration>
-			</plugin>
+        <!-- RETORCH DEPENDENCY-->
+        <dependency>
+            <groupId>giis</groupId>
+            <artifactId>retorch-develop</artifactId>
+            <version>[1.0.0,)</version>
+        </dependency>
 
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId>
-				<version>0.4.13</version>
-				<configuration>
-					<imageName>codeurjc/${project.artifactId}</imageName>
-					<imageTags>
-						<imageTag>latest</imageTag>
-					</imageTags>
-					<serverId>docker-hub</serverId>
-					<dockerDirectory>src/main/docker</dockerDirectory>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.war</include>
-						</resource>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>src/main/docker</directory>
-							<include>init.sh</include>
-						</resource>
-					</resources>
-				</configuration>
-			</plugin>
+        <!-- END RETORCH DEPENDENCY-->
 
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>src/main/ebextensions</directory>
-							<targetPath>.ebextensions</targetPath>
-							<filtering>true</filtering>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven-surefire-plugin.version}</version>
-</plugin>
+    </dependencies>
+    <!-- Plugins -->
 
-<!-- Added -->
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <excludes>com.fullteaching.e2e.no_elastest.common.*</excludes>
+                </configuration>
+            </plugin>
+
+            <!--Added-->
+            <plugin>
+
+
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <!-- ONLY ON DEVELOPMENT -->
+                <dependencies>
+                    <dependency>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>springloaded</artifactId>
+                        <version>1.2.6.RELEASE</version>
+                    </dependency>
+                </dependencies>
+                <!-- ONLY ON DEVELOPMENT -->
+
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <mainClass>com.fullteaching.backend.Application</mainClass>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>0.4.13</version>
+                <configuration>
+                    <imageName>codeurjc/${project.artifactId}</imageName>
+                    <imageTags>
+                        <imageTag>latest</imageTag>
+                    </imageTags>
+                    <serverId>docker-hub</serverId>
+                    <dockerDirectory>src/com.fullteaching.e2e.no_elastest.main/docker</dockerDirectory>
+                    <resources>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>${project.build.directory}</directory>
+                            <include>${project.build.finalName}.war</include>
+                        </resource>
+                        <resource>
+                            <targetPath>/</targetPath>
+                            <directory>src/com.fullteaching.e2e.no_elastest.main/docker</directory>
+                            <include>init.sh</include>
+                        </resource>
+                    </resources>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/com.fullteaching.e2e.no_elastest.main/ebextensions</directory>
+                            <targetPath>.ebextensions</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
+
+            <!-- Added -->
+        </plugins>
+    </build>
 
 </project>

@@ -5,10 +5,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 public class Scroll {
-	public static WebDriver toElement(WebDriver wd, WebElement ele) {
-		Actions actions = new Actions(wd);
-		actions.moveToElement(ele);
-		actions.perform();
-		return wd;
-	}
+    public static WebDriver toElement(WebDriver wd, WebElement ele) {
+        Actions actions = new Actions(wd);
+        actions.moveToElement(ele);
+        actions.perform();
+        return wd;
+    }
 }

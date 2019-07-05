@@ -1,0 +1,349 @@
+pipeline {
+agent any
+ tools {
+    maven 'M3.3.9'
+    }//EndTools
+stages{
+  stage('Clone Repository') { 
+    steps{
+        dir('fullteaching') {
+            git branch: 'DevelopmentOpenViduTests',
+                         credentialsId: 'GitHub',
+                         url:'https://github.com/augustocristian/full-teaching-tunon-tests'
+                            }//endDir
+                       }//EndStep
+
+  }//EndStage
+stage('Executing Test Case oneToOneChatInSessionChrome'){
+ steps{
+   echo 'Executing Test Case oneToOneChatInSessionChrome'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EChat#oneToOneChatInSessionChrome test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+
+ }
+ }
+
+
+  stage('Executing Test Case courseRestOperations'){
+ steps{
+
+ 
+
+         echo 'Executing Test Case courseRestOperations'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#courseRestOperations test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ 
+ }}
+
+     stage('Executing Test Case courseInfoRestOperations'){
+ steps{
+
+         echo 'Executing Test Case courseInfoRestOperations'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#courseInfoRestOperations test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ 
+ }}
+   stage('Executing Test Case sessionRestOperations'){
+ steps{
+
+
+         echo 'Executing Test Case sessionRestOperations'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#sessionRestOperations test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ 
+ }}
+
+    stage('Executing Test Case forumRestOperations'){
+ steps{
+         echo 'Executing Test Case forumRestOperations'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#forumRestOperations test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+
+    stage('Executing Test Case filesRestOperations'){
+ steps{
+         echo 'Executing Test Case filesRestOperations'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#filesRestOperations test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+
+
+ }}
+
+ 
+    stage('Executing Test Case attendersRestOperations'){
+ steps{
+         echo 'Executing Test Case attendersRestOperations'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#attendersRestOperations test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+  
+    stage('Executing Test Case oneToOneVideoAudioSessionChrome'){
+ steps{
+        echo 'Executing Test Case oneToOneVideoAudioSessionChrome'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EVideoSession#oneToOneVideoAudioSessionChrome test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+  
+    stage('Executing Test Case sessionTest'){
+ steps{
+        echo 'Executing Test Case sessionTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedVideoSession#sessionTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+   stage('Executing Test Case studentCourseMainTest'){
+ steps{
+
+        echo 'Executing Test Case studentCourseMainTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=CourseStudentTest#studentCourseMainTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+
+ }}
+
+    stage('Executing Test Case teacherCourseMainTest'){
+ steps{
+
+
+        echo 'Executing Test Case teacherCourseMainTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=teacherCourseMainTest#teacherCourseMainTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+    stage('Executing Test Case teacherCreateAndDeleteCourseTest'){
+ steps{
+
+                echo 'Executing Test Case teacherCreateAndDeleteCourseTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=teacherCourseMainTest#teacherCreateAndDeleteCourseTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+
+ }}
+    stage('Executing Test Case teacherEditCourseValues'){
+ steps{
+
+                echo 'Executing Test Case teacherEditCourseValues'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=teacherCourseMainTest#teacherEditCourseValues test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+
+    stage('Executing Test Case teacherDeleteCourseTest'){
+ steps{
+                echo 'Executing Test Case teacherDeleteCourseTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=teacherCourseMainTest#teacherDeleteCourseTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+   stage('Executing Test Case forumLoadEntriesTest'){
+ steps{
+                echo 'Executing Test Case forumLoadEntriesTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedForumTest#forumLoadEntriesTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+   stage('Executing Test Case forumNewEntryTest'){
+ steps{
+                echo 'Executing Test Case forumNewEntryTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedForumTest#forumNewEntryTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+    stage('Executing Test Case forumNewCommentTest'){
+ steps{
+
+            echo 'Executing Test Case forumNewCommentTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedForumTest#forumNewCommentTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+    stage('Executing Test Case forumNewReply2CommentTest'){
+ steps{
+            echo 'Executing Test Case forumNewReply2CommentTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedForumTest#forumNewReply2CommentTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+    stage('Executing Test Case spiderLoggedTest'){
+ steps{
+            echo 'Executing Test Case spiderLoggedTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedLinksTests#spiderLoggedTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+  stage('Executing Test Case spiderUnloggedTest'){
+ steps{
+            echo 'Executing Test Case spiderUnloggedTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=UnLoggedLinksTests#spiderUnloggedTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+
+ }}
+
+   stage('Executing Test Case loginTest'){
+ steps{
+            echo 'Executing Test Case loginTest'
+        echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Waiting for the SUT...'
+        sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
+        echo 'SUT READY!'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=UserTest#loginTest test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ }}
+
+
+
+
+
+
+
+}
+ post { 
+        failure { 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+      
+}
+}
+}
