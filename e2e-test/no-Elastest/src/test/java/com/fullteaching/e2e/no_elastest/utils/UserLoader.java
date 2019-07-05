@@ -119,6 +119,8 @@ public class UserLoader {
 	        log.info("Navigating to {}", APP_URL);
 
 	        u.getDriver().get(APP_URL);
+	        //For solve some problems with certain window resolutions
+	        u.getDriver().manage().window().maximize();
 
 	        final String GLOBAL_JS_FUNCTION = "var s = window.document.createElement('script');"
 	                + "s.innerText = 'window.MY_FUNC = function(containerQuerySelector) {"
