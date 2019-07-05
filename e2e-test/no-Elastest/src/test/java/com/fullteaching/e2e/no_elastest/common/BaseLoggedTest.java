@@ -83,7 +83,7 @@ public class BaseLoggedTest {
 
 
 	public  BaseLoggedTest() {
-		// TODO Auto-generated constructor stub
+	
 
 
 		if (System.getenv("ET_EUS_API") == null) {

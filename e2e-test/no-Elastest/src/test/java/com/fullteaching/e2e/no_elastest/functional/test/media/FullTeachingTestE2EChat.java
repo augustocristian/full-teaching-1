@@ -19,6 +19,7 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,7 @@ import io.github.bonigarcia.SeleniumExtension;
  *
  * @author Pablo Fuente (pablo.fuente@urjc.es)
  */
+@Disabled
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching chat")
 @ExtendWith(SeleniumExtension.class)

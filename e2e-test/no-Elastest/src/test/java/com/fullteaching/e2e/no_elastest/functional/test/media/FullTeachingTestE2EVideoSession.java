@@ -20,6 +20,7 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -44,6 +45,7 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.*;
  *
  * @author Pablo Fuente (pablo.fuente@urjc.es)
  */
+@Disabled
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching video session")
 @ExtendWith(SeleniumExtension.class)

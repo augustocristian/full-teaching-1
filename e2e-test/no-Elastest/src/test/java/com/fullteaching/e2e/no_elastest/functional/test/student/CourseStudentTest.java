@@ -68,7 +68,7 @@ public class CourseStudentTest extends BaseLoggedTest {
     @ParameterizedTest
 	@MethodSource("data")
     public void studentCourseMainTest(String usermail, String password, String role)throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
-    	
+    
  
 		user= setupBrowser("chrome",role,usermail,100);
 		driver=user.getDriver();
