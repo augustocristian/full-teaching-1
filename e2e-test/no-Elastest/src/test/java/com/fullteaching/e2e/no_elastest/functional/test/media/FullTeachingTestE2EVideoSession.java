@@ -20,17 +20,13 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 import org.junit.Assert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
@@ -39,13 +35,12 @@ import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import io.github.bonigarcia.SeleniumExtension;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
-import static com.fullteaching.e2e.no_elastest.common.Constants.*;
+
 /**
  * E2E tests for FullTeaching video session.
  *
  * @author Pablo Fuente (pablo.fuente@urjc.es)
  */
-
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching video session")
 @ExtendWith(SeleniumExtension.class)
@@ -53,9 +48,6 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
 
     private static String TEACHER_BROWSER;
     private static String STUDENT_BROWSER;
-    
-    static Class<? extends WebDriver> chrome = ChromeDriver.class;
-    static Class<? extends WebDriver> firefox = FirefoxDriver.class;
 
     static Exception ex = null;
 
@@ -77,16 +69,16 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
 
         if (System.getenv("ET_EUS_API") == null) {
             // Outside ElasTest
-            ChromeDriverManager.getInstance(chrome).setup();
-            FirefoxDriverManager.getInstance(firefox).setup();
+       //     ChromeDriverManager.getInstance().setup();
+         //   FirefoxDriverManager.getInstance().setup();
         }
 
         if (System.getenv("ET_SUT_HOST") != null) {
-            APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":"+PORT+"/";
+            APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5000/";
         } else {
             APP_URL = System.getProperty("app.url");
             if (APP_URL == null) {
-                APP_URL = LOCALHOST;
+                APP_URL = "https://localhost:5000/";
             }
         }
 
