@@ -28,11 +28,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -63,8 +60,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 	static Class<? extends WebDriver> chrome = ChromeDriver.class;
 	static Class<? extends WebDriver> firefox = FirefoxDriver.class;
 
-    private static String TEACHER_BROWSER;
-    private static String STUDENT_BROWSER;
+
 
 	final static  Logger log = getLogger(lookup().lookupClass());
 	public static Stream<Arguments> data() throws IOException {
@@ -77,49 +73,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 	    }
 
 
-	  @BeforeAll()
-	    static void setupAll() {
-
-	        if (System.getenv("ET_EUS_API") == null) {
-	            // Outside ElasTest
-	           // ChromeDriverManager.getInstance().setup();
-	            //FirefoxDriverManager.getInstance().setup();
-	        }
-
-	        if (System.getenv("ET_SUT_HOST") != null) {
-	            APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5000/";
-	        } else {
-	            APP_URL = System.getProperty("app.url");
-	            if (APP_URL == null) {
-	                APP_URL = "https://localhost:5000/";
-	            }
-	        }
-
-	        TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
-	        STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
-	        if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
-	            TEACHER_BROWSER = CHROME;
-	        }
-
-	        if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
-	            STUDENT_BROWSER = CHROME;
-	        }
-
-	        log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
-	    }
-
-	    @AfterEach
-	    void dispose(TestInfo info) {
-	        try {
-	            this.logout(user);
-	            user.dispose();
-	        } finally {
-	            log.info("##### Finish test: "
-	                    + info.getTestMethod().get().getName());
-	        }
-	    }
-
+	
 
 
 
