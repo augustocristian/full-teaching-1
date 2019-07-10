@@ -47,7 +47,7 @@ import com.fullteaching.e2e.no_elastest.utils.Wait;
 import io.github.bonigarcia.seljup.DriverCapabilities;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 
-//@Disabled
+@Disabled
 public class LoggedVideoSession{
 
 	//1 teacher

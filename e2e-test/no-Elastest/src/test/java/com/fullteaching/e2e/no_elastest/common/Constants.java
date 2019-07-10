@@ -6,7 +6,7 @@ import org.openqa.selenium.Keys;
 
 public final class Constants {
 	
-	public static final String LOCALHOST = "https://host.docker.internal:5001";
+	public static final String LOCALHOST = "https://host.docker.internal:5000";
 
 	public static final String COURSES_URL = "__HOST__/courses";
 	   

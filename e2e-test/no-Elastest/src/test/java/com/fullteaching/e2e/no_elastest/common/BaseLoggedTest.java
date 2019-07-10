@@ -41,7 +41,7 @@ public class BaseLoggedTest {
     protected static String user;
     protected static String password;
 
-    protected final Logger log = getLogger(lookup().lookupClass());
+    protected final static Logger log = getLogger(lookup().lookupClass());
 
     public WebDriver driver;
 
