@@ -97,6 +97,13 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!-- ESTO ES PARA EL RUNNER -->
+		<dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-runner</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
 <!-- ESTO ES PARA EL LAUNCHER -->
 <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher -->
 <dependency>

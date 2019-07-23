@@ -2,10 +2,12 @@ package com.fullteaching.e2e.flakyexperimentation;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.logging.*;
 
@@ -26,49 +28,61 @@ import com.fullteaching.e2e.no_elastest.functional.test.UserTest;
 
 
 public class TestLoader {
-	
+
 	Logger logger;
 	public static void main(String [] args) {
-		
-		
-		Logger logger = Logger.getLogger("MyLog");  
-	    FileHandler fh;  
+		Runtime runtime = Runtime.getRuntime();
 
-	    try {  
+		Logger logger = Logger.getLogger("SevillaLog");  
+		FileHandler fh;  
+		PrintStream ps; 
 
-	        // This block configure the logger with handler and formatter  
-	        fh = new FileHandler("C:/temp/test/MyLogFile.log");  
-	        logger.addHandler(fh);
-	        SimpleFormatter formatter = new SimpleFormatter();  
-	        fh.setFormatter(formatter);  
+		try {  
 
-	        // the following statement is used to log any messages  
-	        logger.info("My first log");  
 
-	    } catch (SecurityException e) {  
-	        e.printStackTrace();  
-	    } catch (IOException e) {  
-	        e.printStackTrace();  
-	    }  
+			// This block configure the logger with handler and formatter  
+			DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+			String datefile=timeStampPattern.format(java.time.LocalDateTime.now());
 
-	    logger.info("Hi How r u?");  
-	    
-	    // Discover and filter tests
-	    LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder
-	            .request()
-	            .selectors(selectPackage("io.github.bonigarcia"),
-	                    selectClass(UserTest.class))
-	            .filters(includeClassNamePatterns(".*Test")).build();
+			fh = new FileHandler("C:/logssevilla/logUserTest"+datefile+".log");  
+			logger.addHandler(fh);
+			PrintStream stream= new PrintStream("C:/logssevilla/logUserTest"+datefile+".log");
+			System.setOut(stream);
 
-	    Launcher launcher = LauncherFactory.create();
-	    TestPlan plan = launcher.discover(request);
+			SimpleFormatter formatter = new SimpleFormatter();  
+			fh.setFormatter(formatter);  
+			logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
 
-	    // Executing tests
-	    TestExecutionListener listener = new SummaryGeneratingListener();
-	    launcher.registerTestExecutionListeners(listener);
+			// the following statement is used to log any messages  
+			logger.info("My first log");  
 
-	    launcher.execute(request, listener);
-		
+		} catch (SecurityException e) {  
+			e.printStackTrace();  
+		} catch (IOException e) {  
+			e.printStackTrace();  
+		}  
+		logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d \n   ",runtime.freeMemory(),runtime.maxMemory()));
+		logger.info("Hi How r u?");  
+
+		// Discover and filter tests
+		LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder
+				.request()
+				.selectors(selectPackage("io.github.bonigarcia"),
+						selectClass(UserTest.class))
+				.filters(includeClassNamePatterns(".*Test")).build();
+
+		Launcher launcher = LauncherFactory.create();
+		TestPlan plan = launcher.discover(request);
+
+		// Executing tests
+		TestExecutionListener listener = new SummaryGeneratingListener();
+		launcher.registerTestExecutionListeners(listener);
+
+		launcher.execute(request, listener);
+		logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d   ",runtime.freeMemory(),runtime.maxMemory()));
+
+		//logger.info();
+
 	}
 
 }
