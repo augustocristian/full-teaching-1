@@ -1,7 +1,14 @@
+ls
+$PATHORIGEN=Get-Location
 mkdir C:/sevillarepos
-cd C:/sevillarepos
-git clone https://github.com/augustocristian/full-teaching-tunon-tests.git
+Set-Location C:/sevillarepos
 git clone https://github.com/OpenVidu/full-teaching.git
-cd full-teaching
-docker-compose up
-cd ..
+Set-Location full-teaching
+Start-Process docker-compose up
+Set-Location $PATHORIGEN
+ls
+cd C:/Users/crist/Escritorio/full-teaching-tunon-tests/e2e-test/no-Elastest
+mvn install -DskipTests
+java -jar C:/Users/crist/Escritorio/full-teaching-tunon-tests/e2e-test/no-Elastest/target
+
+
