@@ -34,6 +34,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.platform.runner.JUnitPlatform;
+import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -126,6 +128,7 @@ public void addCsVTouple (Date datetime, long memoryused,long memoryavalible) {
      * This test is a simple logging ackenoledgment, that checks if the current logged user
      * was logged correctly
      */ 
+
 	@ParameterizedTest
 	@MethodSource("data")
 	public void loginTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {

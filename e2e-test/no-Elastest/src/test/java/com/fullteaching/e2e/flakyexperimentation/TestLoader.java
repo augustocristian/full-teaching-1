@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.function.Supplier;
 import java.util.logging.*;
 
 import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNamePatterns;
@@ -18,6 +19,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPacka
 import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TestExecutionListener;
+import org.junit.platform.launcher.TestIdentifier;
 import org.junit.platform.launcher.TestPlan;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
@@ -46,12 +48,12 @@ public class TestLoader {
 
 			fh = new FileHandler("C:/logssevilla/logUserTest"+datefile+".log");  
 			logger.addHandler(fh);
-			PrintStream stream= new PrintStream("C:/logssevilla/logUserTest"+datefile+".log");
-			System.setOut(stream);
+		//	PrintStream stream= new PrintStream("C:/logssevilla/logUserTest"+datefile+".log");
+			//System.setOut(stream);
 
 			SimpleFormatter formatter = new SimpleFormatter();  
 			fh.setFormatter(formatter);  
-			logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
+		//	logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
 
 			// the following statement is used to log any messages  
 			logger.info("My first log");  
@@ -73,14 +75,19 @@ public class TestLoader {
 
 		Launcher launcher = LauncherFactory.create();
 		TestPlan plan = launcher.discover(request);
-
-		// Executing tests
+				// Executing tests
 		TestExecutionListener listener = new SummaryGeneratingListener();
+		TestExecutionListener listenerfallos = new TestExecutionListener() {
+		};
 		launcher.registerTestExecutionListeners(listener);
 
 		launcher.execute(request, listener);
 		logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d   ",runtime.freeMemory(),runtime.maxMemory()));
 
+		logger.info(String.format("Aciertos: %d, Fallos : %d ",((SummaryGeneratingListener)listener).getSummary().getTestsSucceededCount(),((SummaryGeneratingListener)listener).getSummary().getTestsFailedCount()));
+		
+
+		
 		//logger.info();
 
 	}
