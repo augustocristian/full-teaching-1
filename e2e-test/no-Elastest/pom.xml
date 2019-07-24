@@ -36,7 +36,9 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+
 		<!-- Test dependencies version -->
+		<assembly.version>2.4.1</assembly.version>
 		<junit.jupiter.version>5.0.0</junit.jupiter.version>
 		<junit.platform.version>1.0.0</junit.platform.version>
 		<selenium-jupiter.version>1.1.2</selenium-jupiter.version>
@@ -68,6 +70,11 @@
 
 	<dependencies>
 		<!-- Test dependencies -->
+		<!-- ESTO ES PARA EL LAUNCHER -->
+		<!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher -->
+	
+
+		<!-- ESTO ES PARA EL LAUNCHER -->
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
 			<artifactId>junit-jupiter-engine</artifactId>
@@ -80,39 +87,27 @@
 		</dependency>
 
 
-		<!-- SELENIUM <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-java</artifactId> 
-			<version>3.14.0</version> <scope>test</scope> </dependency> <dependency> 
-			<groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-remote-driver</artifactId> 
-			<version>3.14.0</version> </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
-			<scope>test</scope>
+
 		</dependency>
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>selenium-jupiter</artifactId>
 			<version>${selenium-jupiter.version}</version>
-			<scope>test</scope>
+
 		</dependency>
-		
+
 		<!-- ESTO ES PARA EL RUNNER -->
 		<dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-runner</artifactId>
-            <version>${junit.platform.version}</version>
-            <scope>test</scope>
-        </dependency>
-<!-- ESTO ES PARA EL LAUNCHER -->
-<!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher -->
-<dependency>
-    <groupId>org.junit.platform</groupId>
-    <artifactId>junit-platform-launcher</artifactId>
-    <version>1.3.2</version>
-    <scope>test</scope>
-</dependency>
-<!-- ESTO ES PARA EL LAUNCHER -->
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-runner</artifactId>
+			<version>${junit.platform.version}</version>
+
+		</dependency>
+
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
@@ -124,34 +119,33 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
-			<scope>test</scope>
+
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>${slf4j.version}</version>
-			<scope>test</scope>
-		</dependency>
 
+		</dependency>
+	<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-launcher</artifactId>
+			<version>1.3.2</version>
+
+		</dependency>
 	</dependencies>
 	<!-- Plugins -->
 
 	<build>
 		<plugins>
+
+
+			<!--Added -->
 			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>${maven-surefire-plugin.version}</version>
-				<configuration>
-					<excludes>com.fullteaching.e2e.no_elastest.common.*</excludes>
-				</configuration>
-			</plugin>
-			
-			<!--Added-->
-			<plugin>
-			
-			
-							<groupId>org.springframework.boot</groupId>
+
+
+				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 
 				<!-- ONLY ON DEVELOPMENT -->
@@ -201,25 +195,87 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>src/main/ebextensions</directory>
-							<targetPath>.ebextensions</targetPath>
-							<filtering>true</filtering>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
-</plugin>
+			</plugin>
+			<!--Building a executable jar -->
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/libs
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<!-- Build an executable JAR -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>test-jar</goal>
+						</goals>
+					</execution>
 
-<!-- Added -->
+				</executions>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							 <classpathPrefix>libs/</classpathPrefix>
+
+							<mainClass>com.fullteaching.e2e.flakyexperimentation.TestLoader</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+
+			</plugin>
+			<!-- Added -->
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${assembly.version}</version>
+
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>libs/</classpathPrefix>
+							<mainClass>com.fullteaching.e2e.flakyexperimentation.TestLoader</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
