@@ -48,21 +48,8 @@ public class TestLoader {
 		// This block configure the logger with handler and formatter  
 		DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 		String datefile=timeStampPattern.format(java.time.LocalDateTime.now());
-		//	System.out.print("EL NOMBRE DEL ARCHIVO \n"+namearchivo+"\n");
+	
 		String filename="C:/logssevilla/salidaconfigurations.csv";
-		//	fh = new FileHandler();  
-		//logger.addHandler(fh);
-
-
-		//	SimpleFormatter formatter = new SimpleFormatter();  
-		//fh.setFormatter(formatter);  
-
-		// the following statement is used to log any messages  
-		//logger.info("My first log");  
-
-
-		//	logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d \n   ",runtime.freeMemory(),runtime.maxMemory()));
-		//logger.info("Hi How r u?");  
 
 
 		// Discover and filter tests
@@ -99,7 +86,8 @@ public class TestLoader {
 
 		if(((SummaryGeneratingListener)listener).getSummary().getTestsFailedCount()>0)
 			nfallos=1;
-		output.append(String.format("%s;%s;%s;%d;%d;%s \n",splittedconf[0],splittedconf[1],splittedconf[2],nfallos,(endTime-startTime),dateFormat. format(date)));
+		output.append(String.format("%s;%s;%s;%d;%d;%s \n",splittedconf[0],splittedconf[1],
+				splittedconf[2],nfallos,(endTime-startTime)/ 1000000,dateFormat. format(date)));
 
 		try {
 			csvWriter = new FileWriter(filename,true);

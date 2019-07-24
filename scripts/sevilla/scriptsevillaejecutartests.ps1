@@ -5,9 +5,19 @@ mvn install -DskipTests
 Set-Location C:\Users\crist\Escritorio\full-teaching-tunon-tests\e2e-test\no-Elastest
 $x = @("800", "1920")
 $y = @("600", "1080")
-$menmax = @("-Xms256m", "-Xms512m")
-$memin = @("-Xms256m", "-Xmx512m")
-$processafinity = @('0001', '0111')
+$menmax = @("-Xmx256m", "-Xmx512m")
+$memin = @("-Xms256m", "-Xms512m")
+[flags()] Enum Cores {
+    Core1 = 0x0001
+    Core2 = 0x0002
+    Core3 = 0x0004
+    Core4 = 0x0008
+    Core5 = 0x0010
+    Core6 = 0x0020
+    Core7 = 0x0040
+    Core8 = 0x0080
+  }
+$processafinity = @( [int][cores]'core1',  [int][cores]'core1,core2,core3')
 
 try {
     [console]::TreatControlCAsInput = $true
