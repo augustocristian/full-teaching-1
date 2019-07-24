@@ -87,7 +87,7 @@ public class TestLoader {
 		//logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d   ",runtime.freeMemory(),runtime.maxMemory()));
 
 	//	logger.info(String.format("Aciertos: %d, Fallos : %d ",((SummaryGeneratingListener)listener).getSummary().getTestsSucceededCount(),((SummaryGeneratingListener)listener).getSummary().getTestsFailedCount()));
-		String [] splittedconf=configurations.split("+");
+		String [] splittedconf=configurations.split("&");
 		int nfallos=0;
 		
 		
