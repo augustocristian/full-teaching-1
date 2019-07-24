@@ -14,7 +14,7 @@ try {
     For ($p = 0; $p -le 1; $p++) {
         For ($i = 0; $i -le 1; $i++) {
             For ($j = 0; $j -le 1; $j++) {
-                $namearchivo="$($x[$i])x$($y[$j])-$($memin[$i])-Windows10-$($processafinity[$p])"
+                $namearchivo="$($x[$i])x$($y[$j])+$($memin[$i])+Windows10+$($processafinity[$p])"
                 C:\Users\crist\Escritorio\full-teaching-tunon-tests\scripts\sevilla\QRes.exe /x:$($x[$i]) /y:$($y[$i])
 
                 Start-Sleep 5

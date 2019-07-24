@@ -1,6 +1,7 @@
 package com.fullteaching.e2e.flakyexperimentation;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
@@ -8,6 +9,7 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.function.Supplier;
 import java.util.logging.*;
@@ -38,33 +40,30 @@ public class TestLoader {
 		Logger logger = Logger.getLogger("SevillaLog");  
 		FileHandler fh;  
 		PrintStream ps; 
+		String configurations= args[0];
+		FileWriter csvWriter = null;
+		StringBuilder output= new StringBuilder();
 
-		try {  
+
+		// This block configure the logger with handler and formatter  
+		DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+		String datefile=timeStampPattern.format(java.time.LocalDateTime.now());
+		//	System.out.print("EL NOMBRE DEL ARCHIVO \n"+namearchivo+"\n");
+		String filename="C:/logssevilla/salidaconfigurations.csv";
+		//	fh = new FileHandler();  
+		//logger.addHandler(fh);
 
 
-			// This block configure the logger with handler and formatter  
-			DateTimeFormatter timeStampPattern = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-			String datefile=timeStampPattern.format(java.time.LocalDateTime.now());
+		//	SimpleFormatter formatter = new SimpleFormatter();  
+		//fh.setFormatter(formatter);  
 
-			fh = new FileHandler("C:/logssevilla/logUserTest"+datefile+".log");  
-			logger.addHandler(fh);
-		//	PrintStream stream= new PrintStream("C:/logssevilla/logUserTest"+datefile+".log");
-			//System.setOut(stream);
+		// the following statement is used to log any messages  
+		//logger.info("My first log");  
 
-			SimpleFormatter formatter = new SimpleFormatter();  
-			fh.setFormatter(formatter);  
-		//	logger.addHandler(new StreamHandler(System.out, new SimpleFormatter()));
 
-			// the following statement is used to log any messages  
-			logger.info("My first log");  
+		//	logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d \n   ",runtime.freeMemory(),runtime.maxMemory()));
+		//logger.info("Hi How r u?");  
 
-		} catch (SecurityException e) {  
-			e.printStackTrace();  
-		} catch (IOException e) {  
-			e.printStackTrace();  
-		}  
-		logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d \n   ",runtime.freeMemory(),runtime.maxMemory()));
-		logger.info("Hi How r u?");  
 
 		// Discover and filter tests
 		LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder
@@ -75,21 +74,49 @@ public class TestLoader {
 
 		Launcher launcher = LauncherFactory.create();
 		TestPlan plan = launcher.discover(request);
-				// Executing tests
+		// Executing tests
 		TestExecutionListener listener = new SummaryGeneratingListener();
 		TestExecutionListener listenerfallos = new TestExecutionListener() {
 		};
 		launcher.registerTestExecutionListeners(listener);
-
+		long startTime = System.nanoTime();
 		launcher.execute(request, listener);
-		logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d   ",runtime.freeMemory(),runtime.maxMemory()));
-
-		logger.info(String.format("Aciertos: %d, Fallos : %d ",((SummaryGeneratingListener)listener).getSummary().getTestsSucceededCount(),((SummaryGeneratingListener)listener).getSummary().getTestsFailedCount()));
-		
+		long endTime = System.nanoTime();
 
 		
+		//logger.info(String.format("STATS \n La memoria libre es %d \n La memoria empleada es %d   ",runtime.freeMemory(),runtime.maxMemory()));
+
+	//	logger.info(String.format("Aciertos: %d, Fallos : %d ",((SummaryGeneratingListener)listener).getSummary().getTestsSucceededCount(),((SummaryGeneratingListener)listener).getSummary().getTestsFailedCount()));
+		String [] splittedconf=configurations.split("+");
+		int nfallos=0;
+		
+		
+
+		//get the current date
+		Calendar cal = Calendar. getInstance();
+		Date date=cal. getTime();
+		DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
+		if(((SummaryGeneratingListener)listener).getSummary().getTestsFailedCount()>0)
+			nfallos=1;
+		output.append(String.format("%s;%s;%s;%d;%d;%s \n",splittedconf[0],splittedconf[1],splittedconf[2],nfallos,(endTime-startTime),dateFormat. format(date)));
+
+		try {
+			csvWriter = new FileWriter(filename,true);
+			csvWriter.append(output.toString());
+			 csvWriter.flush();
+			csvWriter.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		//logger.info();
 
+		
+		
+		
 	}
+	
 
 }

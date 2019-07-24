@@ -61,7 +61,7 @@ public class UserTest extends BaseLoggedTest {
 	
 
 	public static Stream<Arguments> data() throws IOException {
-		SetUpLogs();
+		//SetUpLogs();
         return ParameterLoader.getTestUsers();
     }
 	
@@ -121,7 +121,7 @@ public void addCsVTouple (Date datetime, long memoryused,long memoryavalible) {
 	//Uso de CPU
 	String line= String.format(datetime.toGMTString()+",%d,%d,%f \n", memoryused,memoryavalible,cpuUsage);
 	
-	logger.log(Level.INFO,line);
+	//logger.log(Level.INFO,line);
 }
 	
     /**
