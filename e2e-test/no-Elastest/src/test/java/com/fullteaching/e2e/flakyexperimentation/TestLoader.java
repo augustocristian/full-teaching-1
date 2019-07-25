@@ -86,8 +86,8 @@ public class TestLoader {
 
 		if(((SummaryGeneratingListener)listener).getSummary().getTestsFailedCount()>0)
 			nfallos=1;
-		output.append(String.format("%s;%s;%s;%d;%d;%s \n",splittedconf[0],splittedconf[1],
-				splittedconf[2],nfallos,(endTime-startTime)/ 1000000,dateFormat. format(date)));
+		output.append(String.format("%s;%s;%s;%d;%d;%s;%s \n",splittedconf[0],splittedconf[1],
+				splittedconf[2],nfallos,(endTime-startTime)/ 1000000,dateFormat. format(date),splittedconf[3]));
 
 		try {
 			csvWriter = new FileWriter(filename,true);
