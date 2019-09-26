@@ -70,7 +70,11 @@ public class CourseTeacherTest extends BaseLoggedTest {
      * This tests get the login the user, go the the courses and select the default
      * course.Once the user its here, it clicks upon the different tabs(Corse info,sessions,Forum,Files
      * and attenders), checking that the navigation its possible.
-     * 
+
+    @Disabled
+	@ParameterizedTest
+	@MethodSource("data")
+     * @retorch @openvidu light @mysql light
      */
     @ParameterizedTest
 	@MethodSource("data")
@@ -135,6 +139,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
      * overlapping between different test).After that, we proceed to delete thoose courses, click
      * into the edit icon, check the box that allows it and clicking into the delete button
      * After that, we proceed to check if the course dont appears in the list. 
+     * @retorch @openvidu medium @mysql light
      * 
      */ 
     @ParameterizedTest
@@ -229,6 +234,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
      * course forum is enabled/disbled, to proceed to check if allows disable/enable it.Finally
      * this test check if the current user, that is accessing to the course, is included
      * in the Attenders list( check if the user is in it)
+     * @retorch @openvidu light @mysql light
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
@@ -455,6 +461,9 @@ public class CourseTeacherTest extends BaseLoggedTest {
     @Disabled
 	@ParameterizedTest
 	@MethodSource("data")
+    /**
+     * @retorch @openvidu heavy @mysql light
+     * **/
     public void teacherDeleteCourseTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
     
