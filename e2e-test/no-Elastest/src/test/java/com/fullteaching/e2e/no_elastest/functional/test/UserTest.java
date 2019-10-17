@@ -50,6 +50,9 @@ public class UserTest extends BaseLoggedTest {
     /**
      * This test is a simple logging ackenoledgment, that checks if the current logged user
      * was logged correctly
+     * 
+	@retorch @openvidu light @mysql light
+	
      */ 
 	@ParameterizedTest
 	@MethodSource("data")

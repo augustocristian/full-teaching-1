@@ -185,7 +185,9 @@ public class LoggedVideoSession extends BaseLoggedTest {
     public static Collection<String[]> data() throws IOException {
         return ParameterLoader.sessionParameters();
     }
-
+    /**
+	* @retorch @openvidu heavy @mysql light
+	*/
 	@ParameterizedTest
 	@MethodSource("data")
     public void sessionTest() {

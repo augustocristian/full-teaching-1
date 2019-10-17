@@ -68,8 +68,9 @@ public class FullTeachingTestE2EChat extends BaseLoggedTest {
 	BrowserUser user;
 
 	
-
-
+/**
+	@retorch @openvidu heavy @mysql light
+	*/
 	@Test
 	void oneToOneChatInSessionChrome() throws Exception {
 

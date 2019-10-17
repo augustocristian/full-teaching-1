@@ -139,7 +139,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
      * overlapping between different test).After that, we proceed to delete thoose courses, click
      * into the edit icon, check the box that allows it and clicking into the delete button
      * After that, we proceed to check if the course dont appears in the list. 
-     * @retorch @openvidu medium @mysql light
+     * @retorch @openvidu light @mysql light
      * 
      */ 
     @ParameterizedTest
@@ -462,7 +462,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
 	@ParameterizedTest
 	@MethodSource("data")
     /**
-     * @retorch @openvidu heavy @mysql light
+     * @retorch @openvidu light @mysql light
      * **/
     public void teacherDeleteCourseTest(String usermail, String password, String role) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 

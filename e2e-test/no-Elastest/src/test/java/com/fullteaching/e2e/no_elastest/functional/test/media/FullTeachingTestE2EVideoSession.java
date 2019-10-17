@@ -106,7 +106,9 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
                     + info.getTestMethod().get().getName());
         }
     }
-
+    /**
+	@retorch @openvidu heavy @mysql light
+	*/
     @Test
     void oneToOneVideoAudioSessionChrome() throws Exception {
         String testName = new Object() {

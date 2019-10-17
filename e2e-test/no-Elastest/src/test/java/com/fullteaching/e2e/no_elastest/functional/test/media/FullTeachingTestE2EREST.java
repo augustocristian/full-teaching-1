@@ -100,8 +100,11 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
 		}
 	}
 
-	/*** Test methods ***/
 
+	
+/**
+	@retorch @openvidu light @mysql light
+	*/
 	@Test
 	void courseRestOperations() throws Exception {
 
@@ -151,7 +154,10 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
 		log.info("Course information succesfully updated");
 
 	}
-
+	
+	/**
+	@retorch @openvidu light @mysql light
+	*/
 	@Test
 	void sessionRestOperations() throws Exception {
 
@@ -263,7 +269,10 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
 		log.info("Session successfully deleted");
 
 	}
-
+	
+	/**
+	@retorch @openvidu light @mysql light
+	*/
 	@Test
 	void forumRestOperations() throws Exception {
 
@@ -360,6 +369,9 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
 
 	}
 
+	/**
+	@retorch @openvidu light @mysql light
+	*/
 	@Test
 	void filesRestOperations() throws Exception {
 
@@ -500,7 +512,10 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
 		log.info("File group successfully deleted");
 
 	}
-
+	
+	/**
+	@retorch @openvidu light @mysql light
+	*/
 	@Test
 	void attendersRestOperations() throws Exception {
 

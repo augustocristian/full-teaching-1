@@ -32,7 +32,9 @@ abstract public class UnLoggedLinksTests {
 	            host = appHost;
 	        }
 	 }
-
+	 /**
+	 @retorch @openvidu light @mysql light
+	*/
 	@Test
 	public void spiderUnloggedTest() {
 		/*navigate from home*/

@@ -83,7 +83,9 @@ public class LoggedForumTest extends BaseLoggedTest {
 	 *  and looks if its enable.If its enable, load all the entries and checks for 
 	 *  someone that have comments on it.Finally, with the two previous conditions,
 	 *  makes a assertequals to ensure that both are accomplisment
-
+ 
+	 *@retorch @openvidu light @mysql light
+	
 	 */ 
 	@ParameterizedTest
 	@MethodSource("data")
@@ -161,6 +163,9 @@ public class LoggedForumTest extends BaseLoggedTest {
 	 * a new entry with the previous created title and content. Secondly, we ensure that
 	 * the entry was created correctly and ensures that there are only one comment that 
 	 * correponds with the body of that entry. 
+	 *  
+	 @retorch @openvidu light @mysql light
+	
 	 */ 
 	@ParameterizedTest
 	@MethodSource("data")
@@ -241,6 +246,9 @@ public class LoggedForumTest extends BaseLoggedTest {
 	 * once we are into the entry, we looks for the new comment button, making a new comment
 	 * in this entry with the custom content(the current date and hour).Finally, we iterate 
 	 * over all comments looking for the comment that previously we create. 
+	 
+	 @retorch @openvidu light @mysql light
+	
 	 */ 
 	@ParameterizedTest
 	@MethodSource("data")
@@ -327,7 +335,9 @@ public class LoggedForumTest extends BaseLoggedTest {
 	 * first comment of it ( the content of it).In the other hand if there are entries
 	 * previously created, go to the first and replies to the same comment.After it, we check
 	 * that the comment was correctly published.
-	 * 
+	 *  
+	 @retorch @openvidu light @mysql light
+	
 	 */ 
 	@ParameterizedTest
 	@MethodSource("data")

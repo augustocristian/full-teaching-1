@@ -65,7 +65,8 @@ public class LoggedLinksTests extends BaseLoggedTest {
      * This test get logged the user and checks the navigation by URL works correctly.First
      * get all the possible URLS for the current user for after it iterate over them checking
      * that the response of the rest service was KO
-     * 
+     *  
+	 * @retorch @openvidu light @mysql light
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
