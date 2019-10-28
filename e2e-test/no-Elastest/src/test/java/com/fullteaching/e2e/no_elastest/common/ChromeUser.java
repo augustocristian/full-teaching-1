@@ -42,7 +42,10 @@ public class ChromeUser extends BrowserUser {
 		options.addArguments("--auto-select-desktop-capture-source=Entire screen");
 		
 		options.addArguments("--disable-notifications");
-
+		//Testing the different options
+		
+		options.addArguments("--window-size=1920,1080");
+		//Testing the different options
 		String eusApiURL = System.getenv("ET_EUS_API");
 		
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();

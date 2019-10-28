@@ -158,7 +158,8 @@ public class BaseLoggedTest {
 				+ "window.document.head.appendChild(s);";
 
 		u.runJavascript(GLOBAL_JS_FUNCTION);
-		u.getDriver().manage().window().maximize();
+		//Fuera maximizar
+		//u.getDriver().manage().window().maximize();
 		return u;
 	}
 
