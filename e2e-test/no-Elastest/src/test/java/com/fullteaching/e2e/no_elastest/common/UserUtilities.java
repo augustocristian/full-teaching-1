@@ -68,17 +68,17 @@ public class UserUtilities {
 	public static WebDriver checkLogin(WebDriver wd, String user) throws NotLoggedException, BadUserException, ElementNotFoundException{
 		log.info("[INI]checkLogin");
 		//Wait to settings button to be present
+	
 		try {
+			WebElement settings_button  = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(SETTINGS_BUTTON));
+			
+			try {
 				log.info("url:"+wd.getCurrentUrl()+"\n IMAGEN DE LA PANTALLA DE TESTt:\n{}",
 				            SetUp.getBase64Screenshot(wd));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		try {
-			WebElement settings_button  = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(SETTINGS_BUTTON));
-			
-			  
 			wd = Click.element(wd, settings_button);
 		}catch(TimeoutException toe) {
 			throw new NotLoggedException(toe.getMessage());
