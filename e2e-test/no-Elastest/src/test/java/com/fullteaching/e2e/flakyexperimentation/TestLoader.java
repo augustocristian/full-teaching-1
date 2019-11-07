@@ -18,6 +18,7 @@ import static org.junit.platform.engine.discovery.ClassNameFilter.includeClassNa
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPackage;
 
+import org.junit.platform.launcher.Launcher;
 import org.junit.platform.launcher.LauncherDiscoveryRequest;
 import org.junit.platform.launcher.TestExecutionListener;
 import org.junit.platform.launcher.TestIdentifier;
@@ -56,7 +57,7 @@ public class TestLoader {
 		LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder
 				.request()
 				.selectors(selectPackage("io.github.bonigarcia"),
-						selectClass(UserTestHeadless.class))
+						selectClass(UserTest.class))
 				.filters(includeClassNamePatterns(".*Test")).build();
 
 		Launcher launcher = LauncherFactory.create();

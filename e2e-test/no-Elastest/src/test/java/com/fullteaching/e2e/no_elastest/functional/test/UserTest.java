@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.IOException;
@@ -40,7 +41,8 @@ public class UserTest extends BaseLoggedTest {
 	public void loginTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
 		driver = rwd;
-		driver.manage().window().maximize();
+		
+		driver.manage().window().setSize(new Dimension(800, 600));
 		try {
 			driver = UserUtilities.login(driver, user, password, host);
 		
