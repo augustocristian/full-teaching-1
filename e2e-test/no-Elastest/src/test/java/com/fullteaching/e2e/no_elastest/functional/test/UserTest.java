@@ -42,7 +42,7 @@ public class UserTest extends BaseLoggedTest {
 
 		driver = rwd;
 		
-		driver.manage().window().setSize(new Dimension(800, 600));
+		driver.manage().window().setSize(new Dimension(1080, 2650));
 		try {
 			driver = UserUtilities.login(driver, user, password, host);
 		
