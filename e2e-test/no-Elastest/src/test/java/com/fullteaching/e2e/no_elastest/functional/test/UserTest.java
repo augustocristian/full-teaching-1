@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 import static io.github.bonigarcia.seljup.BrowserType.CHROME;
+import static io.github.bonigarcia.seljup.BrowserType.FIREFOX;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -38,7 +39,7 @@ public class UserTest extends BaseLoggedTest {
      */ 
 	@ParameterizedTest
 	@MethodSource("data")
-	public void loginTest(String user, String password, String role, @DockerBrowser(type = CHROME) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
+	public void loginTest(String user, String password, String role, @DockerBrowser(type = FIREFOX) RemoteWebDriver rwd) throws ElementNotFoundException, BadUserException, NotLoggedException, TimeOutExeception {
 
 		driver = rwd;
 		

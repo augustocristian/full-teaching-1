@@ -27,7 +27,7 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static java.util.logging.Level.ALL;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 import static org.openqa.selenium.remote.CapabilityType.LOGGING_PREFS;
-import static org.openqa.selenium.remote.DesiredCapabilities.chrome;
+import static org.openqa.selenium.remote.DesiredCapabilities.*;
 import static org.slf4j.LoggerFactory.getLogger;
 
 public class BaseLoggedTest {
@@ -48,7 +48,7 @@ public class BaseLoggedTest {
     protected Properties properties;
 
     @DriverCapabilities
-    DesiredCapabilities capabilities = chrome();
+    DesiredCapabilities capabilities = firefox();
 
     {
         LoggingPreferences logPrefs = new LoggingPreferences();
