@@ -139,6 +139,11 @@ public class BaseLoggedTest {
 			u = new FirefoxUser(userIdentifier, secondsOfWait, testName,
 					userIdentifier);
 			break;
+			
+		case "edge":
+			u = new EdgeUser(userIdentifier, secondsOfWait, testName,
+					userIdentifier);
+			break;
 		default:
 			u = new ChromeUser(userIdentifier, secondsOfWait, testName,
 					userIdentifier);

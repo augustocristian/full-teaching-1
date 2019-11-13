@@ -50,7 +50,8 @@ public class UserTest extends BaseLoggedTest {
 	
 	public static final String CHROME = "chrome";
 	public static final String FIREFOX = "firefox";
-
+	public static final String EDGE = "edge";
+	
 	WebDriver driver;
 	static Logger logger ;
 	
@@ -135,7 +136,7 @@ public void addCsVTouple (Date datetime, long memoryused,long memoryavalible) {
 		Runtime runtime = Runtime.getRuntime();
 		
 		addCsVTouple(Calendar.getInstance().getTime(), runtime.maxMemory(), runtime.freeMemory());
-		user= setupBrowser("chrome",role,usermail,100);
+		user= setupBrowser(EDGE,role,usermail,100);
 		driver=user.getDriver();
 		try {
 			this.slowLogin(user, usermail, password);
