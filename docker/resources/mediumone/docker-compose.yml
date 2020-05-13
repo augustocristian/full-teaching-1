@@ -2,13 +2,13 @@ version: '3'
 
 services:
 
-  full-teaching-mysql-medium:
+  full-teaching-mysql-mediumone:
     image: mysql:5.7.22
     environment:
       - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_DATABASE=full_teaching
 
-  full-teaching-light-openvidu-server-kms:
+  full-teaching-light-openvidu-server-kms-mediumone:
     image: eexit/mirror-http-server
     ports:
       - 4443:80
@@ -16,24 +16,24 @@ services:
       - openvidu.secret=MY_SECRET
       - openvidu.publicurl=docker
 
-  full-teaching:
+  full-teaching-mediumone:
     image: codeurjc/full-teaching:2.3.0
     depends_on:
-      - full-teaching-mysql-medium
-      - full-teaching-light-openvidu-server-kms
+      - full-teaching-mysql-mediumone
+      - full-teaching-light-openvidu-server-kms-mediumone
     ports:
       - 5002:5001
     environment:
-      - WAIT_HOSTS=full-teaching-mysql-medium:3306
+      - WAIT_HOSTS=full-teaching-mysql-mediumone:3306
       - WAIT_HOSTS_TIMEOUT=60
-      - MYSQL_PORT_3306_TCP_ADDR=full-teaching-mysql-medium
+      - MYSQL_PORT_3306_TCP_ADDR=full-teaching-mysql-mediumone
       - MYSQL_PORT_3306_TCP_PORT=3306
       - MYSQL_ENV_MYSQL_DATABASE=full_teaching
       - MYSQL_ENV_MYSQL_USER=root
       - MYSQL_ENV_MYSQL_PASSWORD=pass
       - server.port=5001
-      - openvidu.url=https://full-teaching-openvidu-server-kms:4443
+      - openvidu.url=https://full-teaching-light-openvidu-server-kms-mediumone:4443
       - openvidu.secret=MY_SECRET
 networks:
-  fullteaching-medium:
+  fullteaching-mediumone:
     driver: bridge

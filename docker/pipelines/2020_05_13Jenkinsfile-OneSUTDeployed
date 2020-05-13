@@ -1,0 +1,48 @@
+node {
+   def mvnHome
+   stage('Preparation') { // for display purposes
+      // Get some code from a GitHub repository
+        git branch: 'DevelopmentOpenViduTests',
+                    credentialsId: 'GitHub',
+                    url: 'https://github.com/augustocristian/full-teaching-tunon-tests'
+
+      // Get the Maven tool.
+      // ** NOTE: This 'M3' Maven tool must be configured
+      // **       in the global configuration.           
+     mvnHome = tool 'M3.3.9'
+     sutmediumip= "localhost"
+   }
+    try {
+        stage('Starting SUTS') {
+            sh 'cd docker/resources/heavy; ls .;docker-compose --no-ansi -p "FullTeachingHeavy" up -d'
+
+            }
+
+        stage('Build') {
+            // Run the maven build
+            withEnv(["MVN_HOME=$mvnHome"]) {
+                if (isUnix()) {
+                    sh ('cd e2e-test/no-Elastest/;ls .;"$MVN_HOME/bin/mvn" -Dapp.url=https://'+sutmediumip+':5003/ -Dtest=UserTest -B -DforkCount=0 test')
+                    } 
+                else {
+                   // bat(/'cd e2e-test\no-Elastest\;dir .;"$MVN_HOME\bin\mvn" -Dapp.url=https://'+sutmediumip+':5003/ -Dtest=UserTest -B -DforkCount=0 test'/)
+                }
+            } 
+        }
+    } finally {
+                echo 'Stopping SUT'
+              
+                sh 'cd docker/resources/heavy; ls .;docker-compose down'
+
+        }
+    
+    
+  
+   
+   
+   stage('Results') {
+      junit '**/target/surefire-reports/TEST-*.xml'
+      archiveArtifacts 'target/*.jar'
+   }
+}
+

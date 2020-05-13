@@ -16,7 +16,7 @@ services:
       - openvidu.secret=MY_SECRET
       - openvidu.publicurl=docker
 
-  full-teaching:
+  full-teaching-light:
     image: codeurjc/full-teaching:2.3.0
     depends_on:
       - full-teaching-mysql-light
