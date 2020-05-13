@@ -177,7 +177,7 @@ public class BaseLoggedTest {
 
 		if (System.getenv("ET_EUS_API") == null) {
 			// Outside ElasTest
-			ChromeDriverManager.getInstance(chrome).setup();
+			ChromeDriverManager.getInstance(chrome).version("2.46").setup();
 			FirefoxDriverManager.getInstance(firefox).setup();
 		}
 

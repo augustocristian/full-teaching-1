@@ -46,8 +46,8 @@ public class ChromeUser extends BrowserUser {
 		String eusApiURL = System.getenv("ET_EUS_API");
 		
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-		capabilities.setCapability(ChromeOptions.CAPABILITY, options);	
-		
+		capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+		capabilities.setCapability("acceptInsecureCerts", true);
 		if(eusApiURL == null) {
 			this.driver = new ChromeDriver(capabilities);	
 		} else {
