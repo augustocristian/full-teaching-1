@@ -97,8 +97,7 @@ public class LoggedVideoSession extends BaseLoggedTest {
 	public void setUp() throws BadUserException, ElementNotFoundException, NotLoggedException, TimeOutExeception {
 
 		 	log.info("[INI setUP]");
-		 	System.setProperty("webdriver.chrome.driver",
-	    	           "C:/chromedriver_win32/chromedriver.exe");
+
 	    	host = SetUp.getHost();
 	    	users_data=loadStudentsData("src/test/resources/inputs/default_user_LoggedVideoStudents.csv");
 	        log.info("Test over url: "+host);
@@ -112,12 +111,9 @@ public class LoggedVideoSession extends BaseLoggedTest {
 	        courseName="Pseudoscientific course for treating the evil eye";
 	       
 	        
-	        /*ORIGINAL
-	         *  teacher = teacher_data.split(":")[0];
-	        teacher_pass= teacher_data.split(":")[1];
-	        teacherDriver = UserLoader.allocateNewBrowser(teacher_data.split(":")[2]);
+
 	        
-	         * */
+
 	    	//check if logged with correct user
 	        teacherDriver = SetUp.loginUser(teacherDriver, host, teachermail , teacher_pass);
 	        teacherDriver = UserUtilities.checkLogin(teacherDriver, teachermail);
