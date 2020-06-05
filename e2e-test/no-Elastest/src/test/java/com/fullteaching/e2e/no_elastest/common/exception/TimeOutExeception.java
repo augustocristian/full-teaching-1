@@ -1,15 +1,15 @@
 package com.fullteaching.e2e.no_elastest.common.exception;
 
 public class TimeOutExeception extends Exception {
-	
 
-	private static final long serialVersionUID = 9200938683074869086L;
 
-	public TimeOutExeception() {
-		super();
-	}
+    private static final long serialVersionUID = 9200938683074869086L;
 
-	public TimeOutExeception(String message) {
-		super(message);
-	}
+    public TimeOutExeception() {
+        super();
+    }
+
+    public TimeOutExeception(String message) {
+        super(message);
+    }
 }
