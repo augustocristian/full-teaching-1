@@ -54,14 +54,15 @@ public class LoggedLinksTests extends BaseLoggedTest {
      * get all the possible URLS for the current user for after it iterate over them checking
      * that the response of the rest service was KO*
      */
+
+    @ParameterizedTest
+    @MethodSource("data")
     @Resource(resID = "LoginService", replaceable = {})
     @AccessMode(resID = "LoginService", concurrency = 10, sharing = true, accessMode = "READONLY")
     @Resource(resID = "OpenVidu", replaceable = {"OpenViduMock"})
     @AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "NOACCESS")
     @Resource(resID = "Course", replaceable = {})
     @AccessMode(resID = "Course", concurrency = 15, sharing = true, accessMode = "READWRITE")
-    @ParameterizedTest
-    @MethodSource("data")
     public void spiderLoggedTest(String usermail, String password, String role) {
 
 

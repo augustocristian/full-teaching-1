@@ -274,7 +274,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
         }
 
         //Go to details and edit them
-        try {//*[@id="sticky-footer-div"]/main/app-dashboard/div/div[3]/div/div[1]/ul/li[1]/div/div[2]
+        try {//*[@id="sticky-footer-div"]/com.fullteaching.e2e.no_elastest.main/app-dashboard/div/div[3]/div/div[1]/ul/li[1]/div/div[2]
 
             WebElement course = CourseNavigationUtilities.getCourseElement(driver, courseName);
             course.findElement(COURSELIST_COURSETITLE).click();
@@ -295,7 +295,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
             //wait for editor md editor???'
             WebElement editdescription_desc = Wait.notTooMuch(driver).until(ExpectedConditions.visibilityOfElementLocated(By.className(EDITDESCRIPTION_CONTENTBOX_CLASS)));
 
-            //text here?? /html/body/app/div/main/app-course-details/div/div[4]/md-tab-group/div[2]/div[1]/div/div[2]/p-editor/div/div[2]/div[1]
+            //text here?? /html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-course-details/div/div[4]/md-tab-group/div[2]/div[1]/div/div[2]/p-editor/div/div[2]/div[1]
             String old_desc = editdescription_desc.getAttribute("ng-reflect-model");
 
             //deletee old_desc
@@ -350,7 +350,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
             ////*[@id="textEditorRowButtons"]/a[2]
 
 
-            //preview? /html/body/app/div/main/app-course-details/div/div[4]/md-tab-group/div[2]/div[1]/div/div[2]/div/a[2]
+            //preview? /html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-course-details/div/div[4]/md-tab-group/div[2]/div[1]/div/div[2]/div/a[2]
             //driver.findElement(By.xpath(EDITDESCRIPTION_PREVIEWBUTTON_XPATH)).click();
             driver.findElement(By.xpath("//*[@id=\"textEditorRowButtons\"]/a[2]")).click();
 

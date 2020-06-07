@@ -336,14 +336,15 @@ public class LoggedForumTest extends BaseLoggedTest {
      * previously created, go to the first and replies to the same comment.After it, we check
      * that the comment was correctly published.
      */
+
+    @ParameterizedTest
+    @MethodSource("data")
     @Resource(resID = "LoginService", replaceable = {})
     @AccessMode(resID = "LoginService", concurrency = 10, sharing = true, accessMode = "READONLY")
     @Resource(resID = "OpenVidu", replaceable = {"OpenViduMock"})
     @AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "NOACCESS")
     @Resource(resID = "Course", replaceable = {"Forum"})
     @AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READWRITE")
-    @ParameterizedTest
-    @MethodSource("data")
     public void forumNewReply2CommentTest(String usermail, String password, String role) {
 
         user = setupBrowser("chrome", role, usermail, 100);

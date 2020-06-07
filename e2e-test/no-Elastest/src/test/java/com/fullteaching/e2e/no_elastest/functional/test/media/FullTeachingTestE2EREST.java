@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @author Pablo Fuente (pablo.fuente@urjc.es)
  */
-@Disabled
+//@Disabled
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching REST CRUD operations")
 @ExtendWith(SeleniumExtension.class)
@@ -677,7 +677,7 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
 
         courseSpan.click();
 
-        userbrowser.waitUntil(ExpectedConditions.textToBe(By.id("main-course-title"), courseName), "Unexpected course title");
+        userbrowser.waitUntil(ExpectedConditions.textToBe(By.id("com.fullteaching.e2e.no_elastest.main-course-title"), courseName), "Unexpected course title");
 
         log.info("Navigating to tab by clicking icon with id '{}'", tabId);
 

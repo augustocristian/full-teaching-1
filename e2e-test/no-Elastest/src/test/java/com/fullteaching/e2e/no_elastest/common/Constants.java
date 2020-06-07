@@ -25,7 +25,7 @@ public final class Constants {
 
 
     public static final String COURSESDASHBOARD_TITLE_CLASS = "dashboard-title";
-    public static final String FIRSTCOURSE_XPATH = "/html/body/app/div/main/app-dashboard/div/div[3]/div/div[1]/ul/li[1]/div";
+    public static final String FIRSTCOURSE_XPATH = "/html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-dashboard/div/div[3]/div/div[1]/ul/li[1]/div";
     public static final String GOTOCOURSE_XPATH = "/div[2]"; /*use with XCOURSE_XPATH+GOTOCOURSE_XPATH*/
     public static final String COURSELIST_COURSETITLE_CLASS = "course-title";
     public static final String COURSELIST_CLASS = "dashboard-col";
@@ -75,19 +75,19 @@ public final class Constants {
 
     public static final String EDITDESCRIPTION_BUTTON_ID = "edit-course-info";
     public static final String EDITDESCRIPTION_CONTENTBOX_CLASS = "ui-editor-content";
-    public static final String EDITDESCRIPTION_PREVIEWBUTTON_XPATH = "/html/body/app/div/main/app-course-details/div/div[4]/mat-tab-group/div/mat-tab-body[1]/div/div/div[2]/div/a[2]";
+    public static final String EDITDESCRIPTION_PREVIEWBUTTON_XPATH = "/html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-course-details/div/div[4]/mat-tab-group/div/mat-tab-body[1]/div/div/div[2]/div/a[2]";
 
     public static final String EDITDESCRIPTION_SAVEBUTTON_ID = "send-info-btn";
 
-    public static final String USERNAME_XPATH = "/html/body/app/div/main/app-settings/div/div[3]/div[2]/ul/li[2]/div[2]";
+    public static final String USERNAME_XPATH = "/html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-settings/div/div[3]/div[2]/ul/li[2]/div[2]";
     public static final String LOGINMENU_XPATH = "/html/body/app/div/header/navbar/div/nav/div/ul/li[2]/a";
 
     public static final String ENABLEFORUM_BUTTON_ID = "label-forum-checkbox";
     public static final String ENABLEFORUM_MODAL_SAVEBUTTON_ID = "put-modal-btn";
     public static final String ENABLEFORUM_MODAL_ID = "put-delete-modal";
 
-    public static final String ENABLECOURSE_DELETION_BUTTON_XPATH = "/html/body/app/div/main/app-dashboard/div/div[2]/div/div/form/div[2]/div/div/label";
-    public static final String DELETECOURSE_BUTTON_XPATH = "/html/body/app/div/main/app-dashboard/div/div[2]/div/div/form/div[2]/div/a";
+    public static final String ENABLECOURSE_DELETION_BUTTON_XPATH = "/html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-dashboard/div/div[2]/div/div/form/div[2]/div/div/label";
+    public static final String DELETECOURSE_BUTTON_XPATH = "/html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-dashboard/div/div[2]/div/div/form/div[2]/div/a";
 
     public static final String COURSES_BUTTON_ID = "courses-button";
     public static final String SETTINGS_BUTTON_ID = "settings-button";

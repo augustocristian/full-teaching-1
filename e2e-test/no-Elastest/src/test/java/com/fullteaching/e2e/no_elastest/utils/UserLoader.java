@@ -16,13 +16,13 @@ public class UserLoader {
     public static int PASSWORD = 1;
     public static int ROLES = 2;
 
-    private static String cvsMainFieldsSplitBy = ",";
-    private static String cvsRolesSplitBy = "\\|";
+    private static final String cvsMainFieldsSplitBy = ",";
+    private static final String cvsRolesSplitBy = "\\|";
 
     private static Map<String, User> users;
 
-    private static String usersDefaultFile = "src/test/resources/inputs/default_user_file.csv";
-    private static String oneTeacherMultipleStudentsFile = "src/test/resources/inputs/session_test_file.csv";
+    private static final String usersDefaultFile = "src/test/resources/inputs/default_user_file.csv";
+    private static final String oneTeacherMultipleStudentsFile = "src/test/resources/inputs/session_test_file.csv";
 
     public static void loadUsers(List<User> userlst, boolean override) {
         if (override == true || users == null)
@@ -57,7 +57,7 @@ public class UserLoader {
 
 
     public static User parseUser(String cvsline) {
-        String field[] = cvsline.split(cvsMainFieldsSplitBy);
+        String[] field = cvsline.split(cvsMainFieldsSplitBy);
         return new User(field[USERNAME],
                 field[PASSWORD],
                 field[ROLES]);

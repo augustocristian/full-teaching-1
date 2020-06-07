@@ -43,12 +43,7 @@ import java.util.List;
  */
 
 
-@Resource(resID = "LoginService", replaceable = {})
-@AccessMode(resID = "LoginService", concurrency = 10, sharing = true, accessMode = "READONLY")
-@Resource(resID = "OpenVidu", replaceable = {})
-@AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "READWRITE")
-@Resource(resID = "Course", replaceable = {"Configuration"})
-@AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READONLY")
+
 @Disabled
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching chat")
@@ -60,8 +55,8 @@ public class FullTeachingTestE2EChat extends BaseLoggedTest {
     static Class<? extends WebDriver> chrome = ChromeDriver.class;
     static Class<? extends WebDriver> firefox = FirefoxDriver.class;
     static Exception ex = null;
-    private static String TEACHER_BROWSER = "chrome";
-    private static String STUDENT_BROWSER = "chrome";
+    private static final String TEACHER_BROWSER = "chrome";
+    private static final String STUDENT_BROWSER = "chrome";
     final String teacherMail = "teacher@gmail.com";
     final String teacherPass = "pass";
     final String teacherName = "Teacher Cheater";

@@ -24,7 +24,15 @@
 			<organizationUrl>https://www.naevatec.com/</organizationUrl>
 		</developer>
 	</developers>
+	<!-- RETORCH repository -->
+	<repositories>
+		<repository>
+			<id>77</id>
+			<url>https://in4test.lsi.uniovi.es/gitis/giis/retorch</url>
+		</repository>
+	</repositories>
 
+	<!-- ENDRETORCH repository -->
 
 	<properties>
 		<!-- Java 8 -->
@@ -118,9 +126,30 @@
 			<version>${slf4j.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Dependency for solve depreciated method -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<version>3.0.1</version>
+		</dependency>
+		<!--END Dependency for solve depreciated method -->
+	<!--     <dependency>
+         <groupId>giis</groupId>
+         <artifactId>retorch</artifactId>
+         <version>1.1.0-SNAPSHOT</version>
+     </dependency>-->
 
-	</dependencies>
-	<!-- Plugins -->
+		<dependency>
+			<groupId>giis</groupId>
+			<artifactId>retorch</artifactId>
+			<version>1.1.0-SNAPSHOT</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/../../../retorch/target/retorch-1.1.0-SNAPSHOT.jar</systemPath>
+		</dependency>
+
+
+ </dependencies>
+ <!-- Plugins -->
 
 	<build>
 		<plugins>
@@ -170,7 +199,7 @@
 						<imageTag>latest</imageTag>
 					</imageTags>
 					<serverId>docker-hub</serverId>
-					<dockerDirectory>src/main/docker</dockerDirectory>
+					<dockerDirectory>src/com.fullteaching.e2e.no_elastest.main/docker</dockerDirectory>
 					<resources>
 						<resource>
 							<targetPath>/</targetPath>
@@ -179,7 +208,7 @@
 						</resource>
 						<resource>
 							<targetPath>/</targetPath>
-							<directory>src/main/docker</directory>
+							<directory>src/com.fullteaching.e2e.no_elastest.main/docker</directory>
 							<include>init.sh</include>
 						</resource>
 					</resources>
@@ -191,7 +220,7 @@
 				<configuration>
 					<webResources>
 						<resource>
-							<directory>src/main/ebextensions</directory>
+							<directory>src/com.fullteaching.e2e.no_elastest.main/ebextensions</directory>
 							<targetPath>.ebextensions</targetPath>
 							<filtering>true</filtering>
 						</resource>

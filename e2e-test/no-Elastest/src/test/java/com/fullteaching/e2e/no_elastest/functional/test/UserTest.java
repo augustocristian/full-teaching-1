@@ -43,12 +43,13 @@ public class UserTest extends BaseLoggedTest {
      * This test is a simple logging ackenoledgment, that checks if the current logged user
      * was logged correctly
      */
+
+    @ParameterizedTest
+    @MethodSource("data")
     @Resource(resID = "LoginService", replaceable = {})
     @AccessMode(resID = "LoginService", concurrency = 10, sharing = true, accessMode = "READONLY")
     @Resource(resID = "OpenVidu", replaceable = {"OpenViduMock"})
     @AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "NOACCESS")
-    @ParameterizedTest
-    @MethodSource("data")
     public void loginTest(String usermail, String password, String role) {
 
         user = setupBrowser("chrome", role, usermail, 100);

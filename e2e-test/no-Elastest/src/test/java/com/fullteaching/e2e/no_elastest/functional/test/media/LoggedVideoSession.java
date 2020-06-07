@@ -59,8 +59,8 @@ public class LoggedVideoSession extends BaseLoggedTest {
     protected Properties properties;
     //@DriverCapabilities
     DesiredCapabilities capabilities = chrome();
-    private String sessionName = "Today's Session";
-    private String sessionDescription = "Wow today session will be amazing";
+    private final String sessionName = "Today's Session";
+    private final String sessionDescription = "Wow today session will be amazing";
     private String sessionDate;
     private String sessionHour;
 
