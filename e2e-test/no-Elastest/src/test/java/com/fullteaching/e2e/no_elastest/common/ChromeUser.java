@@ -42,6 +42,9 @@ public class ChromeUser extends BrowserUser {
         options.addArguments("--auto-select-desktop-capture-source=Entire screen");
 
         options.addArguments("--disable-notifications");
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
 
         String eusApiURL = System.getenv("ET_EUS_API");
 
