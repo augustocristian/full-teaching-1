@@ -24,19 +24,13 @@
 			<organizationUrl>https://www.naevatec.com/</organizationUrl>
 		</developer>
 	</developers>
-	<!-- RETORCH repository -->
-	<!--    <repositories>
-            <repository>
-                <id>giis</id>
-                <url>file://${project.basedir}/../../../retorch/target/</url>
-            </repository>
-        </repositories>-->
+<!--
 	<repositories>
 		<repository>
 			<id>giis</id>
 			<url>file://${project.basedir}/../../../retorch/target/</url>
 		</repository>
-	</repositories>
+	</repositories>-->
 	<!-- ENDRETORCH repository -->
 
 	<properties>
