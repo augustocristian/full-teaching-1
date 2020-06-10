@@ -1,0 +1,32 @@
+{
+  "OpenViduMock": {
+    "urlDeploymentResource": "localhost",
+    "dockerImageResource": "eexit/mirror-http-server",
+    "basePorts": [
+      {
+        "name": "mainport",
+        "port": "5001"
+      },
+      {
+        "name": "basePortOpenvidu",
+        "port": "4442"
+      }
+    ],
+    "testsBasePath": "fullteaching/e2e-test/no-Elastest/"
+  },
+  "generic": {
+    "urlDeploymentResource": "localhost",
+    "dockerImageResource": "openvidu/openvidu-server-kms:2.3.0",
+    "basePorts": [
+      {
+        "name": "mainport",
+        "port": "5001"
+      },
+      {
+        "name": "basePortOpenvidu",
+        "port": "4442"
+      }
+    ],
+    "testsBasePath": "fullteaching/e2e-test/no-Elastest/"
+  }
+}
