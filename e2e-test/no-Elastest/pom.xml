@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.fullteaching</groupId>
@@ -25,13 +25,18 @@
 		</developer>
 	</developers>
 	<!-- RETORCH repository -->
+	<!--    <repositories>
+            <repository>
+                <id>giis</id>
+                <url>file://${project.basedir}/../../../retorch/target/</url>
+            </repository>
+        </repositories>-->
 	<repositories>
 		<repository>
-			<id>77</id>
-			<url>https://in4test.lsi.uniovi.es/gitis/giis/retorch</url>
+			<id>giis</id>
+			<url>file://${project.basedir}/../../../retorch/target/</url>
 		</repository>
 	</repositories>
-
 	<!-- ENDRETORCH repository -->
 
 	<properties>
@@ -88,10 +93,10 @@
 		</dependency>
 
 
-		<!-- SELENIUM <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-java</artifactId> 
-			<version>3.14.0</version> <scope>test</scope> </dependency> <dependency> 
-			<groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-remote-driver</artifactId> 
-			<version>3.14.0</version> </dependency> -->
+		<!-- SELENIUM <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-java</artifactId>
+            <version>3.14.0</version> <scope>test</scope> </dependency> <dependency>
+            <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-remote-driver</artifactId>
+            <version>3.14.0</version> </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -104,7 +109,7 @@
 			<version>${selenium-jupiter.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
@@ -127,6 +132,12 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Dependency for solve depreciated method -->
+		<!-- Here specify if the most suitable is the develop or the master .jar -->
+		<!--   <dependency>
+               <groupId>giis</groupId>
+               <artifactId>retorch</artifactId>
+               <version>1.1.0-SNAPSHOT</version>
+           </dependency>-->
 		<dependency>
 			<groupId>giis</groupId>
 			<artifactId>retorch</artifactId>
@@ -136,8 +147,8 @@
 		</dependency>
 
 
- </dependencies>
- <!-- Plugins -->
+	</dependencies>
+	<!-- Plugins -->
 
 	<build>
 		<plugins>
@@ -148,12 +159,12 @@
 					<excludes>com.fullteaching.e2e.no_elastest.common.*</excludes>
 				</configuration>
 			</plugin>
-			
+
 			<!--Added-->
 			<plugin>
-			
-			
-							<groupId>org.springframework.boot</groupId>
+
+
+				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 
 				<!-- ONLY ON DEVELOPMENT -->
@@ -219,9 +230,9 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${maven-surefire-plugin.version}</version>
-</plugin>
+			</plugin>
 
-<!-- Added -->
+			<!-- Added -->
 		</plugins>
 	</build>
 
