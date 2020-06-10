@@ -66,7 +66,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobg; ls . ;docker-compose --no-ansi -p TJobg up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5007" -Dtest=CourseStudentTest#studentCourseMainTest,CourseTeacherTest#teacherCourseMainTest,CourseTeacherTest#teacherCreateAndDeleteCourseTest -t 10  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5007" -Dtest=CourseStudentTest#studentCourseMainTest,CourseTeacherTest#teacherCourseMainTest,CourseTeacherTest#teacherCreateAndDeleteCourseTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobg; ls . ;docker-compose --no-ansi -p TJobg down'
  
@@ -101,7 +101,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobj; ls . ;docker-compose --no-ansi -p TJobj up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5010" -Dtest=LoggedForumTest#forumLoadEntriesTest -t 10  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5010" -Dtest=LoggedForumTest#forumLoadEntriesTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobj; ls . ;docker-compose --no-ansi -p TJobj down'
  
@@ -121,7 +121,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobl; ls . ;docker-compose --no-ansi -p TJobl up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5012" -Dtest=UserTest#loginTest -t 10  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5012" -Dtest=UserTest#loginTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobl; ls . ;docker-compose --no-ansi -p TJobl down'
  
