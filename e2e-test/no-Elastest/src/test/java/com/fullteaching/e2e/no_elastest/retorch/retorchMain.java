@@ -1,4 +1,4 @@
-package com.fullteaching.e2e.no_elastest;
+package com.fullteaching.e2e.no_elastest.retorch;
 
 import org.junit.jupiter.api.Test;
 import retorch.exceptions.NoFinalActivitiesException;
@@ -10,9 +10,11 @@ import retorch.resourceidentification.RetorchSerializer;
 
 import java.io.IOException;
 
-public class dummyTestRetorch {
-    @Test
-    public void testRetorch () throws IOException, NoFinalActivitiesException, NotValidSystemException, EmptyInputException, NoTGroupsInTheSchedulerException, ClassNotFoundException {
+public class retorchMain {
+
+
+    public static void main(String[] args) throws IOException, NoFinalActivitiesException, ClassNotFoundException, NotValidSystemException, EmptyInputException, NoTGroupsInTheSchedulerException {
+
         RetorchSerializer serializer = new RetorchSerializer();
         serializer = new RetorchSerializer();
         String databaseParent = "MySQL";
@@ -31,11 +33,11 @@ public class dummyTestRetorch {
 
 
         serializer.serializeResources("EndToEndFullTeaching");
+        OrchestrationGenericToolBox toolBox = new OrchestrationGenericToolBox();
 
-        OrchestrationGenericToolBox toolBox=  new OrchestrationGenericToolBox();
-        toolBox.generateDockerFile("com.fullteaching.e2e.no_elastest.functional.test","EndToEndFullTeaching");
-
+        toolBox.generateDockerFile("com.fullteaching.e2e.no_elastest.functional.test", "EndToEndFullTeaching");
 
 
     }
+
 }
