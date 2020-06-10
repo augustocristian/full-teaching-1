@@ -9,7 +9,7 @@ services:
       - MYSQL_DATABASE=full_teaching
 
   full-teaching-TJob12-openvidu-server-kms:
-    image: eexit/mirror-http-server
+    image: openvidu/openvidu-server-kms:2.3.0
     ports:
       - 4454:80
     environment:
