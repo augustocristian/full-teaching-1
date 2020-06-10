@@ -121,7 +121,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobl; ls . ;docker-compose --no-ansi -p TJobl up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5012" -Dtest=UserTest#loginTest test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5012" -Dtest=UserTest#loginTest  test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobl; ls . ;docker-compose --no-ansi -p TJobl down'
  
