@@ -9,7 +9,7 @@ services:
       - MYSQL_DATABASE=full_teaching
 
   full-teaching-${tjobname}-openvidu-server-kms:
-    image: ${openviduimage}
+    image: ${dockerImageResource}
     ports:
       - ${openviduport}:80
     environment:
