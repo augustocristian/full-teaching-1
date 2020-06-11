@@ -1,0 +1,158 @@
+pipeline {
+agent any
+ tools {
+    maven 'M3.3.9'
+    }//EndTools
+stages{
+  stage('Clone Repository') { 
+    steps{
+        dir('fullteaching') {
+            git branch: 'emptyTestCasesBranch',
+                         credentialsId: 'GitHub',
+                         url:'https://github.com/augustocristian/full-teaching-tunon-tests'
+                            }//endDir
+        dir ('retorch'){
+            git branch: 'develop',
+                         credentialsId: 'GitLab',
+                         url: 'https://in4test.lsi.uniovi.es/gitis/giis/retorch.git'
+                            }//endDir
+                       }//EndStep
+
+  }//EndStage
+stage('Time 0'){
+ steps{
+parallel(
+  "TJob 2 IdResource: Attenders LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobC; ls . ;docker-compose --no-ansi -p TJobC up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5003" -Dtest=FullTeachingTestE2EREST#attendersRestOperations  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobC; ls . ;docker-compose --no-ansi -p TJobC down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 3 IdResource: Configuration LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobD; ls . ;docker-compose --no-ansi -p TJobD up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5004" -Dtest=FullTeachingTestE2EREST#courseRestOperations,CourseTeacherTest#teacherEditCourseValues  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobD; ls . ;docker-compose --no-ansi -p TJobD down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 4 IdResource: Configuration LoginService OpenVidu ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5005" -Dtest=FullTeachingTestE2EChat#oneToOneChatInSessionChrome  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 5 IdResource: Course LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobF; ls . ;docker-compose --no-ansi -p TJobF up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5006" -Dtest=LoggedLinksTests#spiderLoggedTest,UnLoggedLinksTests#spiderUnloggedTest,CourseTeacherTest#teacherDeleteCourseTest  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobF; ls . ;docker-compose --no-ansi -p TJobF down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 6 IdResource: Course LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobG; ls . ;docker-compose --no-ansi -p TJobG up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5007" -Dtest=CourseStudentTest#studentCourseMainTest,CourseTeacherTest#teacherCourseMainTest,CourseTeacherTest#teacherCreateAndDeleteCourseTest -t 10  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobG; ls . ;docker-compose --no-ansi -p TJobG down'
+ 
+          }//EndParallelStep
+   )//End Parallel
+}//End Steps 
+}//End Stage
+stage('Time 1'){
+ steps{
+parallel(
+  "TJob 7 IdResource: Information LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobH; ls . ;docker-compose --no-ansi -p TJobH up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5008" -Dtest=FullTeachingTestE2EREST#courseInfoRestOperations  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobH; ls . ;docker-compose --no-ansi -p TJobH down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 8 IdResource: Files LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobI; ls . ;docker-compose --no-ansi -p TJobI up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5009" -Dtest=FullTeachingTestE2EREST#filesRestOperations  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobI; ls . ;docker-compose --no-ansi -p TJobI down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 9 IdResource: Forum LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobJ; ls . ;docker-compose --no-ansi -p TJobJ up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5010" -Dtest=LoggedForumTest#forumLoadEntriesTest -t 10  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobJ; ls . ;docker-compose --no-ansi -p TJobJ down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 10 IdResource: Forum LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobK; ls . ;docker-compose --no-ansi -p TJobK up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5011" -Dtest=LoggedForumTest#forumNewCommentTest,LoggedForumTest#forumNewEntryTest,LoggedForumTest#forumNewReply2CommentTest,FullTeachingTestE2EREST#forumRestOperations  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobK; ls . ;docker-compose --no-ansi -p TJobK down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 11 IdResource: LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobL; ls . ;docker-compose --no-ansi -p TJobL up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5012" -Dtest=UserTest#loginTest -t 10  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobL; ls . ;docker-compose --no-ansi -p TJobL down'
+ 
+          }//EndParallelStep
+   )//End Parallel
+}//End Steps 
+}//End Stage
+stage('Time 2'){
+ steps{
+parallel(
+  "TJob 12 IdResource: Session LoginService OpenVidu ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobM; ls . ;docker-compose --no-ansi -p TJobM up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5013" -Dtest=FullTeachingTestE2EVideoSession#oneToOneVideoAudioSessionChrome,LoggedVideoSession#sessionTest  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobM; ls . ;docker-compose --no-ansi -p TJobM down'
+ 
+          }//EndParallelStep
+        ,
+  "TJob 13 IdResource: Session LoginService OpenViduMock ": {
+             echo 'Deploying Resources Required'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobN; ls . ;docker-compose --no-ansi -p TJobN up -d'
+        echo 'Executing the test cases'
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5014" -Dtest=FullTeachingTestE2EREST#sessionRestOperations  test')
+        echo 'Disposing the resources'
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobN; ls . ;docker-compose --no-ansi -p TJobN down'
+ 
+          }//EndParallelStep
+   )//End Parallel
+}//End Steps 
+}//End Stage
+}
+}
