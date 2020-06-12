@@ -3,7 +3,7 @@ version: '3'
 services:
 
   full-teaching-mysql-${tjobname}:
-    image: mysql:5.7.22
+    image: ${mysqlimageresource}
     environment:
       - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_DATABASE=full_teaching
