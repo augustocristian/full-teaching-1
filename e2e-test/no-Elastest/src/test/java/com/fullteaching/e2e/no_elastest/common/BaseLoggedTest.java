@@ -1,6 +1,5 @@
 package com.fullteaching.e2e.no_elastest.common;
 
-import com.fullteaching.e2e.no_elastest.common.exception.BadUserException;
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.utils.SetUp;

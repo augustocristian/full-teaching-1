@@ -2,10 +2,10 @@
   "OpenViduMock": {
     "urlDeploymentResource": "localhost",
     "dockerImageResource":[
-    {
-      "placeHolderId": "openviduimageresource",
-      "imageName": "eexit/mirror-http-server"
-    },
+      {
+        "placeHolderId": "openviduimageresource",
+        "imageName": "eexit/mirror-http-server"
+      },
       {
         "placeHolderId": "mysqlimageresource",
         "imageName": "mysql:5.7.22"
@@ -14,11 +14,13 @@
     "basePorts": [
       {
         "name": "mainport",
-        "port": "5001"
+        "lowerPort": "5001",
+        "upperPort": "5015"
       },
       {
         "name": "openviduport",
-        "port": "4442"
+        "lowerPort": "4442",
+        "upperPort": "4455"
       }
     ],
     "testsBasePath": "fullteaching/e2e-test/no-Elastest/"
@@ -34,16 +36,18 @@
         "placeHolderId": "mysqlimageresource",
         "imageName": "mysql:5.7.22"
       }]
-    ,
+  ,
 
     "basePorts": [
       {
         "name": "mainport",
-        "port": "5001"
+        "lowerPort": "5001",
+        "upperPort": "5015"
       },
       {
         "name": "openviduport",
-        "port": "4442"
+        "lowerPort": "4442",
+        "upperPort": "4455"
       }
     ],
     "testsBasePath": "fullteaching/e2e-test/no-Elastest/"

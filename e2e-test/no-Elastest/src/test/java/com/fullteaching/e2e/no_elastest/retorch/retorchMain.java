@@ -1,6 +1,5 @@
 package com.fullteaching.e2e.no_elastest.retorch;
 
-import org.junit.jupiter.api.Test;
 import retorch.exceptions.NoFinalActivitiesException;
 import retorch.exceptions.NoTGroupsInTheSchedulerException;
 import retorch.exceptions.NotValidSystemException;

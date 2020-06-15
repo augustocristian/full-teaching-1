@@ -45,7 +45,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 
 
-
 @Disabled
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching chat")
@@ -54,11 +53,11 @@ public class FullTeachingTestE2EChat extends BaseLoggedTest {
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
+    private static final String TEACHER_BROWSER = "chrome";
+    private static final String STUDENT_BROWSER = "chrome";
     static Class<? extends WebDriver> chrome = ChromeDriver.class;
     static Class<? extends WebDriver> firefox = FirefoxDriver.class;
     static Exception ex = null;
-    private static final String TEACHER_BROWSER = "chrome";
-    private static final String STUDENT_BROWSER = "chrome";
     final String teacherMail = "teacher@gmail.com";
     final String teacherPass = "pass";
     final String teacherName = "Teacher Cheater";
