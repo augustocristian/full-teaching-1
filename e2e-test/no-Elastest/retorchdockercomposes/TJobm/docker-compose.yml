@@ -11,7 +11,7 @@ services:
   full-teaching-TJobM-openvidu-server-kms:
     image: openvidu/openvidu-server-kms:2.3.0
     ports:
-      - 4454:80
+      - 4442:80
     environment:
       - openvidu.secret=MY_SECRET
       - openvidu.publicurl=docker
@@ -22,7 +22,7 @@ services:
       - full-teaching-mysql-TJobM
       - full-teaching-TJobM-openvidu-server-kms
     ports:
-      - 5013:5001
+      - 5001:5001
     environment:
       - WAIT_HOSTS=full-teaching-mysql-TJobM:3306
       - WAIT_HOSTS_TIMEOUT=60
@@ -32,7 +32,7 @@ services:
       - MYSQL_ENV_MYSQL_USER=root
       - MYSQL_ENV_MYSQL_PASSWORD=pass
       - server.port=5001
-      - openvidu.url=https://full-teaching-TJobM-openvidu-server-kms:4454
+      - openvidu.url=https://full-teaching-TJobM-openvidu-server-kms:4442
       - openvidu.secret=MY_SECRET
 networks:
   fullteaching-TJobM:

@@ -11,7 +11,7 @@ services:
   full-teaching-TJobN-openvidu-server-kms:
     image: eexit/mirror-http-server
     ports:
-      - 4455:80
+      - 4443:80
     environment:
       - openvidu.secret=MY_SECRET
       - openvidu.publicurl=docker
@@ -22,7 +22,7 @@ services:
       - full-teaching-mysql-TJobN
       - full-teaching-TJobN-openvidu-server-kms
     ports:
-      - 5014:5001
+      - 5002:5001
     environment:
       - WAIT_HOSTS=full-teaching-mysql-TJobN:3306
       - WAIT_HOSTS_TIMEOUT=60
@@ -32,7 +32,7 @@ services:
       - MYSQL_ENV_MYSQL_USER=root
       - MYSQL_ENV_MYSQL_PASSWORD=pass
       - server.port=5001
-      - openvidu.url=https://full-teaching-TJobN-openvidu-server-kms:4455
+      - openvidu.url=https://full-teaching-TJobN-openvidu-server-kms:4443
       - openvidu.secret=MY_SECRET
 networks:
   fullteaching-TJobN:
