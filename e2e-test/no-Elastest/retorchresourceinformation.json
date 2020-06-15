@@ -1,12 +1,12 @@
 {
   "OpenViduMock": {
     "urlDeploymentResource": "localhost",
-    "dockerImageResource":[
-    {
-      "placeHolderId": "openviduimageresource",
-      "imageName": "eexit/mirror-http-server"
-    }],
-
+    "dockerImageResource": [
+      {
+        "placeHolderId": "openviduimageresource",
+        "imageName": "eexit/mirror-http-server"
+      }
+    ],
     "basePorts": [
       {
         "name": "mainport",
@@ -21,13 +21,12 @@
   },
   "generic": {
     "urlDeploymentResource": "localhost",
-    "dockerImageResource":[
+    "dockerImageResource": [
       {
         "placeHolderId": "openviduimageresource",
         "imageName": "openvidu/openvidu-server-kms:2.3.0"
-      }]
-    ,
-
+      }
+    ],
     "basePorts": [
       {
         "name": "mainport",

@@ -21,7 +21,6 @@ import retorch.testannotations.AccessMode;
 import retorch.testannotations.Resource;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -42,6 +41,8 @@ public class LoggedVideoSession extends BaseLoggedTest {
     public static final String FIREFOX = "firefox";
     final static Logger log = getLogger(lookup().lookupClass());
     protected static BrowserUser teacher;
+    private final String sessionName = "Today's Session";
+    private final String sessionDescription = "Wow today session will be amazing";
     public String teacher_data;
     public String users_data;
     public String courseName;
@@ -59,8 +60,6 @@ public class LoggedVideoSession extends BaseLoggedTest {
     protected Properties properties;
     //@DriverCapabilities
     DesiredCapabilities capabilities = chrome();
-    private final String sessionName = "Today's Session";
-    private final String sessionDescription = "Wow today session will be amazing";
     private String sessionDate;
     private String sessionHour;
 
@@ -113,7 +112,6 @@ public class LoggedVideoSession extends BaseLoggedTest {
 
             //WebDriver studentD = UserLoader.allocateNewBrowser(students_data[i].split(":")[2]);
             BrowserUser studentD = setupBrowser("chrome", "BrowserStudent" + i, studentemail, 100);
-
 
 
             this.slowLogin(studentD, studentemail, studentpass);

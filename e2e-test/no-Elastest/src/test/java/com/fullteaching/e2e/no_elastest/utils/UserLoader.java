@@ -12,17 +12,14 @@ import java.util.*;
 
 public class UserLoader {
 
+    private static final String cvsMainFieldsSplitBy = ",";
+    private static final String cvsRolesSplitBy = "\\|";
+    private static final String usersDefaultFile = "src/test/resources/inputs/default_user_file.csv";
+    private static final String oneTeacherMultipleStudentsFile = "src/test/resources/inputs/session_test_file.csv";
     public static int USERNAME = 0;
     public static int PASSWORD = 1;
     public static int ROLES = 2;
-
-    private static final String cvsMainFieldsSplitBy = ",";
-    private static final String cvsRolesSplitBy = "\\|";
-
     private static Map<String, User> users;
-
-    private static final String usersDefaultFile = "src/test/resources/inputs/default_user_file.csv";
-    private static final String oneTeacherMultipleStudentsFile = "src/test/resources/inputs/session_test_file.csv";
 
     public static void loadUsers(List<User> userlst, boolean override) {
         if (override == true || users == null)

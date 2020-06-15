@@ -1,6 +1,5 @@
 package com.fullteaching.e2e.no_elastest.retorch;
 
-import org.junit.jupiter.api.Test;
 import retorch.exceptions.NoFinalActivitiesException;
 import retorch.exceptions.NoTGroupsInTheSchedulerException;
 import retorch.exceptions.NotValidSystemException;
@@ -35,7 +34,7 @@ public class retorchMain {
         serializer.serializeResources("EndToEndFullTeaching");
         OrchestrationGenericToolBox toolBox = new OrchestrationGenericToolBox();
 
-        toolBox.generateDockerFile("com.fullteaching.e2e.no_elastest.functional.test", "EndToEndFullTeaching");
+        toolBox.generateJenkinsfile("com.fullteaching.e2e.no_elastest.functional.test", "EndToEndFullTeaching");
 
 
     }

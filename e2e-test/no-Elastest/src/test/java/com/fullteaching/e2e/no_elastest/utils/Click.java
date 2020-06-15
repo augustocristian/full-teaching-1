@@ -104,7 +104,7 @@ public class Click {
     /**
      * Scrolls and click
      *
-     * @param wd WebDriver of the method
+     * @param wd    WebDriver of the method
      * @param eleBy Element to found
      * @return
      * @throws ElementNotFoundException
