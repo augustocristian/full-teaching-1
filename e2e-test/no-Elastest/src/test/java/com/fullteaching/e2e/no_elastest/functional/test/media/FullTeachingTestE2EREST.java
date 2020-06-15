@@ -19,11 +19,12 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 
 import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import retorch.testannotations.AccessMode;
 import retorch.testannotations.Resource;
@@ -528,6 +529,7 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
     @Test
     void attendersRestOperations() {
 
+
         enterCourseAndNavigateTab(COURSE_NAME, "attenders-tab-icon");
 
         log.info("Checking that there is only one attender to the course");
@@ -607,7 +609,7 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
 
     private void addCourse(String courseName) {
         log.info("Adding test course");
-
+        userbrowser.waitUntil(ExpectedConditions.visibilityOfElementLocated(By.className("collection-item")),"The elements doesn't appear");
         int numberOfCourses = userbrowser.getDriver().findElements(By.className("course-list-item")).size();
 
         openDialog("#add-course-icon", userbrowser);
@@ -677,7 +679,7 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
 
         courseSpan.click();
 
-        userbrowser.waitUntil(ExpectedConditions.textToBe(By.id("com.fullteaching.e2e.no_elastest.main-course-title"), courseName), "Unexpected course title");
+        userbrowser.waitUntil(ExpectedConditions.textToBe(By.id("main-course-title"), courseName), "Unexpected course title");
 
         log.info("Navigating to tab by clicking icon with id '{}'", tabId);
 

@@ -79,7 +79,7 @@ public final class Constants {
 
     public static final String EDITDESCRIPTION_SAVEBUTTON_ID = "send-info-btn";
 
-    public static final String USERNAME_XPATH = "/html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-settings/div/div[3]/div[2]/ul/li[2]/div[2]";
+    public static final String USERNAME_XPATH = "/html/body/app/div/main/app-settings/div/div[3]/div[2]/ul/li[2]/div[2]";
     public static final String LOGINMENU_XPATH = "/html/body/app/div/header/navbar/div/nav/div/ul/li[2]/a";
 
     public static final String ENABLEFORUM_BUTTON_ID = "label-forum-checkbox";

@@ -9,7 +9,8 @@ import com.fullteaching.e2e.no_elastest.utils.Click;
 import com.fullteaching.e2e.no_elastest.utils.DOMMannager;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumExtension;
+import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -227,7 +229,7 @@ public class LoggedForumTest extends BaseLoggedTest {
             assertEquals(comentario, userName, "Bad user in comment");
 
         } catch (ElementNotFoundException enfe) {
-            fail("Failed to navigate to course forum:: " + enfe.getClass() + ": " + enfe.getLocalizedMessage());
+            Assert.fail("Failed to navigate to course forum:: " + enfe.getClass() + ": " + enfe.getLocalizedMessage());
         }
 
     }
@@ -312,9 +314,15 @@ public class LoggedForumTest extends BaseLoggedTest {
             boolean commentFound = false;
             for (WebElement comment : comments) {
                 //check if it is new comment
-                if (comment.findElement(FORUMCOMMENTLIST_COMMENT_CONTENT).getText().equals(newCommentContent)) {
-                    commentFound = true;
-                    assertEquals(comment.findElement(FORUMCOMMENTLIST_COMMENT_USER).getText(), userName, "Bad user in comment");
+                try {
+                    String text = comment.findElement(FORUMCOMMENTLIST_COMMENT_CONTENT).getText();
+
+                    if (text.equals(newCommentContent)) {
+                        commentFound = true;
+                        assertEquals(comment.findElement(FORUMCOMMENTLIST_COMMENT_USER).getText(), userName, "Bad user in comment");
+                    }
+                } catch (StaleElementReferenceException e) {
+                    log.info("Not Found");
                 }
             }
             assertTrue(commentFound, "Comment not found");

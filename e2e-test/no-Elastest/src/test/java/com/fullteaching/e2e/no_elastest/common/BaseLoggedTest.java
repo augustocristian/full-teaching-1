@@ -3,7 +3,7 @@ package com.fullteaching.e2e.no_elastest.common;
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.utils.SetUp;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.junit.Assert;
@@ -16,10 +16,10 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LoggingPreferences;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
@@ -63,7 +63,7 @@ public class BaseLoggedTest {
     private static String STUDENT_BROWSER;
     protected BrowserUser user;
     //@DriverCapabilities
-    DesiredCapabilities capabilities = chrome();
+    ChromeOptions capabilities = new ChromeOptions();
 
     {
         LoggingPreferences logPrefs = new LoggingPreferences();
@@ -116,7 +116,7 @@ public class BaseLoggedTest {
 
         if (System.getenv("ET_EUS_API") == null) {
             // Outside ElasTest
-            ChromeDriverManager.getInstance(chrome).version("2.46").setup();
+            ChromeDriverManager.getInstance(chrome).setup();
             FirefoxDriverManager.getInstance(firefox).setup();
         }
 
@@ -194,7 +194,7 @@ public class BaseLoggedTest {
     void tearDown(TestInfo testInfo) throws IOException {
         String testName = testInfo.getTestMethod().get().getName();
 
-        log.info("##### Finish test: {} - Driver {}", testName, user.getDriver());
+     //   log.info("##### Finish test: {} - Driver {}", testName, user.getDriver());
 
         if (user != null) {
             log.info("url:" + user.getDriver().getCurrentUrl() + "\nScreenshot (in Base64) at the end of the test:\n{}",

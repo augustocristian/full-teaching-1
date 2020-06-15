@@ -6,7 +6,7 @@ import com.fullteaching.e2e.no_elastest.common.NavigationUtilities;
 import com.fullteaching.e2e.no_elastest.utils.Click;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import com.fullteaching.e2e.no_elastest.utils.Wait;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
