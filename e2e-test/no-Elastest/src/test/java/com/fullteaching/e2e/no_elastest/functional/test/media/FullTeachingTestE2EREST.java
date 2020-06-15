@@ -202,7 +202,7 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
         userbrowser.waitUntil(ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-description"), comment),
                 "Unexpected session description");
         userbrowser.waitUntil(
-                ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-datetime"), "Mar 1, 2018 - 15:10"),
+                ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-datetime"), "Jan 3, 2018 - 03:10"),
                 "Unexpected session date-time");
 
         log.info("New session successfully added");
@@ -245,7 +245,7 @@ public class FullTeachingTestE2EREST extends BaseLoggedTest {
                 ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-description"), comment + EDITED),
                 "Unexpected session description");
         userbrowser.waitUntil(
-                ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-datetime"), "Apr 2, 2019 - 05:10"),
+                ExpectedConditions.textToBe(By.cssSelector("li.session-data .session-datetime"), "Feb 4, 2019 - 05:10"),
                 "Unexpected session date-time");
 
         log.info("Session succesfully edited");
