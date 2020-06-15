@@ -11,11 +11,6 @@ stages{
                          credentialsId: 'GitHub',
                          url:'https://github.com/augustocristian/full-teaching-tunon-tests'
                             }//endDir
-        dir ('retorch'){
-            git branch: 'develop',
-                         credentialsId: 'GitLab',
-                         url: 'https://in4test.lsi.uniovi.es/gitis/giis/retorch.git'
-                            }//endDir
                        }//EndStep
 
   }//EndStage
@@ -26,7 +21,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobC; ls . ;docker-compose --no-ansi -p TJobC up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5003" -Dtest=FullTeachingTestE2EREST#attendersRestOperations  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5001" -Dtest=FullTeachingTestE2EREST#attendersRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobC; ls . ;docker-compose --no-ansi -p TJobC down'
  
@@ -36,7 +31,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobD; ls . ;docker-compose --no-ansi -p TJobD up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5004" -Dtest=FullTeachingTestE2EREST#courseRestOperations,CourseTeacherTest#teacherEditCourseValues  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5002" -Dtest=FullTeachingTestE2EREST#courseRestOperations,CourseTeacherTest#teacherEditCourseValues test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobD; ls . ;docker-compose --no-ansi -p TJobD down'
  
@@ -46,7 +41,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5005" -Dtest=FullTeachingTestE2EChat#oneToOneChatInSessionChrome  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5003" -Dtest=FullTeachingTestE2EChat#oneToOneChatInSessionChrome test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
  
@@ -56,7 +51,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobF; ls . ;docker-compose --no-ansi -p TJobF up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5006" -Dtest=LoggedLinksTests#spiderLoggedTest,UnLoggedLinksTests#spiderUnloggedTest,CourseTeacherTest#teacherDeleteCourseTest  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5004" -Dtest=LoggedLinksTests#spiderLoggedTest,UnLoggedLinksTests#spiderUnloggedTest,CourseTeacherTest#teacherDeleteCourseTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobF; ls . ;docker-compose --no-ansi -p TJobF down'
  
@@ -66,7 +61,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobG; ls . ;docker-compose --no-ansi -p TJobG up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5007" -Dtest=CourseStudentTest#studentCourseMainTest,CourseTeacherTest#teacherCourseMainTest,CourseTeacherTest#teacherCreateAndDeleteCourseTest -t 10  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5005" -Dtest=CourseStudentTest#studentCourseMainTest,CourseTeacherTest#teacherCourseMainTest,CourseTeacherTest#teacherCreateAndDeleteCourseTest test')//Can be parallelized until 10 threads
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobG; ls . ;docker-compose --no-ansi -p TJobG down'
  
@@ -81,7 +76,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobH; ls . ;docker-compose --no-ansi -p TJobH up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5008" -Dtest=FullTeachingTestE2EREST#courseInfoRestOperations  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5001" -Dtest=FullTeachingTestE2EREST#courseInfoRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobH; ls . ;docker-compose --no-ansi -p TJobH down'
  
@@ -91,7 +86,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobI; ls . ;docker-compose --no-ansi -p TJobI up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5009" -Dtest=FullTeachingTestE2EREST#filesRestOperations  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5002" -Dtest=FullTeachingTestE2EREST#filesRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobI; ls . ;docker-compose --no-ansi -p TJobI down'
  
@@ -101,7 +96,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobJ; ls . ;docker-compose --no-ansi -p TJobJ up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5010" -Dtest=LoggedForumTest#forumLoadEntriesTest -t 10  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5003" -Dtest=LoggedForumTest#forumLoadEntriesTest test')//Can be parallelized until 10 threads
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobJ; ls . ;docker-compose --no-ansi -p TJobJ down'
  
@@ -111,7 +106,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobK; ls . ;docker-compose --no-ansi -p TJobK up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5011" -Dtest=LoggedForumTest#forumNewCommentTest,LoggedForumTest#forumNewEntryTest,LoggedForumTest#forumNewReply2CommentTest,FullTeachingTestE2EREST#forumRestOperations  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5004" -Dtest=LoggedForumTest#forumNewCommentTest,LoggedForumTest#forumNewEntryTest,LoggedForumTest#forumNewReply2CommentTest,FullTeachingTestE2EREST#forumRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobK; ls . ;docker-compose --no-ansi -p TJobK down'
  
@@ -121,7 +116,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobL; ls . ;docker-compose --no-ansi -p TJobL up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5012" -Dtest=UserTest#loginTest -t 10  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5005" -Dtest=UserTest#loginTest test')//Can be parallelized until 10 threads
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobL; ls . ;docker-compose --no-ansi -p TJobL down'
  
@@ -136,7 +131,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobM; ls . ;docker-compose --no-ansi -p TJobM up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5013" -Dtest=FullTeachingTestE2EVideoSession#oneToOneVideoAudioSessionChrome,LoggedVideoSession#sessionTest  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5001" -Dtest=FullTeachingTestE2EVideoSession#oneToOneVideoAudioSessionChrome,LoggedVideoSession#sessionTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobM; ls . ;docker-compose --no-ansi -p TJobM down'
  
@@ -146,7 +141,7 @@ parallel(
              echo 'Deploying Resources Required'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobN; ls . ;docker-compose --no-ansi -p TJobN up -d'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5014" -Dtest=FullTeachingTestE2EREST#sessionRestOperations  test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://localhost:5002" -Dtest=FullTeachingTestE2EREST#sessionRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobN; ls . ;docker-compose --no-ansi -p TJobN down'
  
