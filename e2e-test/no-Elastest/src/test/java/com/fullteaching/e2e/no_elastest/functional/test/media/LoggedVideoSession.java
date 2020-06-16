@@ -35,7 +35,7 @@ import static org.openqa.selenium.remote.DesiredCapabilities.chrome;
 import static org.slf4j.LoggerFactory.getLogger;
 
 //@Disabled
-public class LoggedVideoSession extends BaseLoggedTest {
+public class LoggedVideoSession{// extends BaseLoggedTest {
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";
@@ -76,7 +76,7 @@ public class LoggedVideoSession extends BaseLoggedTest {
     @BeforeEach
     public void setUp() throws BadUserException, ElementNotFoundException, NotLoggedException, TimeOutExeception {
 
-        log.info("[INI setUP]");
+/*        log.info("[INI setUP]");
 
         host = SetUp.getHost();
         users_data = loadStudentsData("src/test/resources/inputs/default_user_LoggedVideoStudents.csv");
@@ -118,7 +118,7 @@ public class LoggedVideoSession extends BaseLoggedTest {
             studentNames.add(userName);
             studentDriver.add(studentD);
 
-        }
+        }*/
 
         /* Dedicated set up to Forum tests*/
 	        /*log.info("INI dedicated setUP");
@@ -136,19 +136,19 @@ public class LoggedVideoSession extends BaseLoggedTest {
 			}
 
 	    	log.info("End dedicated setUP");*/
-        /*END dedicated*/
-        log.info("[End setUP]");
+        /*END dedicated
+        log.info("[End setUP]");*/
     }
 
     @AfterEach
     public void teardown() throws IOException {
-        //TODO delete tested test if it is last test.
+    /*    //TODO delete tested test if it is last test.
         SetUp.tearDown(teacherDriver);
         teacherDriver.close();
         for (BrowserUser driver : studentDriver) {
             driver.dispose();
 
-        }
+        }*/
     }
 
     @Resource(resID = "LoginService", replaceable = {})
@@ -160,7 +160,7 @@ public class LoggedVideoSession extends BaseLoggedTest {
     @ParameterizedTest
     @MethodSource("data")
     public void sessionTest() {
-        Calendar calendar = Calendar.getInstance();
+       /* Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
         int mYear = calendar.get(Calendar.YEAR);
@@ -311,7 +311,7 @@ public class LoggedVideoSession extends BaseLoggedTest {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+*/
 
     }
 

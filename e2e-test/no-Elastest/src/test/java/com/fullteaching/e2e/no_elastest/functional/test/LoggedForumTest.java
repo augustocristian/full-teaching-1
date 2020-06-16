@@ -251,9 +251,9 @@ public class LoggedForumTest extends BaseLoggedTest {
     @AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READWRITE")
     @ParameterizedTest
     @MethodSource("data")
-    public void forumNewCommentTest(String usermail, String password, String role) {
-
-
+    public void forumNewCommentTest(String usermail, String password, String role) throws InterruptedException {
+Thread.sleep(3000);
+/*
         user = setupBrowser("chrome", role, usermail, 100);
         driver = user.getDriver();
         this.slowLogin(user, usermail, password);
@@ -329,7 +329,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 
         } catch (ElementNotFoundException enfe) {
             fail("Failed to navigate to course forum:: " + enfe.getClass() + ": " + enfe.getLocalizedMessage());
-        }
+        }*/
 
     }
 
@@ -350,9 +350,9 @@ public class LoggedForumTest extends BaseLoggedTest {
     @AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "NOACCESS")
     @Resource(resID = "Course", replaceable = {"Forum"})
     @AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READWRITE")
-    public void forumNewReply2CommentTest(String usermail, String password, String role) {
-
-        user = setupBrowser("chrome", role, usermail, 100);
+    public void forumNewReply2CommentTest(String usermail, String password, String role) throws InterruptedException {
+Thread.sleep(30000);
+ /*       user = setupBrowser("chrome", role, usermail, 100);
         driver = user.getDriver();
 
         this.slowLogin(user, usermail, password);
@@ -433,7 +433,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 
         } catch (ElementNotFoundException enfe) {
             fail("Failed to navigate to course forum:: " + enfe.getClass() + ": " + enfe.getLocalizedMessage());
-        }
+        }*/
     }
 
 }

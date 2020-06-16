@@ -269,7 +269,7 @@ public class BaseLoggedTest {
 
     protected void logout(BrowserUser user) {
 
-        log.info("Logging out {}", user.getClientData());
+     //   log.info("Logging out {}", user.getClientData());
 
         if (user.getDriver().findElements(By.cssSelector("#fixed-icon"))
                 .size() > 0) {

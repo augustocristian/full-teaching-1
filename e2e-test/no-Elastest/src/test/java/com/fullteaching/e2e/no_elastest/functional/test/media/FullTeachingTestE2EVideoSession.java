@@ -17,7 +17,6 @@
 
 package com.fullteaching.e2e.no_elastest.functional.test.media;
 
-import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.Assert;
@@ -38,7 +37,7 @@ import retorch.testannotations.Resource;
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching video session")
 @ExtendWith(SeleniumExtension.class)
-public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
+public class FullTeachingTestE2EVideoSession {//extends BaseLoggedTest {
 
     static Exception ex = null;
     private static String TEACHER_BROWSER;
@@ -58,7 +57,7 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
 
     @BeforeAll()
     static void setupAll() {
-
+/*
         if (System.getenv("ET_EUS_API") == null) {
             // Outside ElasTest
             //  ChromeDriverManager.getInstance().setup();
@@ -85,18 +84,18 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
             STUDENT_BROWSER = CHROME;
         }
 
-        log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
+        log.info("Using URL {} to connect to openvidu-testapp", APP_URL); */
     }
 
     @AfterEach
     void dispose(TestInfo info) {
-        try {
+      /*  try {
             this.logout(user);
             user.dispose();
         } finally {
             log.info("##### Finish test: "
                     + info.getTestMethod().get().getName());
-        }
+        }*/
     }
 
     @Resource(resID = "LoginService", replaceable = {})
@@ -106,7 +105,9 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
     @Resource(resID = "Course", replaceable = {"Session"})
     @AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READWRITE")
     @Test
-    void oneToOneVideoAudioSessionChrome() {
+    void oneToOneVideoAudioSessionChrome() throws InterruptedException {
+        Thread.sleep(30000);
+        /*
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
 
@@ -115,6 +116,8 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
         // TEACHER
 
         this.user = setupBrowser(TEACHER_BROWSER, testName, "Teacher", 30);
+
+
 
         this.slowLogin(user, teacherMail, teacherPass);
 
@@ -279,7 +282,7 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
 
         // Logout student
         this.logout(student);
-        student.dispose();
+        student.dispose();*/
 
     }
 
@@ -344,8 +347,8 @@ public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
     private boolean checkVideoPlaying(BrowserUser user, WebElement videoElement,
                                       String containerQuerySelector) {
 
-        log.info("{} waiting for video in container '{}' to be playing",
-                user.getClientData(), containerQuerySelector);
+//        log.info("{} waiting for video in container '{}' to be playing",
+  //              user.getClientData(), containerQuerySelector);
 
         // Video element should be in 'readyState'='HAVE_ENOUGH_DATA'
         user.getWaiter().until(ExpectedConditions.attributeToBe(videoElement,
