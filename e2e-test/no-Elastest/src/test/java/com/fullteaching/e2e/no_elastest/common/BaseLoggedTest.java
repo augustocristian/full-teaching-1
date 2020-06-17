@@ -74,7 +74,8 @@ public class BaseLoggedTest {
 
     public BaseLoggedTest() {
 
-
+//Problemas con el puerto --> El puerto que usa cada metodo de prueba debe de ser específico, el que viene
+//  de la anotacion que tiene.
         if (System.getenv("ET_EUS_API") == null) {
 
             ChromeDriverManager.getInstance(chrome).setup();

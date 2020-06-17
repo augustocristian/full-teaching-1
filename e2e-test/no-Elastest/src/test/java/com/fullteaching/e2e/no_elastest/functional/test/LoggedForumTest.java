@@ -18,7 +18,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -84,7 +83,7 @@ public class LoggedForumTest extends BaseLoggedTest {
     @MethodSource("data")
     public void forumLoadEntriesTest(String usermail, String password, String role) {
 
-
+//Variable user local para evitar problemas con la concurrencia
         this.user = setupBrowser("chrome", role, usermail, 30);
 
         driver = user.getDriver();
@@ -252,7 +251,7 @@ public class LoggedForumTest extends BaseLoggedTest {
     @ParameterizedTest
     @MethodSource("data")
     public void forumNewCommentTest(String usermail, String password, String role) throws InterruptedException {
-Thread.sleep(3000);
+        Thread.sleep(3000);
 /*
         user = setupBrowser("chrome", role, usermail, 100);
         driver = user.getDriver();
@@ -351,7 +350,7 @@ Thread.sleep(3000);
     @Resource(resID = "Course", replaceable = {"Forum"})
     @AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READWRITE")
     public void forumNewReply2CommentTest(String usermail, String password, String role) throws InterruptedException {
-Thread.sleep(30000);
+        Thread.sleep(30000);
  /*       user = setupBrowser("chrome", role, usermail, 100);
         driver = user.getDriver();
 
