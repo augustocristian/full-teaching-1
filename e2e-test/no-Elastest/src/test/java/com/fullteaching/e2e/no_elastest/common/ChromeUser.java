@@ -42,21 +42,20 @@ public class ChromeUser extends BrowserUser {
         options.addArguments("--auto-select-desktop-capture-source=Entire screen");
 
         options.addArguments("--disable-notifications");
-        options.addArguments("--headless");
+       // options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-
+      //  options.addArguments("--disable-gpu");
         String eusApiURL = System.getenv("ET_EUS_API");
 
-        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-        capabilities.setCapability("acceptInsecureCerts", true);
+        options.setCapability(ChromeOptions.CAPABILITY, options);
+        options.setCapability("acceptInsecureCerts", true);
         if (eusApiURL == null) {
-            this.driver = new ChromeDriver(capabilities);
+            this.driver = new ChromeDriver(options);
         } else {
             try {
-                capabilities.setCapability("testName", testName + "_" + userIdentifier);
-                RemoteWebDriver remote = new RemoteWebDriver(new URL(eusApiURL), capabilities);
+                options.setCapability("testName", testName + "_" + userIdentifier);
+                RemoteWebDriver remote = new RemoteWebDriver(new URL(eusApiURL), options);
                 remote.setFileDetector(new LocalFileDetector());
                 this.driver = remote;
             } catch (MalformedURLException e) {

@@ -19,7 +19,7 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 
 import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
