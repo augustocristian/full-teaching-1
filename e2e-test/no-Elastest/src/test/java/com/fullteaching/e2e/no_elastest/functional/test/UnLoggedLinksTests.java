@@ -1,18 +1,10 @@
 package com.fullteaching.e2e.no_elastest.functional.test;
 
-import com.fullteaching.e2e.no_elastest.common.NavigationUtilities;
-import com.fullteaching.e2e.no_elastest.common.SpiderNavigation;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import retorch.testannotations.AccessMode;
 import retorch.testannotations.Resource;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static com.fullteaching.e2e.no_elastest.common.Constants.LOCALHOST;
 import static java.lang.System.getProperty;

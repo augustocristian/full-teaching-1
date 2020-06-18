@@ -1,10 +1,6 @@
 package com.fullteaching.e2e.no_elastest.functional.test;
 
 import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
-import com.fullteaching.e2e.no_elastest.common.UserUtilities;
-import com.fullteaching.e2e.no_elastest.common.exception.BadUserException;
-import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
-import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +17,6 @@ import java.io.IOException;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 
 @ExtendWith(SeleniumExtension.class)

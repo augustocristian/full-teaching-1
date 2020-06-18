@@ -19,7 +19,6 @@ package com.fullteaching.e2e.no_elastest.common;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -42,10 +41,10 @@ public class ChromeUser extends BrowserUser {
         options.addArguments("--auto-select-desktop-capture-source=Entire screen");
 
         options.addArguments("--disable-notifications");
-       // options.addArguments("--headless");
+        // options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-      //  options.addArguments("--disable-gpu");
+        //  options.addArguments("--disable-gpu");
         String eusApiURL = System.getenv("ET_EUS_API");
 
         options.setCapability(ChromeOptions.CAPABILITY, options);

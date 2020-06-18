@@ -150,4 +150,32 @@ parallel(
 }//End Steps 
 }//End Stage
 }
+ post { 
+        failure { 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobC; ls . ;docker-compose --no-ansi -p TJobC down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobD; ls . ;docker-compose --no-ansi -p TJobD down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobF; ls . ;docker-compose --no-ansi -p TJobF down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobG; ls . ;docker-compose --no-ansi -p TJobG down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobH; ls . ;docker-compose --no-ansi -p TJobH down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobI; ls . ;docker-compose --no-ansi -p TJobI down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobJ; ls . ;docker-compose --no-ansi -p TJobJ down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobK; ls . ;docker-compose --no-ansi -p TJobK down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobL; ls . ;docker-compose --no-ansi -p TJobL down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobM; ls . ;docker-compose --no-ansi -p TJobM down'
+ 
+        sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobN; ls . ;docker-compose --no-ansi -p TJobN down'
+ 
+}
+}
 }

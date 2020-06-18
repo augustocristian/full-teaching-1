@@ -19,13 +19,9 @@ package com.fullteaching.e2e.no_elastest.functional.test.media;
 
 import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
-import io.github.bonigarcia.SeleniumExtension;
-import org.junit.Assert;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import retorch.testannotations.AccessMode;
 import retorch.testannotations.Resource;
 

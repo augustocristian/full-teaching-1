@@ -2,8 +2,7 @@ package com.fullteaching.e2e.no_elastest.common;
 
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
-import com.fullteaching.e2e.no_elastest.utils.SetUp;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
 import org.junit.Assert;
@@ -17,7 +16,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -26,7 +24,6 @@ import org.slf4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -193,7 +190,7 @@ public class BaseLoggedTest {
     @AfterEach
     void tearDown(TestInfo testInfo) throws IOException {
 
-      
+
         //TEMPORAL SOLUTION TO MULTIPLE WINDOWS CREATION
 
         //driver.close();

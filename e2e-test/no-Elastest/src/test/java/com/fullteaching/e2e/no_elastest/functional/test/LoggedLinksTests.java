@@ -1,16 +1,13 @@
 package com.fullteaching.e2e.no_elastest.functional.test;
 
 import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
-import com.fullteaching.e2e.no_elastest.common.NavigationUtilities;
-import com.fullteaching.e2e.no_elastest.common.SpiderNavigation;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
-import io.github.bonigarcia.SeleniumExtension;
+import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
@@ -18,10 +15,6 @@ import retorch.testannotations.AccessMode;
 import retorch.testannotations.Resource;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.lang.invoke.MethodHandles.lookup;
@@ -62,7 +55,8 @@ public class LoggedLinksTests extends BaseLoggedTest {
     public void spiderLoggedTest(String usermail, String password, String role) throws InterruptedException {
 
         Thread.sleep(10000);
-        assertTrue(true);}
+        assertTrue(true);
+    }
 
 
 }
