@@ -33,7 +33,7 @@ import static org.openqa.selenium.remote.DesiredCapabilities.chrome;
 import static org.slf4j.LoggerFactory.getLogger;
 
 //@Disabled
-public class LoggedVideoSession extends BaseLoggedTest {
+public class LoggedVideoSession{// extends BaseLoggedTest {
 
     public static final String CHROME = "chrome";
     public static final String FIREFOX = "firefox";

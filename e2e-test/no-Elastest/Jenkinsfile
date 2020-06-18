@@ -7,7 +7,7 @@ stages{
   stage('Clone Repository') { 
     steps{
         dir('fullteaching') {
-            git branch: 'DevelopmentOpenViduTests',
+            git branch: 'emptyTestCasesBranch',
                          credentialsId: 'GitHub',
                          url:'https://github.com/augustocristian/full-teaching-tunon-tests'
                             }//endDir
