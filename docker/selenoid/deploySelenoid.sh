@@ -10,8 +10,8 @@ docker rm selenoid
 docker run -d  --name selenoid   --restart always                       `
     -p 4444:4444                                            `
     -v //var/run/docker.sock:/var/run/docker.sock           `
-    -v /home/augusto/conf/selenoid/:/etc/selenoid/:ro                `
-    -v /home/augusto/cdat/selenoid/:/opt/selenoid/video/             `
+    -v /home/augusto/docker/conf/selenoid/:/etc/selenoid/:ro                `
+    -v /home/augusto/docker/cdat/selenoid/:/opt/selenoid/video/             `
     -e OVERRIDE_VIDEO_OUTPUT_DIR=/c/T/cdat/selenoid/        `
     aerokube/selenoid:latest-release
 docker stop selenoid-ui
