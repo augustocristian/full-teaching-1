@@ -11,7 +11,7 @@ services:
   full-teaching-TJobH-openvidu-server-kms:
     image: eexit/mirror-http-server
     ports:
-      - 4442:80
+      - 10000:80
     environment:
       - openvidu.secret=MY_SECRET
       - openvidu.publicurl=docker
@@ -32,7 +32,7 @@ services:
       - MYSQL_ENV_MYSQL_USER=root
       - MYSQL_ENV_MYSQL_PASSWORD=pass
       - server.port=5001
-      - openvidu.url=https://full-teaching-TJobH-openvidu-server-kms:4442
+      - openvidu.url=https://full-teaching-TJobH-openvidu-server-kms:10000
       - openvidu.secret=MY_SECRET
 networks:
   fullteaching-TJobH:

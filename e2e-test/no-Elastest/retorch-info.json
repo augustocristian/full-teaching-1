@@ -19,8 +19,8 @@
       },
       {
         "name": "openviduport",
-        "lowerPort": "4442",
-        "upperPort": "4455"
+        "lowerPort": "10000",
+        "upperPort": "10010"
       }
     ],
     "testsBasePath": "fullteaching/e2e-test/no-Elastest/"
@@ -45,8 +45,8 @@
       },
       {
         "name": "openviduport",
-        "lowerPort": "4442",
-        "upperPort": "4455"
+        "lowerPort": "10000",
+        "upperPort": "10010"
       }
     ],
     "testsBasePath": "fullteaching/e2e-test/no-Elastest/"
