@@ -19,6 +19,7 @@ package com.fullteaching.e2e.no_elastest.common;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -41,19 +42,32 @@ public class ChromeUser extends BrowserUser {
         options.addArguments("--auto-select-desktop-capture-source=Entire screen");
 
         options.addArguments("--disable-notifications");
-        // options.addArguments("--headless");
+       // options.addArguments("--headless");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
-        //  options.addArguments("--disable-gpu");
+
+      //  options.addArguments("--disable-gpu");
         String eusApiURL = System.getenv("ET_EUS_API");
 
         options.setCapability(ChromeOptions.CAPABILITY, options);
         options.setCapability("acceptInsecureCerts", true);
+
+
+
+
+
         if (eusApiURL == null) {
             this.driver = new ChromeDriver(options);
         } else {
             try {
                 options.setCapability("testName", testName + "_" + userIdentifier);
+
+                //CAPABILITIES FOR SELENOID RETORCH
+                options.setCapability("enableVideo", true);
+                options.setCapability("enableVNC", true);
+                options.setCapability("name", testName + "_" + userIdentifier);
+                options.setCapability("videoName", testName + "_" + userIdentifier);
+                //END CAPABILITIES FOR SELENOID RETORCH
                 RemoteWebDriver remote = new RemoteWebDriver(new URL(eusApiURL), options);
                 remote.setFileDetector(new LocalFileDetector());
                 this.driver = remote;

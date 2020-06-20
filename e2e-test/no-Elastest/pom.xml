@@ -54,11 +54,6 @@
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
         <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
 
-        <!-- RETORCH Dependencies -->
-        <jacksonjson.version>2.5.3</jacksonjson.version>
-        <collections.version>4.0</collections.version>
-        <log4j-java.version>1.2.17</log4j-java.version>
-
     </properties>
 
     <scm>
@@ -137,23 +132,6 @@
 
         <!-- END RETORCH DEPENDENCY-->
 
-        <!-- RETORCH TEMPORAL PACKAGES-->
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jacksonjson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>${log4j-java.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-collections4</artifactId>
-            <version>${collections.version}</version>
-        </dependency>
-        <!-- RETORCH TEMPORAL PACKAGES-->
 
     </dependencies>
     <!-- Plugins -->
