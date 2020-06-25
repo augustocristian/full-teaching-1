@@ -23,7 +23,7 @@
         "upperPort": "10010"
       }
     ],
-    "testsBasePath": "fullteaching/e2e-test/no-Elastest/"
+    "testsBasePath": "e2e-test/no-Elastest/"
   },
   "generic": {
     "urlDeploymentResource": "192.168.0.103",
@@ -49,6 +49,6 @@
         "upperPort": "10010"
       }
     ],
-    "testsBasePath": "fullteaching/e2e-test/no-Elastest/"
+    "testsBasePath": "e2e-test/no-Elastest/"
   }
 }
