@@ -204,8 +204,8 @@ public class BaseLoggedTest {
      //   log.info("##### Finish test: {} - Driver {}", testName, user.getDriver());
 
         if (user != null) {
-            log.info("url:" + user.getDriver().getCurrentUrl() + "\nScreenshot (in Base64) at the end of the test:\n{}",
-                    SetUp.getBase64Screenshot(user.getDriver()));
+          //  log.info("url:" + user.getDriver().getCurrentUrl() + "\nScreenshot (in Base64) at the end of the test:\n{}",
+            //        SetUp.getBase64Screenshot(user.getDriver()));
 
             log.info("Browser console at the end of the test");
             LogEntries logEntries = user.getDriver().manage().logs().get(BROWSER);
