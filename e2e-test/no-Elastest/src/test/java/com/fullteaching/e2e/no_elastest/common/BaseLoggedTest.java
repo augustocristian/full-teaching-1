@@ -212,8 +212,8 @@ public class BaseLoggedTest {
             logEntries.forEach((entry) -> log.info("[{}] {} {}",
                     new Date(entry.getTimestamp()), entry.getLevel(),
                     entry.getMessage()));
-
-            this.logout(user);
+            //TO-DO- ERROR with the logout
+            //this.logout(user);
             user.dispose();
         }
 
