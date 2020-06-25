@@ -19,7 +19,7 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.LOCALHOST;
 import static java.lang.System.getProperty;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
- public class UnLoggedLinksTests extends BaseLoggedTest {
+public class UnLoggedLinksTests extends BaseLoggedTest {
 
     protected static WebDriver driver;
     protected static int DEPTH = 3;
@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
     @BeforeAll
     static void setUp() {
 
-      String appHost = getProperty("fullTeachingUrl");
+        String appHost = getProperty("fullTeachingUrl");
         if (appHost != null) {
             host = appHost;
         }
@@ -41,10 +41,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
     @Resource(resID = "Course", replaceable = {})
     @AccessMode(resID = "Course", concurrency = 15, sharing = true, accessMode = "READWRITE")
     @Test
-    public void spiderUnloggedTest()  {
-
+    public void spiderUnloggedTest() {
+        String role = "TEACHER";
         //*navigate from home*//*
-
+        user = setupBrowser("chrome", role, usermail, 100);
+        driver = user.getDriver();
         NavigationUtilities.getUrlAndWaitFooter(driver, host);
 
         List<WebElement> pageLinks = SpiderNavigation.getPageLinks(driver);
