@@ -249,10 +249,12 @@ public class LoggedForumTest extends BaseLoggedTest {
     @ParameterizedTest
     @MethodSource("data")
     public void forumNewCommentTest(String usermail, String password, String role) throws InterruptedException {
+        user = setupBrowser("chrome", role, usermail, 100);
+
         Thread.sleep(3000);
         assertTrue(true);
 /*
-        user = setupBrowser("chrome", role, usermail, 100);
+
         driver = user.getDriver();
         this.slowLogin(user, usermail, password);
 
@@ -349,8 +351,10 @@ public class LoggedForumTest extends BaseLoggedTest {
     @Resource(resID = "Course", replaceable = {"Forum"})
     @AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READWRITE")
     public void forumNewReply2CommentTest(String usermail, String password, String role) throws InterruptedException {
+        user = setupBrowser("chrome", role, usermail, 100);
         Thread.sleep(30000);
- /*       user = setupBrowser("chrome", role, usermail, 100);
+        assertTrue(true);
+ /*
         driver = user.getDriver();
 
         this.slowLogin(user, usermail, password);

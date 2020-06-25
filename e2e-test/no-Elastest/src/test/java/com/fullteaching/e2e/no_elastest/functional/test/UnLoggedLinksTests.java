@@ -43,13 +43,15 @@ public class UnLoggedLinksTests extends BaseLoggedTest {
     @AccessMode(resID = "Course", concurrency = 15, sharing = true, accessMode = "READWRITE")
     @Test
     public void spiderUnloggedTest() throws InterruptedException {
-
+        String role = "TEACHER";
+        this.usermail="nonloged@gmail.com";
+        user = setupBrowser("chrome", role, this.usermail, 100);
         Thread.sleep(10000);
         Assert.assertTrue(true);
         /*
-        String role = "TEACHER";
+
         //*navigate from home*//*
-        user = setupBrowser("chrome", role, usermail, 100);
+
         driver = user.getDriver();
         NavigationUtilities.getUrlAndWaitFooter(driver, host);
 

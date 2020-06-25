@@ -53,11 +53,12 @@ public class LoggedLinksTests extends BaseLoggedTest {
     @Resource(resID = "Course", replaceable = {})
     @AccessMode(resID = "Course", concurrency = 15, sharing = true, accessMode = "READWRITE")
     public void spiderLoggedTest(String usermail, String password, String role) throws InterruptedException {
+        user = setupBrowser("chrome", role, usermail, 100);
         Thread.sleep(10000);
         Assert.assertTrue(true);
 /*
 
-        user = setupBrowser("chrome", role, usermail, 100);
+
         driver = user.getDriver();
         this.slowLogin(user, usermail, password);
 

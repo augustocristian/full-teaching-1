@@ -62,10 +62,11 @@ public class CourseTeacherTest extends BaseLoggedTest {
     @ParameterizedTest
     @MethodSource("data")
     public void teacherCourseMainTest(String usermail, String password, String role) throws InterruptedException {
+        user = setupBrowser("chrome", role, usermail, 100);
         Thread.sleep(3000);
         assertEquals(true,true);
 /*
-        user = setupBrowser("chrome", role, usermail, 100);
+
         driver = user.getDriver();
         String courseName = properties.getProperty("forum.test.course");
 
@@ -133,10 +134,11 @@ public class CourseTeacherTest extends BaseLoggedTest {
     @ParameterizedTest
     @MethodSource("data")
     public void teacherCreateAndDeleteCourseTest(String usermail, String password, String role) throws InterruptedException {
-        Thread.sleep(3000);
+        user = setupBrowser("chrome", role, usermail, 100);
+       Thread.sleep(3000);
         assertEquals(true,true);
 /*
-        user = setupBrowser("chrome", role, usermail, 100);
+
         driver = user.getDriver();
 
         String courseName = properties.getProperty("forum.test.course");
@@ -232,10 +234,12 @@ public class CourseTeacherTest extends BaseLoggedTest {
     @ParameterizedTest
     @MethodSource("data")
     public void teacherEditCourseValues(String usermail, String password, String role) throws InterruptedException {
+        user = setupBrowser("chrome", role, usermail, 100);
+
         Thread.sleep(30000);
         assertEquals(true,true);
 /*
-        user = setupBrowser("chrome", role, usermail, 100);
+
         driver = user.getDriver();
 
         String courseName = properties.getProperty("forum.test.course");
@@ -466,7 +470,7 @@ public class CourseTeacherTest extends BaseLoggedTest {
     public void teacherDeleteCourseTest(String usermail, String password, String role) {
 
 
-        user = setupBrowser("chrome", role, usermail, 100);
+        this.user = setupBrowser("chrome", role, usermail, 100);
         driver = user.getDriver();
 
         this.slowLogin(user, usermail, password);
