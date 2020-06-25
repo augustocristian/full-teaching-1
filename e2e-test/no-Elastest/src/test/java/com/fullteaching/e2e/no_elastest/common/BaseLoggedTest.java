@@ -2,7 +2,6 @@ package com.fullteaching.e2e.no_elastest.common;
 
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
-import com.fullteaching.e2e.no_elastest.utils.SetUp;
 import io.github.bonigarcia.seljup.SeleniumExtension;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
@@ -11,25 +10,24 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 import static com.fullteaching.e2e.no_elastest.common.Constants.LOCALHOST;
 import static com.fullteaching.e2e.no_elastest.common.Constants.PORT;
@@ -37,7 +35,6 @@ import static java.lang.invoke.MethodHandles.lookup;
 import static java.util.logging.Level.ALL;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 import static org.openqa.selenium.remote.CapabilityType.LOGGING_PREFS;
-import static org.openqa.selenium.remote.DesiredCapabilities.chrome;
 import static org.slf4j.LoggerFactory.getLogger;
 
 //import io.github.bonigarcia.seljup.DriverCapabilities;
@@ -51,7 +48,7 @@ public class BaseLoggedTest {
     public static final String FIREFOX = "firefox";
     //protected common attributes
     protected static final String BROWSER_VERSION_LATEST = "latest";
-    protected static final String HOST = LOCALHOST;
+    protected static String HOST = LOCALHOST;
     protected final static Logger log = getLogger(lookup().lookupClass());
     protected static String userName;
     protected static String usermail;
@@ -85,10 +82,16 @@ public class BaseLoggedTest {
 
         if (System.getenv("ET_SUT_HOST") != null) {
             APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":" + PORT + "/";
+            //In order to check if is correct
+            HOST = APP_URL;
         } else {
             APP_URL = System.getProperty("app.url");
+
             if (APP_URL == null) {
                 APP_URL = LOCALHOST;
+            } else {
+                //In order to check id its correct
+                HOST = APP_URL;
             }
         }
 
@@ -147,17 +150,17 @@ public class BaseLoggedTest {
     }
 
     protected BrowserUser setupBrowser(String browser, TestInfo testInfo,
-                                       String userIdentifier, int secondsOfWait)  {
+                                       String userIdentifier, int secondsOfWait) {
 
-            return this.setupBrowser(browser,
-                    testInfo.getTestMethod().get().getName(), userIdentifier,
-                    secondsOfWait);
+        return this.setupBrowser(browser,
+                testInfo.getTestMethod().get().getName(), userIdentifier,
+                secondsOfWait);
 
 
     }
 
     protected BrowserUser setupBrowser(String browser, String testName,
-                                       String userIdentifier, int secondsOfWait)  {
+                                       String userIdentifier, int secondsOfWait) {
 
         BrowserUser u;
 
@@ -202,10 +205,9 @@ public class BaseLoggedTest {
         String testName = testInfo.getTestMethod().get().getName();
 
 
-
         if (user != null) {
             log.info("##### Finish test: {} - Driver {}", testName, this.user.getDriver());
-          //  log.info("url:" + user.getDriver().getCurrentUrl() + "\nScreenshot (in Base64) at the end of the test:\n{}",
+            //  log.info("url:" + user.getDriver().getCurrentUrl() + "\nScreenshot (in Base64) at the end of the test:\n{}",
             //        SetUp.getBase64Screenshot(user.getDriver()));
 
             log.info("Browser console at the end of the test");
@@ -217,7 +219,6 @@ public class BaseLoggedTest {
             //this.logout(user);
             user.dispose();
         }
-
 
 
     }
@@ -275,7 +276,7 @@ public class BaseLoggedTest {
 
     protected void logout(BrowserUser user) {
 
-     //   log.info("Logging out {}", user.getClientData());
+        //   log.info("Logging out {}", user.getClientData());
 
         if (user.getDriver().findElements(By.cssSelector("#fixed-icon"))
                 .size() > 0) {
