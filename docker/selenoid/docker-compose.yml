@@ -9,7 +9,7 @@ services:
             - "/home/augusto/docker/cdat/selenoid/:/opt/selenoid/video"
             - "/home/augusto/docker/logs/selenoid/:/opt/selenoid/logs"
         environment:
-            - OVERRIDE_VIDEO_OUTPUT_DIR=/path/to/config/video
+            - OVERRIDE_VIDEO_OUTPUT_DIR=/home/augusto/docker/cdat/selenoid/
         command: ["-conf", "/home/augusto/docker/conf/selenoid/", "-video-output-dir", "/home/augusto/docker/cdat/selenoid/", "-log-output-dir", "/home/augusto/docker/logs/selenoid/"]
         ports:
             - "4444:4444"
