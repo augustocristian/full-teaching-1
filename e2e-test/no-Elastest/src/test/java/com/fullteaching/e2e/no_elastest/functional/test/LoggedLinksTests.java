@@ -1,6 +1,8 @@
 package com.fullteaching.e2e.no_elastest.functional.test;
 
 import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
+import com.fullteaching.e2e.no_elastest.common.NavigationUtilities;
+import com.fullteaching.e2e.no_elastest.common.SpiderNavigation;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.Assert;
@@ -9,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.slf4j.Logger;
@@ -16,9 +19,14 @@ import retorch.testannotations.AccessMode;
 import retorch.testannotations.Resource;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import static java.lang.invoke.MethodHandles.lookup;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.slf4j.LoggerFactory.getLogger;
 
 
@@ -54,9 +62,8 @@ public class LoggedLinksTests extends BaseLoggedTest {
     @AccessMode(resID = "Course", concurrency = 15, sharing = true, accessMode = "READWRITE")
     public void spiderLoggedTest(String usermail, String password, String role) throws InterruptedException {
         user = setupBrowser("chrome", role, usermail, 100);
-        Thread.sleep(10000);
-        Assert.assertTrue(true);
-/*
+
+
 
 
         driver = user.getDriver();
@@ -87,7 +94,7 @@ public class LoggedLinksTests extends BaseLoggedTest {
         for (String failed : failed_links) {
             msg = failed + "\n";
         }
-        assertTrue(failed_links.isEmpty(), msg); */
+        assertTrue(failed_links.isEmpty(), msg);
     }
 
 

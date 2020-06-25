@@ -46,9 +46,8 @@ public class UnLoggedLinksTests extends BaseLoggedTest {
         String role = "TEACHER";
         this.usermail="nonloged@gmail.com";
         user = setupBrowser("chrome", role, this.usermail, 100);
-        Thread.sleep(10000);
-        Assert.assertTrue(true);
-        /*
+
+
 
         //*navigate from home*//*
 
@@ -75,7 +74,7 @@ public class UnLoggedLinksTests extends BaseLoggedTest {
             msg = failed + "\n";
         }
         assertTrue(failed_links.isEmpty(), msg);
-*/
+
 
     }
 
