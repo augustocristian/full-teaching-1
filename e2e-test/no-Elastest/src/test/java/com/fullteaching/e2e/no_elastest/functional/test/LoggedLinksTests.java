@@ -61,14 +61,13 @@ public class LoggedLinksTests extends BaseLoggedTest {
     @AccessMode(resID = "Course", concurrency = 15, sharing = true, accessMode = "READWRITE")
     public void spiderLoggedTest(String usermail, String password, String role) throws InterruptedException {
 
-        Thread.sleep(30000);
-        assertTrue(true);
-/*
+
+
         user = setupBrowser("chrome", role, usermail, 100);
         driver = user.getDriver();
         this.slowLogin(user, usermail, password);
 
-        *//*navigate from home*//*
+        //*navigate from home*//*
         NavigationUtilities.getUrlAndWaitFooter(driver, host);
 
         List<WebElement> pageLinks = SpiderNavigation.getPageLinks(driver);
@@ -93,7 +92,7 @@ public class LoggedLinksTests extends BaseLoggedTest {
         for (String failed : failed_links) {
             msg = failed + "\n";
         }
-        assertTrue(failed_links.isEmpty(), msg);*/
+        assertTrue(failed_links.isEmpty(), msg);
     }
 
 

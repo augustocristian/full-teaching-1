@@ -7,7 +7,10 @@ docker pull selenoid/vnc:chrome_81.0
 #direccion del remote web driver http://<ip>:4444/wd/hub
 docker stop selenoid
 docker rm selenoid
-docker run -d  --name selenoid   --restart always -p 4444:4444 -v //var/run/docker.sock:/var/run/docker.sock -v /home/augusto/docker/conf/selenoid/:/etc/selenoid/:ro -v /home/augusto/docker/cdat/selenoid/:/opt/selenoid/video/ -e OVERRIDE_VIDEO_OUTPUT_DIR=/c/T/cdat/selenoid/ aerokube/selenoid:latest-release 
+docker run -d  --name selenoid   --restart always -p 4444:4444 -v //var/run/docker.sock:/var/run/docker.sock 
+-v /home/augusto/docker/conf/selenoid/:/etc/selenoid/:ro 
+-v /home/augusto/docker/cdat/selenoid/:/opt/selenoid/video/ 
+-e OVERRIDE_VIDEO_OUTPUT_DIR=/c/T/cdat/selenoid/ aerokube/selenoid:latest-release 
 docker stop selenoid-ui
 docker rm selenoid-ui
 #con conexiones que no son directas (p.e. desde casa) no sirve

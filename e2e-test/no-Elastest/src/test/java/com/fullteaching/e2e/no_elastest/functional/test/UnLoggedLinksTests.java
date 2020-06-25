@@ -19,7 +19,7 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.LOCALHOST;
 import static java.lang.System.getProperty;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-abstract public class UnLoggedLinksTests extends BaseLoggedTest {
+ public class UnLoggedLinksTests extends BaseLoggedTest {
 
     protected static WebDriver driver;
     protected static int DEPTH = 3;
@@ -28,10 +28,10 @@ abstract public class UnLoggedLinksTests extends BaseLoggedTest {
     @BeforeAll
     static void setUp() {
 
-/*        String appHost = getProperty("fullTeachingUrl");
+      String appHost = getProperty("fullTeachingUrl");
         if (appHost != null) {
             host = appHost;
-        }*/
+        }
     }
 
     @Resource(resID = "LoginService", replaceable = {})
@@ -41,10 +41,9 @@ abstract public class UnLoggedLinksTests extends BaseLoggedTest {
     @Resource(resID = "Course", replaceable = {})
     @AccessMode(resID = "Course", concurrency = 15, sharing = true, accessMode = "READWRITE")
     @Test
-    public void spiderUnloggedTest() throws InterruptedException {
-        Thread.sleep(30000);
-        assertTrue(true);
-   /*     *//*navigate from home*//*
+    public void spiderUnloggedTest()  {
+
+        //*navigate from home*//*
 
         NavigationUtilities.getUrlAndWaitFooter(driver, host);
 
@@ -67,7 +66,7 @@ abstract public class UnLoggedLinksTests extends BaseLoggedTest {
         for (String failed : failed_links) {
             msg = failed + "\n";
         }
-        assertTrue(failed_links.isEmpty(), msg);*/
+        assertTrue(failed_links.isEmpty(), msg);
     }
 
 }

@@ -182,22 +182,6 @@ public class BaseLoggedTest {
 
         u.getDriver().get(APP_URL);
 
-/*        Wait<WebDriver> wait = new FluentWait<WebDriver>(u.getDriver())
-                .withTimeout(Duration.ofSeconds(30))
-                .pollingEvery(Duration.ofSeconds(2))
-                .ignoring(NoSuchElementException.class);
-        WebElement foo = wait.until(new Function<WebDriver, WebElement>() {
-            public WebElement apply(WebDriver driver) {
-                log.info("Retry Again");
-                return driver.findElement(By.id("download-button"));
-            }
-        });*/
-
-
-
-        //This is for solve the problem with the driver.
-       // WebDriverWait wait = new WebDriverWait(u.getDriver(), 20);
-     //   wait.until(ExpectedConditions.elementToBeClickable(lastElementToLoad));
 
         final String GLOBAL_JS_FUNCTION = "var s = window.document.createElement('script');"
                 + "s.innerText = 'window.MY_FUNC = function(containerQuerySelector) {"
