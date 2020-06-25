@@ -1,0 +1,24 @@
+version: '3'
+services:
+    selenoid:
+        network_mode: bridge
+        image: aerokube/selenoid:latest-release
+        volumes:
+            - "/home/augusto/docker/conf/selenoid/:/etc/selenoid"
+            - "/var/run/docker.sock:/var/run/docker.sock"
+            - "/home/augusto/docker/cdat/selenoid/:/opt/selenoid/video"
+            - "/home/augusto/docker/logs/selenoid/:/opt/selenoid/logs"
+        environment:
+            - OVERRIDE_VIDEO_OUTPUT_DIR=/path/to/config/video
+        command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-log-output-dir", "/opt/selenoid/logs"]
+        ports:
+            - "4444:4444"
+    selenoid-ui:
+        network_mode: bridge
+        image: aerokube/selenoid:latest-release
+        links:
+            - selenoid
+        command: ["--selenoid-uri","http://192.168.0.103:4444"]
+        ports:
+        - "8080:8080"
+
