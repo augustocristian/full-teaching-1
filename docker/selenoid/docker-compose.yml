@@ -16,7 +16,7 @@ services:
         restart: always  
     selenoid-ui:
         network_mode: bridge
-        image: aerokube/selenoid:latest-release
+        image: "aerokube/selenoid-ui"
         links:
             - selenoid
         command: ["--selenoid-uri","http://192.168.0.103:4444"]
