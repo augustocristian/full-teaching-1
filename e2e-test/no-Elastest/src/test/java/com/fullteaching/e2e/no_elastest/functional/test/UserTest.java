@@ -74,7 +74,7 @@ public class UserTest extends BaseLoggedTest {
         }
 
         try {
-            driver = UserUtilities.logOut(driver, host);
+            driver = UserUtilities.logOut(driver, HOST);
 
             driver = UserUtilities.checkLogOut(driver);
 

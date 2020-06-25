@@ -473,14 +473,14 @@ public class CourseTeacherTest extends BaseLoggedTest {
         String courseName = "";
         // navigate to courses if not there
         try {
-            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", host)))
+            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", HOST)))
                 driver = NavigationUtilities.toCoursesHome(driver);
         } catch (Exception e) {
             fail("Failed to go to Courses " + e.getClass() + ": " + e.getLocalizedMessage());
         }
         // create a course
         try {
-            courseName = CourseNavigationUtilities.newCourse(driver, host);
+            courseName = CourseNavigationUtilities.newCourse(driver, HOST);
 
         } catch (ElementNotFoundException e) {
             fail("Failed to create course:: " + e.getClass() + ": " + e.getLocalizedMessage());

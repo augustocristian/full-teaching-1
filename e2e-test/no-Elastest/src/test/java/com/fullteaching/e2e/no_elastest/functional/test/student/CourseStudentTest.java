@@ -72,12 +72,12 @@ public class CourseStudentTest extends BaseLoggedTest {
 
 
         try {
-            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", host)))
+            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", HOST)))
                 driver = NavigationUtilities.toCoursesHome(driver);
 
             //go to first course
             //get course list
-            List<String> course_list = CourseNavigationUtilities.getCoursesList(driver, host);
+            List<String> course_list = CourseNavigationUtilities.getCoursesList(driver, HOST);
             if (course_list.size() < 0) fail("No courses available for test user");
 
             WebElement course_button = CourseNavigationUtilities.getCourseElement(driver, course_list.get(0)).findElement(By.className("title"));

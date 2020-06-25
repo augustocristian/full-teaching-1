@@ -42,11 +42,8 @@ public class ChromeUser extends BrowserUser {
         options.addArguments("--auto-select-desktop-capture-source=Entire screen");
 
         options.addArguments("--disable-notifications");
-        // options.addArguments("--headless");
-        // options.addArguments("--no-sandbox");
-        // options.addArguments("--disable-dev-shm-usage");
 
-        //  options.addArguments("--disable-gpu");
+
         String eusApiURL = System.getenv("ET_EUS_API");
 
         options.setCapability(ChromeOptions.CAPABILITY, options);
@@ -68,7 +65,7 @@ public class ChromeUser extends BrowserUser {
                 remote.setFileDetector(new LocalFileDetector());
                 this.driver = remote;
             } catch (MalformedURLException e) {
-                throw new RuntimeException("Exception creaing eusApiURL", e);
+                throw new RuntimeException("Exception creating eusApiURL", e);
             }
         }
 

@@ -93,10 +93,10 @@ public class LoggedForumTest extends BaseLoggedTest {
 
         try {
             //navigate to courses.
-            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", host))) {
+            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", HOST))) {
                 driver = NavigationUtilities.toCoursesHome(driver);
             }
-            List<String> courses = CourseNavigationUtilities.getCoursesList(driver, host);
+            List<String> courses = CourseNavigationUtilities.getCoursesList(driver, HOST);
 
             assertTrue(courses.size() > 0, "No courses in the list");
 
@@ -186,7 +186,7 @@ public class LoggedForumTest extends BaseLoggedTest {
 
         try {
             //navigate to courses.
-            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", host))) {
+            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", HOST))) {
                 driver = NavigationUtilities.toCoursesHome(driver);
             }
             WebElement course = CourseNavigationUtilities.getCourseElement(driver, courseName);

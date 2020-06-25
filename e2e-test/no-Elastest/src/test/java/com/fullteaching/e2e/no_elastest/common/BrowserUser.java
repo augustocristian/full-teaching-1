@@ -28,7 +28,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 public class BrowserUser {
 
-    final static Logger log = getLogger(lookup().lookupClass());
+    static final Logger log = getLogger(lookup().lookupClass());
     protected WebDriver driver;
     protected WebDriverWait waiter;
     protected String clientData;

@@ -51,7 +51,7 @@ public class BaseLoggedTest {
     public static final String FIREFOX = "firefox";
     //protected common attributes
     protected static final String BROWSER_VERSION_LATEST = "latest";
-    protected static final String host = LOCALHOST;
+    protected static final String HOST = LOCALHOST;
     protected final static Logger log = getLogger(lookup().lookupClass());
     protected static String userName;
     protected static String usermail;
@@ -164,11 +164,11 @@ public class BaseLoggedTest {
         log.info("Starting browser ({})", browser);
 
         switch (browser) {
-            case "chrome":
+            case CHROME:
                 u = new ChromeUser(userIdentifier, secondsOfWait, testName,
                         userIdentifier);
                 break;
-            case "firefox":
+            case FIREFOX:
                 u = new FirefoxUser(userIdentifier, secondsOfWait, testName,
                         userIdentifier);
                 break;
@@ -201,7 +201,7 @@ public class BaseLoggedTest {
     void tearDown(TestInfo testInfo) throws IOException {
         String testName = testInfo.getTestMethod().get().getName();
 
-     //   log.info("##### Finish test: {} - Driver {}", testName, user.getDriver());
+        log.info("##### Finish test: {} - Driver {}", testName, user.getDriver());
 
         if (user != null) {
           //  log.info("url:" + user.getDriver().getCurrentUrl() + "\nScreenshot (in Base64) at the end of the test:\n{}",
@@ -213,12 +213,10 @@ public class BaseLoggedTest {
                     new Date(entry.getTimestamp()), entry.getLevel(),
                     entry.getMessage()));
 
-            //this.logout(user);
+            this.logout(user);
             user.dispose();
         }
-        //TEMPORAL SOLUTION TO MULTIPLE WINDOWS CREATION
 
-        //driver.close();
 
 
     }
