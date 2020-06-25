@@ -197,7 +197,9 @@
 
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
+                <version>3.3.0</version>
                 <configuration>
+
                     <webResources>
                         <resource>
                             <directory>src/com.fullteaching.e2e.no_elastest.main/ebextensions</directory>
@@ -206,11 +208,6 @@
                         </resource>
                     </webResources>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
             </plugin>
 
             <!-- Added -->
