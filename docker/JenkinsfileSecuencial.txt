@@ -26,6 +26,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EChat#oneToOneChatInSessionChrome test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
 
  }
  }
@@ -46,6 +47,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#courseRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  
  }}
 
@@ -62,6 +64,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#courseInfoRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  
  }}
    stage('Executing Test Case sessionRestOperations'){
@@ -78,6 +81,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#sessionRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  
  }}
 
@@ -93,6 +97,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#forumRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
 
@@ -108,6 +113,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#filesRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
 
 
  }}
@@ -125,6 +131,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EREST#attendersRestOperations test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
   
@@ -140,6 +147,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=FullTeachingTestE2EVideoSession#oneToOneVideoAudioSessionChrome test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
   
@@ -155,6 +163,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedVideoSession#sessionTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
    stage('Executing Test Case studentCourseMainTest'){
@@ -170,6 +179,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=CourseStudentTest#studentCourseMainTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
 
  }}
 
@@ -184,9 +194,10 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
         echo 'SUT READY!'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=teacherCourseMainTest#teacherCourseMainTest test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=CourseTeacherTest#teacherCourseMainTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
     stage('Executing Test Case teacherCreateAndDeleteCourseTest'){
  steps{
@@ -198,9 +209,10 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
         echo 'SUT READY!'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=teacherCourseMainTest#teacherCreateAndDeleteCourseTest test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=CourseTeacherTest#teacherCreateAndDeleteCourseTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
 
  }}
     stage('Executing Test Case teacherEditCourseValues'){
@@ -213,9 +225,10 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
         echo 'SUT READY!'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=teacherCourseMainTest#teacherEditCourseValues test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=CourseTeacherTest#teacherEditCourseValues test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
 
@@ -228,9 +241,10 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 3; done;"'
         echo 'SUT READY!'
         echo 'Executing the test cases'
-        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=teacherCourseMainTest#teacherDeleteCourseTest test')
+        sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=CourseTeacherTest#teacherDeleteCourseTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
    stage('Executing Test Case forumLoadEntriesTest'){
@@ -245,6 +259,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedForumTest#forumLoadEntriesTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
    stage('Executing Test Case forumNewEntryTest'){
@@ -259,6 +274,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedForumTest#forumNewEntryTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
     stage('Executing Test Case forumNewCommentTest'){
@@ -274,6 +290,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedForumTest#forumNewCommentTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
     stage('Executing Test Case forumNewReply2CommentTest'){
@@ -288,6 +305,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedForumTest#forumNewReply2CommentTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
     stage('Executing Test Case spiderLoggedTest'){
@@ -302,6 +320,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=LoggedLinksTests#spiderLoggedTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
  }}
 
   stage('Executing Test Case spiderUnloggedTest'){
@@ -316,6 +335,7 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=UnLoggedLinksTests#spiderUnloggedTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+         sh 'echo "y" | docker volume prune'
 
  }}
 
@@ -331,6 +351,8 @@ stage('Executing Test Case oneToOneChatInSessionChrome'){
         sh ('cd fullteaching/e2e-test/no-Elastest/;ls .;mvn -Dapp.url="https://192.168.0.103:5003" -Dtest=UserTest#loginTest test')
         echo 'Disposing the resources'
         sh 'cd fullteaching/e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+        sh 'echo "y" | docker volume prune'
+
  }}
 
 
