@@ -15,8 +15,8 @@ stages{
 stage('Time 0'){
  steps{
 parallel(
-  "TJob 2 IdResource: Attenders LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 2 IdResource: Attenders LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobC; ls . ;docker-compose --no-ansi -p TJobC up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5001 > /dev/null; do echo waiting for TJobC; sleep 0.3; done;"'
@@ -28,8 +28,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 3 IdResource: Configuration LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 3 IdResource: Configuration LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobD; ls . ;docker-compose --no-ansi -p TJobD up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5002 > /dev/null; do echo waiting for TJobD; sleep 0.3; done;"'
@@ -41,8 +41,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 4 IdResource: Configuration LoginService OpenVidu ": {
-             echo 'Deploying Resources Required'
+        "TJob 4 IdResource: Configuration LoginService OpenVidu ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobE; sleep 0.3; done;"'
@@ -54,8 +54,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 5 IdResource: Course LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 5 IdResource: Course LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobF; ls . ;docker-compose --no-ansi -p TJobF up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5004 > /dev/null; do echo waiting for TJobF; sleep 0.3; done;"'
@@ -67,8 +67,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 6 IdResource: Course LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 6 IdResource: Course LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobG; ls . ;docker-compose --no-ansi -p TJobG up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5005 > /dev/null; do echo waiting for TJobG; sleep 0.3; done;"'
@@ -85,8 +85,8 @@ parallel(
 stage('Time 1'){
  steps{
 parallel(
-  "TJob 7 IdResource: Information LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 7 IdResource: Information LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobH; ls . ;docker-compose --no-ansi -p TJobH up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5001 > /dev/null; do echo waiting for TJobH; sleep 0.3; done;"'
@@ -98,8 +98,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 8 IdResource: Files LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 8 IdResource: Files LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobI; ls . ;docker-compose --no-ansi -p TJobI up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5002 > /dev/null; do echo waiting for TJobI; sleep 0.3; done;"'
@@ -111,8 +111,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 9 IdResource: Forum LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 9 IdResource: Forum LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobJ; ls . ;docker-compose --no-ansi -p TJobJ up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5003 > /dev/null; do echo waiting for TJobJ; sleep 0.3; done;"'
@@ -124,8 +124,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 10 IdResource: Forum LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 10 IdResource: Forum LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobK; ls . ;docker-compose --no-ansi -p TJobK up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5004 > /dev/null; do echo waiting for TJobK; sleep 0.3; done;"'
@@ -137,8 +137,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 11 IdResource: LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 11 IdResource: LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobL; ls . ;docker-compose --no-ansi -p TJobL up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5005 > /dev/null; do echo waiting for TJobL; sleep 0.3; done;"'
@@ -155,8 +155,8 @@ parallel(
 stage('Time 2'){
  steps{
 parallel(
-  "TJob 12 IdResource: Session LoginService OpenVidu ": {
-             echo 'Deploying Resources Required'
+        "TJob 12 IdResource: Session LoginService OpenVidu ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobM; ls . ;docker-compose --no-ansi -p TJobM up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5001 > /dev/null; do echo waiting for TJobM; sleep 0.3; done;"'
@@ -168,8 +168,8 @@ parallel(
  
           }//EndParallelStep
         ,
-  "TJob 13 IdResource: Session LoginService OpenViduMock ": {
-             echo 'Deploying Resources Required'
+        "TJob 13 IdResource: Session LoginService OpenViduMock ": {
+        echo 'Deploying Resources Required'
         sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobN; ls . ;docker-compose --no-ansi -p TJobN up -d'
         echo 'Waiting for the SUT...'
         sh 'bash -c "while ! curl --insecure -s https://192.168.0.103:5002 > /dev/null; do echo waiting for TJobN; sleep 0.3; done;"'
@@ -186,29 +186,29 @@ parallel(
 }
  post { 
         failure { 
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobC; ls . ;docker-compose --no-ansi -p TJobC down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobC; ls . ;docker-compose --no-ansi -p TJobC down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobD; ls . ;docker-compose --no-ansi -p TJobD down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobD; ls . ;docker-compose --no-ansi -p TJobD down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobE; ls . ;docker-compose --no-ansi -p TJobE down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobF; ls . ;docker-compose --no-ansi -p TJobF down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobF; ls . ;docker-compose --no-ansi -p TJobF down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobG; ls . ;docker-compose --no-ansi -p TJobG down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobG; ls . ;docker-compose --no-ansi -p TJobG down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobH; ls . ;docker-compose --no-ansi -p TJobH down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobH; ls . ;docker-compose --no-ansi -p TJobH down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobI; ls . ;docker-compose --no-ansi -p TJobI down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobI; ls . ;docker-compose --no-ansi -p TJobI down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobJ; ls . ;docker-compose --no-ansi -p TJobJ down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobJ; ls . ;docker-compose --no-ansi -p TJobJ down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobK; ls . ;docker-compose --no-ansi -p TJobK down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobK; ls . ;docker-compose --no-ansi -p TJobK down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobL; ls . ;docker-compose --no-ansi -p TJobL down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobL; ls . ;docker-compose --no-ansi -p TJobL down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobM; ls . ;docker-compose --no-ansi -p TJobM down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobM; ls . ;docker-compose --no-ansi -p TJobM down'
  
-        sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobN; ls . ;docker-compose --no-ansi -p TJobN down'
+            sh 'cd e2e-test/no-Elastest/retorchdockercomposes/TJobN; ls . ;docker-compose --no-ansi -p TJobN down'
  
 }
         cleanup { 

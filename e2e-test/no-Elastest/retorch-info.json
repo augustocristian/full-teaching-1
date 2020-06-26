@@ -1,6 +1,15 @@
 {
   "OpenViduMock": {
-    "urlDeploymentResource": "192.168.0.103",
+    "urlDeploymentResource": [
+      {
+        "name": "mainuri",
+        "url": "192.168.0.103"
+      },
+      {
+        "name": "openviduurl",
+        "url": "192.168.0.103"
+      }
+    ],
     "dockerImageResource": [
       {
         "placeHolderId": "openviduimageresource",
@@ -26,11 +35,20 @@
     "testsBasePath": "e2e-test/no-Elastest/"
   },
   "generic": {
-    "urlDeploymentResource": "192.168.0.103",
+    "urlDeploymentResource": [
+      {
+        "name": "mainuri",
+        "url": "192.168.0.103"
+      },
+      {
+        "name": "openviduurl",
+        "url": "192.168.0.103"
+      }
+    ],
     "dockerImageResource": [
       {
         "placeHolderId": "openviduimageresource",
-        "imageName": "openvidu/openvidu-server-kms:2.3.0"
+        "imageName": "openvidu/openvidu-server-kms:1.7.0"
       },
       {
         "placeHolderId": "mysqlimageresource",

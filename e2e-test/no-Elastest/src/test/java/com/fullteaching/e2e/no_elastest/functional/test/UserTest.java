@@ -50,41 +50,28 @@ public class UserTest extends BaseLoggedTest {
     @AccessMode(resID = "LoginService", concurrency = 10, sharing = true, accessMode = "READONLY")
     @Resource(resID = "OpenVidu", replaceable = {"OpenViduMock"})
     @AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "NOACCESS")
-    public void loginTest(String usermail, String password, String role) {
-
-        user = setupBrowser("chrome", role, usermail, 100);
+    public void loginTest(String usermail, String password, String role) { //22  +85 +28 set up +13 lines teardown  =148
+        user = setupBrowser("chrome", role, usermail, 100); //27 lines
         driver = user.getDriver();
         try {
-            this.slowLogin(user, usermail, password);
-
-            driver = UserUtilities.checkLogin(driver, usermail);
-
+            this.slowLogin(user, usermail, password); //24 lines
+            driver = UserUtilities.checkLogin(driver, usermail); //12 lines
             assertTrue(true, "not logged");
-
         } catch (NotLoggedException | BadUserException e) {
-
             e.printStackTrace();
             fail("Not logged");
-
         } catch (ElementNotFoundException e) {
-
             e.printStackTrace();
             fail(e.getLocalizedMessage());
-
         }
-
         try {
-            driver = UserUtilities.logOut(driver, HOST);
-
-            driver = UserUtilities.checkLogOut(driver);
-
+            driver = UserUtilities.logOut(driver, HOST); //14 lines
+            driver = UserUtilities.checkLogOut(driver); //8lines
         } catch (ElementNotFoundException enfe) {
             fail("Still logged");
-
         } catch (NotLoggedException e) {
             assertTrue(true, "Not logged");
         }
-
         assertTrue(true);
     }
 

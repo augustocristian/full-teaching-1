@@ -25,18 +25,14 @@ public class SpiderNavigation {
      * @param wd
      * @return List<WebElements>
      */
-    public static List<WebElement> getPageLinks(WebDriver wd) {
-
+    public static List<WebElement> getPageLinks(WebDriver wd) { //29 lines
         String appHost = getProperty("fullTeachingUrl");
         if (appHost != null) {
             host = appHost;
         }
-
         Set<String> links_href = new HashSet<String>();
         List<WebElement> links = new ArrayList<WebElement>();
-
         List<WebElement> a_lst = wd.findElements(By.tagName("a"));
-
         for (WebElement a : a_lst) {
             String href = a.getAttribute("href");
             if ((href != null) && (!href.trim().equals("")) && (!href.contains("#"))) {
@@ -44,7 +40,6 @@ public class SpiderNavigation {
                     links.add(a);
             }
         }
-
         return links;
     }
 
@@ -55,26 +50,21 @@ public class SpiderNavigation {
      * @param explored
      * @return
      */
-    public static List<WebElement> getUnexploredPlageLinks(WebDriver wd, Map<String, String> explored) {
+    public static List<WebElement> getUnexploredPlageLinks(WebDriver wd, Map<String, String> explored) { //36 lines
         List<WebElement> links = new ArrayList<WebElement>();
-
         List<WebElement> allLinks = getPageLinks(wd);
-
         for (WebElement a : allLinks) {
             String href = a.getAttribute("href");
             if ((href != null) && (!href.trim().equals("")) && (!href.contains("#"))) {
-                if (!isContainedIn(href.trim(), explored.keySet()) && href.contains(host))
+                if (!isContainedIn(href.trim(), explored.keySet()) && href.contains(host)) //8lines
                     links.add(a);
             }
         }
-
         return links;
     }
 
-    public static Map<String, String> exploreLinks(WebDriver wd, List<WebElement> pageLinks, Map<String, String> explored, int depth) {
-
+    public static Map<String, String> exploreLinks(WebDriver wd, List<WebElement> pageLinks, Map<String, String> explored, int depth) { //49 lines
         if (depth <= 0) return explored;
-
         while (!pageLinks.isEmpty()) {
             WebElement link = pageLinks.get(0);
             String href = link.getAttribute("href");
@@ -86,27 +76,23 @@ public class SpiderNavigation {
                 link.click();
                 Wait.footer(wd);
                 explored.put(href, "OK");
-
             } catch (Exception e) {
                 //if fails put KO and continue
                 explored.put(href, "KO");
                 explore = false;
             }
             if (explore) {
-                List<WebElement> newLinks = getUnexploredPlageLinks(wd, explored);
+                List<WebElement> newLinks = getUnexploredPlageLinks(wd, explored);// 9 lines
                 explored = exploreLinks(wd, newLinks, explored, depth - 1);
             }
-
-            NavigationUtilities.getUrlAndWaitFooter(wd, currentUrl);
-            pageLinks = SpiderNavigation.getUnexploredPlageLinks(wd, explored);
-
+            NavigationUtilities.getUrlAndWaitFooter(wd, currentUrl); //3 lines
+            pageLinks = SpiderNavigation.getUnexploredPlageLinks(wd, explored);//9lines
         }
         return explored;
     }
 
-    private static boolean isContainedIn(String href, Set<String> set) {
+    private static boolean isContainedIn(String href, Set<String> set) { // 8lines
         if (set.contains(href)) return true;
-
         if (href.endsWith("/")) {
             String aux_href = href.substring(0, href.length() - 1);
             return set.contains(aux_href);
@@ -116,19 +102,16 @@ public class SpiderNavigation {
         }
     }
 
-    public static Set<String> addNonExistentLink(Set<String> original, String href) {
-
+    public static Set<String> addNonExistentLink(Set<String> original, String href) { //5lines
         if ((href != null) && (!href.equals("")) && (!href.contains("#"))) {
             if (!isContainedIn(href, original) && href.contains(host))
                 original.add(href);
         }
-
         return original;
     }
 
-    public static List<String> discardExplored(List<String> new_links, Set<String> explored) {
+    public static List<String> discardExplored(List<String> new_links, Set<String> explored) { //8 lines
         List<String> withOutExplored = new ArrayList<String>();
-
         for (String href : new_links) {
             if ((href != null) && (!href.equals("")) && (!href.contains("#"))) {
                 if (!isContainedIn(href, explored) && href.contains(host))

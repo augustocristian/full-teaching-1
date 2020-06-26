@@ -5,7 +5,6 @@ import com.fullteaching.e2e.no_elastest.common.NavigationUtilities;
 import com.fullteaching.e2e.no_elastest.common.SpiderNavigation;
 import com.fullteaching.e2e.no_elastest.utils.ParameterLoader;
 import io.github.bonigarcia.seljup.SeleniumExtension;
-import org.junit.Assert;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -60,27 +59,17 @@ public class LoggedLinksTests extends BaseLoggedTest {
     @AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "NOACCESS")
     @Resource(resID = "Course", replaceable = {})
     @AccessMode(resID = "Course", concurrency = 15, sharing = true, accessMode = "READWRITE")
-    public void spiderLoggedTest(String usermail, String password, String role) throws InterruptedException {
-        user = setupBrowser("chrome", role, usermail, 100);
-
-
-
-
+    public void spiderLoggedTest(String usermail, String password, String role) { //140 + 28 set up +13 lines teardown = 181
+        user = setupBrowser("chrome", role, usermail, 100); //27 lines
         driver = user.getDriver();
         this.slowLogin(user, usermail, password);
-
         //*navigate from home*//*
-        NavigationUtilities.getUrlAndWaitFooter(driver, HOST);
-
-        List<WebElement> pageLinks = SpiderNavigation.getPageLinks(driver);
-
+        NavigationUtilities.getUrlAndWaitFooter(driver, HOST); //13 lines
+        List<WebElement> pageLinks = SpiderNavigation.getPageLinks(driver); //29 lines
         Map<String, String> explored = new HashMap<>();
-
         //Navigate the links...
         //Problem: once one is pressed the rest will be unusable as the page reloads...
-
-        explored = SpiderNavigation.exploreLinks(driver, pageLinks, explored, DEPTH);
-
+        explored = SpiderNavigation.exploreLinks(driver, pageLinks, explored, DEPTH);//49 lines
         List<String> failed_links = new ArrayList<>();
         System.out.println(usermail + " tested " + explored.size() + " urls");
         explored.forEach((link, result) -> {
@@ -89,13 +78,10 @@ public class LoggedLinksTests extends BaseLoggedTest {
                 failed_links.add(link);
             }
         });
-
         String msg = "";
         for (String failed : failed_links) {
             msg = failed + "\n";
         }
         assertTrue(failed_links.isEmpty(), msg);
     }
-
-
 }

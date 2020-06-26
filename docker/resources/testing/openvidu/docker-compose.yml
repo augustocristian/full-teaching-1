@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+
+  full-teaching-light-openvidu-server-kms-mediumtwo:
+    image: openvidu/openvidu-server-kms:2.3.0
+    ports:
+      - 20002:80
+    environment:
+      - openvidu.secret=MY_SECRET
+      - openvidu.publicurl=docker

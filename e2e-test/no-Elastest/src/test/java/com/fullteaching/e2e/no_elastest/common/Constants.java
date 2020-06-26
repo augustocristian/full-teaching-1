@@ -6,7 +6,7 @@ import org.openqa.selenium.Keys;
 
 public final class Constants {
 
-    public static final String LOCALHOST = "https://192.168.0.103:5001";
+    public static final String LOCALHOST = "https://192.168.0.103:5100";
     public static final String PORT = "5001";
     public static final String STUDENTNAME = "Student Imprudent";
     public static final String TEACHERNAME = "Teacher Cheater";
@@ -25,7 +25,10 @@ public final class Constants {
 
 
     public static final String COURSESDASHBOARD_TITLE_CLASS = "dashboard-title";
-    public static final String FIRSTCOURSE_XPATH = "/html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-dashboard/div/div[3]/div/div[1]/ul/li[1]/div";
+    //public static final String FIRSTCOURSE_XPATH = "/html/body/app/div/com.fullteaching.e2e.no_elastest.main/app-dashboard/div/div[3]/div/div[1]/ul/li[1]/div";//OLD ONES
+
+
+    public static final String FIRSTCOURSE_XPATH ="/html/body/app/div/main/app-dashboard/div/div[3]/div/div[1]/ul/li[1]";
     public static final String GOTOCOURSE_XPATH = "/div[2]"; /*use with XCOURSE_XPATH+GOTOCOURSE_XPATH*/
     public static final String COURSELIST_COURSETITLE_CLASS = "course-title";
     public static final String COURSELIST_CLASS = "dashboard-col";

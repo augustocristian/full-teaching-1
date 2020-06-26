@@ -20,8 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class ForumNavigationUtilities {
 
 
-    public static boolean isForumEnabled(WebElement forumTabContent) {
-
+    public static boolean isForumEnabled(WebElement forumTabContent) { //6lines
         try {
             forumTabContent.findElement(FORUM_NEWENTRY_ICON);
             return true;
@@ -31,15 +30,13 @@ public class ForumNavigationUtilities {
     }
 
 
-    public static List<String> getFullEntryList(WebDriver wd) {
+    public static List<String> getFullEntryList(WebDriver wd) { //6 lines
         ArrayList<String> entries_titles = new ArrayList<>();
-
         WebElement tab_content = CourseNavigationUtilities.getTabContent(wd, FORUM_ICON);
         List<WebElement> entries = tab_content.findElements(By.className("entry-title"));
         for (WebElement entry : entries) {
             entries_titles.add(entry.findElement(FORUMENTRYLIST_ENTRYTITLE).getText());
         }
-
         return entries_titles;
     }
 
@@ -56,8 +53,10 @@ public class ForumNavigationUtilities {
         return entries_titles;
     }
 
-    public static WebElement getEntry(WebDriver wd, String entry_name) throws ElementNotFoundException {
+    public static WebElement getEntry(WebDriver wd, String entry_name) throws ElementNotFoundException { //16 lines
+        Wait.waitForPageLoaded(wd);
         WebElement tab_content = CourseNavigationUtilities.getTabContent(wd, FORUM_ICON);
+        Wait.waitForPageLoaded(wd);
         List<WebElement> entries = tab_content.findElements(By.className("entry-title"));
         for (WebElement entry : entries) {
             try {
@@ -67,29 +66,23 @@ public class ForumNavigationUtilities {
                     title_text = title.getAttribute("innerHTML");
                 }
                 if (entry_name.equals(title_text)) {
-
                     return entry;
                 }
             } catch (NoSuchElementException csee) {
                 //do nothing and look for the next item
             }
         }
-
         throw new ElementNotFoundException("getEntry-the entry doesn't exist");
     }
 
     public static List<WebElement> getComments(WebDriver wd) {
-
-
         Wait.notTooMuch(wd);
         return wd.findElements(FORUMCOMMENTLIST_COMMENT);
     }
 
-    public static List<WebElement> getUserComments(WebDriver wd, String user_name) {
+    public static List<WebElement> getUserComments(WebDriver wd, String user_name) {//8lines
         List<WebElement> user_comments = new ArrayList<>();
-
         List<WebElement> all_comments = wd.findElements(FORUMCOMMENTLIST_COMMENT);
-
         for (WebElement comment : all_comments) {
             String comment_username = comment.findElement(FORUMCOMMENTLIST_COMMENT_USER).getText();
             if (user_name.equals(comment_username)) {
@@ -113,87 +106,72 @@ public class ForumNavigationUtilities {
         return user_comments;
     }
 
-    public static WebDriver newEntry(WebDriver wd, String newEntryTitle, String newEntryContent) throws ElementNotFoundException {
+    public static WebDriver newEntry(WebDriver wd, String newEntryTitle, String newEntryContent) throws ElementNotFoundException { //16 lines
         wd = CourseNavigationUtilities.go2Tab(wd, FORUM_ICON);
         assertTrue(ForumNavigationUtilities.isForumEnabled(CourseNavigationUtilities.getTabContent(wd, FORUM_ICON)), "Forum not activated");
-
         wd = Click.element(wd, FORUM_NEWENTRY_ICON);
-
         //wait for modal
         Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(FORUM_NEWENTRY_MODAL));
-
         //fill new Entry
         WebElement title = Wait.aLittle(wd).until(ExpectedConditions.visibilityOfElementLocated(FORUM_NEWENTRY_MODAL_TITLE));
         title.sendKeys(newEntryTitle);
         WebElement comment = Wait.aLittle(wd).until(ExpectedConditions.visibilityOfElementLocated(FORUM_NEWENTRY_MODAL_CONTENT));
         comment.sendKeys(newEntryContent);
-
         //Publish
         wd = Click.element(wd, FORUM_NEWENTRY_MODAL_POSTBUTTON);
-
         //Wait to publish
         Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(FORUMENTRYLIST_ENTRIESUL));
-
         //Check entry...
         WebElement newEntry = ForumNavigationUtilities.getEntry(wd, newEntryTitle);
-
         return wd;
     }
 
 
-    public static List<WebElement> getReplies(WebDriver driver, WebElement comment) {
+    public static List<WebElement> getReplies(WebDriver driver, WebElement comment) { //7 lines
         List<WebElement> replies = new ArrayList<>();
-
         //get all comment-div
         List<WebElement> subcomments = comment.findElements(FORUMCOMMENTLIST_COMMENT_DIV);
-
         //ignore first it is original comment
         for (int i = 1; i < subcomments.size(); i++) {
             replies.add(subcomments.get(i));
         }
-
         return replies;
     }
 
-    public static WebDriver enableForum(WebDriver wd) throws ElementNotFoundException {
-
+    public static WebDriver enableForum(WebDriver wd) throws ElementNotFoundException { //11lines
         //click edit
         WebElement edit_button = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(FORUM_EDITENTRY_ICON));
         wd = Click.element(wd, edit_button);
         WebElement edit_modal = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(ENABLEFORUM_MODAL));
-
         //press enable
+        Wait.waitForPageLoaded(wd);
         WebElement enable_button = edit_modal.findElement(ENABLEFORUM_BUTTON);
+        Wait.waitForPageLoaded(wd);
         wd = Click.element(wd, enable_button);
-
+        Wait.waitForPageLoaded(wd);
         WebElement save_button = edit_modal.findElement(ENABLEFORUM_MODAL_SAVEBUTTON);
+        Wait.waitForPageLoaded(wd);
         wd = Click.element(wd, save_button);
-
+        Wait.waitForPageLoaded(wd);
         WebElement forum_tab_content = CourseNavigationUtilities.wait4TabContent(wd, FORUM_ICON);
-
+        Wait.waitForPageLoaded(wd);
         assertTrue(isForumEnabled(forum_tab_content), "The forum is not dissabled");
-
         return wd;
     }
 
-    public static WebDriver disableForum(WebDriver wd) throws ElementNotFoundException {
-
+    public static WebDriver disableForum(WebDriver wd) throws ElementNotFoundException { //12 lines
         //click edit
         WebElement edit_button = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(FORUM_EDITENTRY_ICON));
         wd = Click.element(wd, edit_button);
         WebElement edit_modal = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(ENABLEFORUM_MODAL));
-
         //press disable
         WebElement enable_button = edit_modal.findElement(DISABLEFORUM_BUTTON);
         wd = Click.element(wd, enable_button);
-
         WebElement save_button = edit_modal.findElement(ENABLEFORUM_MODAL_SAVEBUTTON);
         wd = Click.element(wd, save_button);
-
         WebElement forum_tab_content = CourseNavigationUtilities.wait4TabContent(wd, FORUM_ICON);
-
+        Wait.waitForPageLoaded(wd);
         assertFalse(ForumNavigationUtilities.isForumEnabled(forum_tab_content), "The forum is not dissabled");
-
         return wd;
     }
 

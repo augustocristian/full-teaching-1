@@ -1,44 +1,39 @@
 version: '3'
+
 services:
+
   full-teaching-mysql-${tjobname}:
-    image: mysql:5.7.21
+    image: mysql:5.7.22
     environment:
       - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_DATABASE=full_teaching
-      - MYSQL_USER=ft-root
-      - MYSQL_PASSWORD=pass
+
   full-teaching-${tjobname}-openvidu-server-kms:
-    image:  ${openviduimageresource}
-    expose:
-      - 8443
+    image: ${openviduimageresource}
     ports:
-      - ${openviduport}:8443
+      - ${openviduport}:80
     environment:
-      - KMS_STUN_IP=stun.l.google.com
-      - KMS_STUN_PORT=19302
       - openvidu.secret=MY_SECRET
-      - openvidu.publicurl=https://${openviduurl}:${openviduport}
+      - openvidu.publicurl=docker
+
   full-teaching-${tjobname}:
-    image: codeurjc/full-teaching:demo
+    image: codeurjc/full-teaching:2.3.0
     depends_on:
       - full-teaching-mysql-${tjobname}
       - full-teaching-${tjobname}-openvidu-server-kms
     ports:
-      - ${mainport}:5000
-    expose:
-      - 5000
+      - ${mainport}:5001
     environment:
       - WAIT_HOSTS=full-teaching-mysql-${tjobname}:3306
-      - WAIT_HOSTS_TIMEOUT=120
+      - WAIT_HOSTS_TIMEOUT=60
       - MYSQL_PORT_3306_TCP_ADDR=full-teaching-mysql-${tjobname}
       - MYSQL_PORT_3306_TCP_PORT=3306
       - MYSQL_ENV_MYSQL_DATABASE=full_teaching
-      - MYSQL_ENV_MYSQL_USER=ft-root
+      - MYSQL_ENV_MYSQL_USER=root
       - MYSQL_ENV_MYSQL_PASSWORD=pass
-      - server.port=5000
-      - openvidu.url=https://${openviduurl}:${openviduport}
+      - server.port=5001
+      - openvidu.url=https://full-teaching-${tjobname}-openvidu-server-kms:${openviduport}
       - openvidu.secret=MY_SECRET
-
 networks:
   fullteaching-${tjobname}:
     driver: bridge

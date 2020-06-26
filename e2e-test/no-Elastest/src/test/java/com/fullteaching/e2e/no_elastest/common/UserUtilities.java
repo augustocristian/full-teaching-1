@@ -53,19 +53,16 @@ public class UserUtilities {
 
     }
 
-    public static WebDriver checkLogin(WebDriver wd, String user) throws NotLoggedException, BadUserException, ElementNotFoundException {
+    public static WebDriver checkLogin(WebDriver wd, String user) throws NotLoggedException, BadUserException, ElementNotFoundException { //12 lines
         log.info("[INI]checkLogin");
         //Wait to settings button to be present
         try {
             WebElement settings_button = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(SETTINGS_BUTTON));
-
             wd = Click.element(wd, settings_button);
         } catch (TimeoutException toe) {
             throw new NotLoggedException(toe.getMessage());
         }
-
         WebElement settings_page = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(SETTINGS_USEREMAIL));
-
         //Check if the user name is the expected
         if (!settings_page.getText().trim().equals(user.trim())) throw new BadUserException();
         log.info("[END]checkLogin");
@@ -102,18 +99,14 @@ public class UserUtilities {
 
     }
 
-    public static WebDriver logOut(WebDriver wd, String host) throws NotLoggedException, ElementNotFoundException {
+    public static WebDriver logOut(WebDriver wd, String host) throws NotLoggedException, ElementNotFoundException { //14 lines
         log.info("[INI]logOut");
         //press logout link
         try {
             WebElement arrow_button = Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(MAINMENU_ARROW));
-
             wd = Click.element(wd, arrow_button);
-
             WebElement logout_button = Wait.aLittle(wd).until(ExpectedConditions.visibilityOfElementLocated(LOGOUT_BUTTON));
-
             wd = Click.element(wd, logout_button);
-
             //go to home as the log out has been done
             NavigationUtilities.getUrlAndWaitFooter(wd, login_url.replace("__HOST__", host));
 
@@ -122,10 +115,9 @@ public class UserUtilities {
         }
         log.info("[END]logOut");
         return wd;
-
     }
 
-    public static WebDriver checkLogOut(WebDriver wd) throws ElementNotFoundException {
+    public static WebDriver checkLogOut(WebDriver wd) throws ElementNotFoundException { //8lines
         log.info("[INI]checkLogOut");
         try {
             Wait.notTooMuch(wd).until(ExpectedConditions.visibilityOfElementLocated(By.xpath(LOGINMENU_XPATH)));

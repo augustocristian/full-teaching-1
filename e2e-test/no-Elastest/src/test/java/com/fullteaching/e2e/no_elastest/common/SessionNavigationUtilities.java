@@ -12,19 +12,17 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
 public class SessionNavigationUtilities {
 
-    public static List<String> getFullSessionList(WebDriver wd) {
+    public static List<String> getFullSessionList(WebDriver wd) { //7lines
         ArrayList<String> session_titles = new ArrayList<String>();
-
         WebElement tab_content = CourseNavigationUtilities.getTabContent(wd, SESSION_ICON);
         List<WebElement> sessions = tab_content.findElements(SESSIONLIST_SESSION_ROW);
         for (WebElement session : sessions) {
             session_titles.add(session.findElement(SESSIONLIST_SESSION_NAME).getText());
         }
-
         return session_titles;
     }
 
-    public static WebElement getSession(WebDriver wd, String session_name) throws ElementNotFoundException {
+    public static WebElement getSession(WebDriver wd, String session_name) throws ElementNotFoundException {//17 lines
         WebElement tab_content = CourseNavigationUtilities.getTabContent(wd, SESSION_ICON);
         List<WebElement> sessions = tab_content.findElements(SESSIONLIST_SESSION_ROW);
         for (WebElement session : sessions) {
@@ -35,7 +33,6 @@ public class SessionNavigationUtilities {
                     title_text = title.getAttribute("innerHTML");
                 }
                 if (session_name.equals(title_text)) {
-
                     return session;
                 }
             } catch (NoSuchElementException csee) {

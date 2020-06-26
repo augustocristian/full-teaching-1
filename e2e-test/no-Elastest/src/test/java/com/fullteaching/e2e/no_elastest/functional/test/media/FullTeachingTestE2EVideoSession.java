@@ -17,6 +17,7 @@
 
 package com.fullteaching.e2e.no_elastest.functional.test.media;
 
+import com.fullteaching.e2e.no_elastest.common.BaseLoggedTest;
 import com.fullteaching.e2e.no_elastest.common.BrowserUser;
 import io.github.bonigarcia.seljup.SeleniumExtension;
 import org.junit.Assert;
@@ -28,16 +29,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import retorch.testannotations.AccessMode;
 import retorch.testannotations.Resource;
 
-@Resource(resID = "LoginService", replaceable = {})
-@AccessMode(resID = "LoginService", concurrency = 10, sharing = true, accessMode = "READONLY")
-@Resource(resID = "OpenVidu", replaceable = {})
-@AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "READWRITE")
-@Resource(resID = "Course", replaceable = {"Session"})
-@AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READWRITE")
+/*This test case were disabled due to problems with the OpenVidu Server. The video input doesn't work , so its not
+ * feasible check that in the other side of the connection its playing the stream*/
+@Disabled
 @Tag("e2e")
 @DisplayName("E2E tests for FullTeaching video session")
 @ExtendWith(SeleniumExtension.class)
-public class FullTeachingTestE2EVideoSession {//extends BaseLoggedTest {
+public class FullTeachingTestE2EVideoSession extends BaseLoggedTest {
 
     static Exception ex = null;
     private static String TEACHER_BROWSER;
@@ -57,13 +55,11 @@ public class FullTeachingTestE2EVideoSession {//extends BaseLoggedTest {
 
     @BeforeAll()
     static void setupAll() {
-/*
         if (System.getenv("ET_EUS_API") == null) {
             // Outside ElasTest
             //  ChromeDriverManager.getInstance().setup();
             //FirefoxDriverManager.getInstance().setup();
         }
-
         if (System.getenv("ET_SUT_HOST") != null) {
             APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":5000/";
         } else {
@@ -72,30 +68,26 @@ public class FullTeachingTestE2EVideoSession {//extends BaseLoggedTest {
                 APP_URL = "https://localhost:5000/";
             }
         }
-
         TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
         STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
         if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
             TEACHER_BROWSER = CHROME;
         }
-
         if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
             STUDENT_BROWSER = CHROME;
         }
-
-        log.info("Using URL {} to connect to openvidu-testapp", APP_URL); */
+        log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
     }
 
     @AfterEach
     void dispose(TestInfo info) {
-      /*  try {
+        try {
             this.logout(user);
             user.dispose();
         } finally {
             log.info("##### Finish test: "
                     + info.getTestMethod().get().getName());
-        }*/
+        }
     }
 
     @Resource(resID = "LoginService", replaceable = {})
@@ -105,133 +97,85 @@ public class FullTeachingTestE2EVideoSession {//extends BaseLoggedTest {
     @Resource(resID = "Course", replaceable = {"Session"})
     @AccessMode(resID = "Course", concurrency = 1, sharing = false, accessMode = "READWRITE")
     @Test
-    void oneToOneVideoAudioSessionChrome() throws InterruptedException {
-        Thread.sleep(30000);
-        Assert.assertTrue(true);
-        /*
+    void oneToOneVideoAudioSessionChrome() { //124+ 232+ 20 set up +8 lines teardown = 564
         String testName = new Object() {
         }.getClass().getEnclosingMethod().getName();
-
         log.info("##### Start test: " + testName);
-
         // TEACHER
-
-        this.user = setupBrowser(TEACHER_BROWSER, testName, "Teacher", 30);
-
-
-
-        this.slowLogin(user, teacherMail, teacherPass);
-
+        this.user = setupBrowser(TEACHER_BROWSER, testName, "Teacher", 30); // 27 lines
+        this.slowLogin(user, teacherMail, teacherPass);//24
         waitSeconds(1);
-
         log.info("{} entering first course", user.getClientData());
-
         user.getWaiter().until(
                 ExpectedConditions.presenceOfElementLocated(By.cssSelector(
                         ("ul.collection li.collection-item:first-child div.course-title"))));
         user.getDriver().findElement(By.cssSelector(
                 "ul.collection li.collection-item:first-child div.course-title"))
                 .click();
-
         waitSeconds(1);
-
         log.info("{} navigating to 'Sessions' tab", user.getClientData());
-
         user.getWaiter().until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector(("#md-tab-label-0-1"))));
         user.getDriver().findElement(By.cssSelector("#md-tab-label-0-1"))
                 .click();
-
         waitSeconds(1);
-
         log.info("{} getting into first session", user.getClientData());
-
         user.getDriver()
                 .findElement(By.cssSelector(
                         "ul div:first-child li.session-data div.session-ready"))
                 .click();
-
         waitSeconds(1);
-
         user.getWaiter().until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector(("div.participant video"))));
-
         waitSeconds(1);
-
         checkVideoPlaying(user,
                 user.getDriver()
                         .findElement(By.cssSelector(("div.participant video"))),
-                "div.participant");
-
+                "div.participant"); //30 lines
         // STUDENT
-
         BrowserUser student = setupBrowser(STUDENT_BROWSER, testName, "Student",
                 30);
         slowLogin(student, studentMail, studentPass);
-
         waitSeconds(1);
-
         log.info("{} entering first course", student.getClientData());
-
         student.getWaiter().until(
                 ExpectedConditions.presenceOfElementLocated(By.cssSelector(
                         ("ul.collection li.collection-item:first-child div.course-title"))));
         student.getDriver().findElement(By.cssSelector(
                 "ul.collection li.collection-item:first-child div.course-title"))
                 .click();
-
         waitSeconds(1);
-
         log.info("{} navigating to 'Courses' tab", student.getClientData());
-
         student.getWaiter().until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector(("#md-tab-label-0-1"))));
         student.getDriver().findElement(By.cssSelector("#md-tab-label-0-1"))
                 .click();
-
         waitSeconds(1);
-
         log.info("{} getting into first session", student.getClientData());
-
-        student.getDriver()
-                .findElement(By.cssSelector(
-                        "ul div:first-child li.session-data div.session-ready"))
-                .click();
-
+        student.getDriver().findElement(By.cssSelector("ul div:first-child li.session-data div.session-ready")).click();
         waitSeconds(1);
-
         student.getWaiter().until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector(("div.participant video"))));
-
         waitSeconds(1);
-
         checkVideoPlaying(student,
                 student.getDriver()
                         .findElement(By.cssSelector(("div.participant video"))),
-                "div.participant");
-
+                "div.participant");//30 lines
         // Student asks for intervention
         student.getWaiter().until(ExpectedConditions.elementToBeClickable(By
                 .xpath("//div[@id='div-header-buttons']//i[text() = 'record_voice_over']")));
-
         log.info("{} asking for intervention", student.getClientData());
-
         student.getDriver().findElement(By.xpath(
                 "//div[@id='div-header-buttons']//i[text() = 'record_voice_over']"))
                 .click();
-
         waitSeconds(1);
-
         // Teacher accepts intervention
         user.getWaiter().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[contains(@class, 'usr-btn')]")));
-
         log.info("{} accepts student intervention", user.getClientData());
-
         user.getDriver()
                 .findElement(By.xpath("//a[contains(@class, 'usr-btn')]"))
                 .click();
-
         // Check both videos for both users
         student.getWaiter().until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector(("div.participant-small video"))));
@@ -239,38 +183,32 @@ public class FullTeachingTestE2EVideoSession {//extends BaseLoggedTest {
         checkVideoPlaying(student,
                 student.getDriver().findElement(
                         By.cssSelector(("div.participant-small video"))),
-                "div.participant-small");
+                "div.participant-small");//30 lines
         // Main video of student
         checkVideoPlaying(student,
                 student.getDriver()
                         .findElement(By.cssSelector(("div.participant video"))),
-                "div.participant");
-
+                "div.participant");//30 lines
         user.getWaiter().until(ExpectedConditions.presenceOfElementLocated(
                 By.cssSelector(("div.participant-small video"))));
         // Small video of teacher
         checkVideoPlaying(user,
                 user.getDriver().findElement(
                         By.cssSelector(("div.participant-small video"))),
-                "div.participant-small");
+                "div.participant-small");//30 lines
         // Main video of teacher
         checkVideoPlaying(user,
                 user.getDriver()
                         .findElement(By.cssSelector(("div.participant video"))),
-                "div.participant");
-
+                "div.participant");//30 lines
         waitSeconds(5);
-
         // Teacher stops student intervention
         user.getWaiter().until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[contains(@class, 'usr-btn')]")));
-
         log.info("{} canceling student intervention", user.getClientData());
-
         user.getDriver()
                 .findElement(By.xpath("//a[contains(@class, 'usr-btn')]"))
                 .click();
-
         // Wait until only one video
         user.getWaiter().until(ExpectedConditions
                 .not(ExpectedConditions.presenceOfAllElementsLocatedBy(
@@ -278,13 +216,13 @@ public class FullTeachingTestE2EVideoSession {//extends BaseLoggedTest {
         student.getWaiter().until(ExpectedConditions
                 .not(ExpectedConditions.presenceOfAllElementsLocatedBy(
                         By.cssSelector(("div.participant-small video")))));
-
         waitSeconds(4);
-
         // Logout student
         this.logout(student);
-        student.dispose();*/
-
+        student.dispose();
+        //LogOut of the user
+        this.logout(user);
+        user.dispose();
     }
 
     /*
@@ -346,33 +284,26 @@ public class FullTeachingTestE2EVideoSession {//extends BaseLoggedTest {
      */
 
     private boolean checkVideoPlaying(BrowserUser user, WebElement videoElement,
-                                      String containerQuerySelector) {
-
-//        log.info("{} waiting for video in container '{}' to be playing",
-  //              user.getClientData(), containerQuerySelector);
-
+                                      String containerQuerySelector) { //30 lines
+        log.info("{} waiting for video in container '{}' to be playing",
+                user.getClientData(), containerQuerySelector);
         // Video element should be in 'readyState'='HAVE_ENOUGH_DATA'
         user.getWaiter().until(ExpectedConditions.attributeToBe(videoElement,
                 "readyState", "4"));
-
         // Video should have a srcObject (type MediaStream) with the attribute
         // 'active'
         // to true
         Assert.assertTrue((boolean) user.runJavascript(
                 "return document.querySelector('" + containerQuerySelector
                         + "').getElementsByTagName('video')[0].srcObject.active"));
-
         // Video should trigger 'playing' event
         user.runJavascript("document.querySelector('" + containerQuerySelector
                 + "').getElementsByTagName('video')[0].addEventListener('playing', window.MY_FUNC('"
                 + containerQuerySelector + "'));");
-
         user.getWaiter().until(ExpectedConditions.attributeContains(
                 By.id("video-playing-div"), "innerHTML", "VIDEO PLAYING"));
-
         user.runJavascript(
                 "document.body.removeChild(document.getElementById('video-playing-div'))");
-
         return true;
     }
 

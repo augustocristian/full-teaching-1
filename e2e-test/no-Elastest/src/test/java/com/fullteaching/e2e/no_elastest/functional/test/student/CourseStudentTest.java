@@ -32,7 +32,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 
 @ExtendWith(SeleniumExtension.class)
-public class CourseStudentTest extends BaseLoggedTest {
+class CourseStudentTest extends BaseLoggedTest {
 
     protected static final String CHROME = "chrome";
     protected static final String FIREFOX = "firefox";
@@ -62,72 +62,52 @@ public class CourseStudentTest extends BaseLoggedTest {
     @AccessMode(resID = "OpenVidu", concurrency = 10, sharing = true, accessMode = "NOACCESS")
     @ParameterizedTest
     @MethodSource("data")
-    public void studentCourseMainTest(String usermail, String password, String role) {
-
-
-        user = setupBrowser("chrome", role, usermail, 100);
+    public void studentCourseMainTest(String usermail, String password, String role) {//45+ 107+28 set up +13 lines teardown =193
+        user = setupBrowser("chrome", role, usermail, 100); //27 lines
         driver = user.getDriver();
-
-        this.slowLogin(user, usermail, password);
-
-
+        this.slowLogin(user, usermail, password);//24 lines
         try {
-            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", HOST)))
-                driver = NavigationUtilities.toCoursesHome(driver);
-
+            if (!NavigationUtilities.amIHere(driver, COURSES_URL.replace("__HOST__", HOST))) //9lines
+                driver = NavigationUtilities.toCoursesHome(driver); //3lins
             //go to first course
             //get course list
-            List<String> course_list = CourseNavigationUtilities.getCoursesList(driver, HOST);
+            List<String> course_list = CourseNavigationUtilities.getCoursesList(driver, HOST); //13 lines
             if (course_list.size() < 0) fail("No courses available for test user");
-
-            WebElement course_button = CourseNavigationUtilities.getCourseElement(driver, course_list.get(0)).findElement(By.className("title"));
-
+            WebElement course_button = CourseNavigationUtilities.getCourseElement(driver, course_list.get(0)).findElement(By.className("title")); //14 lines
             driver = Click.element(driver, course_button);
-
             Wait.notTooMuch(driver).until(ExpectedConditions.visibilityOfElementLocated(By.id(COURSE_TABS_TAG)));
-
         } catch (Exception e) {
             fail("Failed to load Courses Tabs" + e.getClass() + ": " + e.getLocalizedMessage());
         }
         //Check tabs
         //Home tab
         try {
-
             //WebDriverWait wait = new WebDriverWait(driver, 10);
             //wait.until(ExpectedConditions.presenceOfElementLocated(By.id(HOME_ICON_ID)));
-
-            driver = CourseNavigationUtilities.go2Tab(driver, HOME_ICON);
-
-
+            driver = CourseNavigationUtilities.go2Tab(driver, HOME_ICON);//4 lines
         } catch (Exception e) {
             fail("Failed to load home tab" + e.getClass() + ": " + e.getLocalizedMessage());
         }
-
         try {
-            driver = CourseNavigationUtilities.go2Tab(driver, SESSION_ICON);
+            driver = CourseNavigationUtilities.go2Tab(driver, SESSION_ICON);//4lines
         } catch (Exception e) {
             fail("Failed to load session tab" + e.getClass() + ": " + e.getLocalizedMessage());
         }
-
         try {
-            driver = CourseNavigationUtilities.go2Tab(driver, FORUM_ICON);
+            driver = CourseNavigationUtilities.go2Tab(driver, FORUM_ICON);//4lines
         } catch (Exception e) {
             fail("Failed to load forum tab" + e.getClass() + ": " + e.getLocalizedMessage());
         }
-
         try {
-            driver = CourseNavigationUtilities.go2Tab(driver, FILES_ICON);
+            driver = CourseNavigationUtilities.go2Tab(driver, FILES_ICON);//4lines
         } catch (Exception e) {
             fail("Failed to load files tab" + e.getClass() + ": " + e.getLocalizedMessage());
         }
-
         try {
-            driver = CourseNavigationUtilities.go2Tab(driver, ATTENDERS_ICON);
+            driver = CourseNavigationUtilities.go2Tab(driver, ATTENDERS_ICON);//4lines
         } catch (Exception e) {
             fail("Failed to load attenders tab" + e.getClass() + ": " + e.getLocalizedMessage());
         }
-
-
     }
 
 

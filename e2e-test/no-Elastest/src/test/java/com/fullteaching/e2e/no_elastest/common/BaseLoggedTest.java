@@ -2,6 +2,7 @@ package com.fullteaching.e2e.no_elastest.common;
 
 import com.fullteaching.e2e.no_elastest.common.exception.ElementNotFoundException;
 import com.fullteaching.e2e.no_elastest.common.exception.NotLoggedException;
+import com.fullteaching.e2e.no_elastest.utils.Wait;
 import io.github.bonigarcia.seljup.SeleniumExtension;
 import io.github.bonigarcia.wdm.ChromeDriverManager;
 import io.github.bonigarcia.wdm.FirefoxDriverManager;
@@ -71,15 +72,11 @@ public class BaseLoggedTest {
 
 
     public BaseLoggedTest() {
-
-//Problemas con el puerto --> El puerto que usa cada metodo de prueba debe de ser específico, el que viene
-//  de la anotacion que tiene.
         if (System.getenv("ET_EUS_API") == null) {
 
             ChromeDriverManager.getInstance(chrome).setup();
             FirefoxDriverManager.getInstance(firefox).setup();
         }
-
         if (System.getenv("ET_SUT_HOST") != null) {
             APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":" + PORT + "/";
             //In order to check if is correct
@@ -94,7 +91,6 @@ public class BaseLoggedTest {
                 HOST = APP_URL;
             }
         }
-
         properties = new Properties();
         try {
             // load a properties file for reading
@@ -108,23 +104,19 @@ public class BaseLoggedTest {
     }
 
     @BeforeAll()
-    static void setupAll() {
-
+    static void setupAll() { //28 lines
         properties = new Properties();
         try {
             // load a properties file for reading
             properties.load(new FileInputStream("src/test/resources/inputs/test.properties"));
-
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
         if (System.getenv("ET_EUS_API") == null) {
             // Outside ElasTest
             ChromeDriverManager.getInstance(chrome).setup();
             FirefoxDriverManager.getInstance(firefox).setup();
         }
-
         if (System.getenv("ET_SUT_HOST") != null) {
             APP_URL = "https://" + System.getenv("ET_SUT_HOST") + ":" + PORT + "/";
         } else {
@@ -133,19 +125,14 @@ public class BaseLoggedTest {
                 APP_URL = LOCALHOST;
             }
         }
-
         TEACHER_BROWSER = System.getenv("TEACHER_BROWSER");
         STUDENT_BROWSER = System.getenv("STUDENT_BROWSER");
-
         if ((TEACHER_BROWSER == null) || (!TEACHER_BROWSER.equals(FIREFOX))) {
             TEACHER_BROWSER = CHROME;
         }
-
         if ((STUDENT_BROWSER == null) || (!STUDENT_BROWSER.equals(FIREFOX))) {
             STUDENT_BROWSER = CHROME;
         }
-
-
         //log.info("Using URL {} to connect to openvidu-testapp", APP_URL);
     }
 
@@ -155,17 +142,12 @@ public class BaseLoggedTest {
         return this.setupBrowser(browser,
                 testInfo.getTestMethod().get().getName(), userIdentifier,
                 secondsOfWait);
-
-
     }
 
     protected BrowserUser setupBrowser(String browser, String testName,
                                        String userIdentifier, int secondsOfWait) {
-
         BrowserUser u;
-
         log.info("Starting browser ({})", browser);
-
         switch (browser) {
             case CHROME:
                 u = new ChromeUser(userIdentifier, secondsOfWait, testName,
@@ -179,13 +161,8 @@ public class BaseLoggedTest {
                 u = new ChromeUser(userIdentifier, secondsOfWait, testName,
                         userIdentifier);
         }
-
         log.info("Navigating to {}", APP_URL);
-
-
         u.getDriver().get(APP_URL);
-
-
         final String GLOBAL_JS_FUNCTION = "var s = window.document.createElement('script');"
                 + "s.innerText = 'window.MY_FUNC = function(containerQuerySelector) {"
                 + "var elem = document.createElement(\"div\");"
@@ -194,22 +171,18 @@ public class BaseLoggedTest {
                 + "document.body.appendChild(elem);"
                 + "console.log(\"Video check function successfully added to DOM by Selenium\")}';"
                 + "window.document.head.appendChild(s);";
-
         u.runJavascript(GLOBAL_JS_FUNCTION);
         u.getDriver().manage().window().maximize();
         return u;
     }
 
     @AfterEach
-    void tearDown(TestInfo testInfo) throws IOException {
+    void tearDown(TestInfo testInfo) throws IOException { //13 lines
         String testName = testInfo.getTestMethod().get().getName();
-
-
         if (user != null) {
             log.info("##### Finish test: {} - Driver {}", testName, this.user.getDriver());
             //  log.info("url:" + user.getDriver().getCurrentUrl() + "\nScreenshot (in Base64) at the end of the test:\n{}",
             //        SetUp.getBase64Screenshot(user.getDriver()));
-
             log.info("Browser console at the end of the test");
             LogEntries logEntries = user.getDriver().manage().logs().get(BROWSER);
             logEntries.forEach((entry) -> log.info("[{}] {} {}",
@@ -219,34 +192,28 @@ public class BaseLoggedTest {
             //this.logout(user);
             user.dispose();
         }
-
-
     }
 
 
     protected void slowLogin(BrowserUser user, String userEmail,
-                             String userPass) {
+                             String userPass) {//24 lines
         this.login(user, userEmail, userPass, true);
     }
 
     protected void quickLogin(BrowserUser user, String userEmail,
-                              String userPass) {
+                              String userPass) { //24 lines
         this.login(user, userEmail, userPass, false);
     }
 
     private void login(BrowserUser user, String userEmail, String userPass,
-                       boolean slow) {
-
-        log.info("Logging in user {} with mail '{}'", user.getClientData(),
-                userEmail);
-
+                       boolean slow) { //24 lines
+        log.info("Logging in user {} with mail '{}'", user.getClientData(), userEmail);
+        Wait.waitForPageLoaded(user.getDriver());
         openDialog("#download-button", user);
-
+        Wait.waitForPageLoaded(user.getDriver());
         // Find form elements (login modal is already opened)
         WebElement userNameField = user.getDriver().findElement(By.id("email"));
-        WebElement userPassField = user.getDriver()
-                .findElement(By.id("password"));
-
+        WebElement userPassField = user.getDriver().findElement(By.id("password"));
         // Fill input fields
         userNameField.sendKeys(userEmail);
         if (slow)
@@ -254,30 +221,22 @@ public class BaseLoggedTest {
         userPassField.sendKeys(userPass);
         if (slow)
             waitSeconds(1);
-
         // Ensure fields contain what has been entered
         Assert.assertEquals(userNameField.getAttribute("value"), userEmail);
         Assert.assertEquals(userPassField.getAttribute("value"), userPass);
-
         user.getDriver().findElement(By.id("log-in-btn")).click();
-
-        user.waitUntil(
-                ExpectedConditions.elementToBeClickable(By.id(("course-list"))),
-                "Course list not present");
+        user.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("course-list"))), "Course list not present");
         try {
             userName = UserUtilities.getUserName(user.getDriver(), true, APP_URL);
         } catch (NotLoggedException | ElementNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         log.info("Logging in successful for user {}", user.getClientData());
     }
 
-    protected void logout(BrowserUser user) {
-
+    protected void logout(BrowserUser user) { //43 lines
         //   log.info("Logging out {}", user.getClientData());
-
         if (user.getDriver().findElements(By.cssSelector("#fixed-icon"))
                 .size() > 0) {
             // Get out of video session page
@@ -343,7 +302,9 @@ public class BaseLoggedTest {
                 ExpectedConditions
                         .elementToBeClickable(By.cssSelector(cssSelector)),
                 "Button for opening the dialog not clickable");
+
         user.getDriver().findElement(By.cssSelector(cssSelector)).click();
+        Wait.waitForPageLoaded(user.getDriver());
         user.waitUntil(ExpectedConditions.presenceOfElementLocated(By.xpath(
                 "//div[contains(@class, 'modal-overlay') and contains(@style, 'opacity: 0.5')]")),
                 "Dialog not opened");
@@ -351,26 +312,22 @@ public class BaseLoggedTest {
         log.debug("Dialog opened for user {}", user.getClientData());
     }
 
-    protected void openDialog(WebElement el, BrowserUser user) {
-
+    protected void openDialog(WebElement el, BrowserUser user) {//8lines
         log.debug("User {} opening dialog by web element '{}'",
                 user.getClientData(), el);
-
         user.waitUntil(ExpectedConditions.elementToBeClickable(el),
                 "Button for opening the dialog not clickable");
         el.click();
         user.waitUntil(ExpectedConditions.presenceOfElementLocated(By.xpath(
                 "//div[contains(@class, 'modal-overlay') and contains(@style, 'opacity: 0.5')]")),
                 "Dialog not opened");
-
         log.debug("Dialog opened for user {}", user.getClientData());
     }
 
     protected void waitForDialogClosed(String dialogId, String errorMessage,
-                                       BrowserUser user) {
+                                       BrowserUser user) {//14 lines
         log.debug("User {} waiting for dialog with id '{}' to be closed",
                 user.getClientData(), dialogId);
-
         user.waitUntil(ExpectedConditions
                         .presenceOfElementLocated(By.xpath("//div[@id='" + dialogId
                                 + "' and contains(@class, 'my-modal-class') and contains(@style, 'opacity: 0') and contains(@style, 'display: none')]")),
@@ -383,7 +340,6 @@ public class BaseLoggedTest {
                 ExpectedConditions.numberOfElementsToBe(
                         By.cssSelector(".modal-overlay"), 0),
                 "Dialog not closed. Reason: " + errorMessage);
-
         log.debug("Dialog closed for user {}", user.getClientData());
     }
 

@@ -1,39 +1,44 @@
 version: '3'
-
 services:
-
   full-teaching-mysql-TJobF:
-    image: mysql:5.7.22
+    image: mysql:5.7.21
     environment:
       - MYSQL_ROOT_PASSWORD=pass
       - MYSQL_DATABASE=full_teaching
-
+      - MYSQL_USER=ft-root
+      - MYSQL_PASSWORD=pass
   full-teaching-TJobF-openvidu-server-kms:
-    image: eexit/mirror-http-server
+    image:  eexit/mirror-http-server
+    expose:
+      - 8443
     ports:
-      - 10003:80
+      - 10003:8443
     environment:
+      - KMS_STUN_IP=stun.l.google.com
+      - KMS_STUN_PORT=19302
       - openvidu.secret=MY_SECRET
-      - openvidu.publicurl=docker
-
+      - openvidu.publicurl=https://192.168.0.103:10003
   full-teaching-TJobF:
-    image: codeurjc/full-teaching:2.3.0
+    image: codeurjc/full-teaching:demo
     depends_on:
       - full-teaching-mysql-TJobF
       - full-teaching-TJobF-openvidu-server-kms
     ports:
-      - 5004:5001
+      - 5004:5000
+    expose:
+      - 5000
     environment:
       - WAIT_HOSTS=full-teaching-mysql-TJobF:3306
-      - WAIT_HOSTS_TIMEOUT=60
+      - WAIT_HOSTS_TIMEOUT=120
       - MYSQL_PORT_3306_TCP_ADDR=full-teaching-mysql-TJobF
       - MYSQL_PORT_3306_TCP_PORT=3306
       - MYSQL_ENV_MYSQL_DATABASE=full_teaching
-      - MYSQL_ENV_MYSQL_USER=root
+      - MYSQL_ENV_MYSQL_USER=ft-root
       - MYSQL_ENV_MYSQL_PASSWORD=pass
-      - server.port=5001
-      - openvidu.url=https://full-teaching-TJobF-openvidu-server-kms:10003
+      - server.port=5000
+      - openvidu.url=https://192.168.0.103:10003
       - openvidu.secret=MY_SECRET
+
 networks:
   fullteaching-TJobF:
     driver: bridge

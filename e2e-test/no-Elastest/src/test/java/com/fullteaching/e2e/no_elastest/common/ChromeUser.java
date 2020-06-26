@@ -59,7 +59,7 @@ public class ChromeUser extends BrowserUser {
                 options.setCapability("enableVideo", true);
                 options.setCapability("enableVNC", true);
                 options.setCapability("name", testName + "_" + userIdentifier);
-                options.setCapability("videoName", testName + "_" + userIdentifier + "_" + new Date().getTime());
+                options.setCapability("videoName", + new Date().getTime()+"_"+testName + "_" + userIdentifier );
                 //END CAPABILITIES FOR SELENOID RETORCH
                 RemoteWebDriver remote = new RemoteWebDriver(new URL(eusApiURL), options);
                 remote.setFileDetector(new LocalFileDetector());

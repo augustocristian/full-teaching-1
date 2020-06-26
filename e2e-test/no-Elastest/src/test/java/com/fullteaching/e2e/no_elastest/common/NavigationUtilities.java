@@ -14,17 +14,15 @@ import static com.fullteaching.e2e.no_elastest.common.Constants.*;
 
 public class NavigationUtilities {
 
-    public static boolean amIHere(WebDriver wd, String url) {
+    public static boolean amIHere(WebDriver wd, String url) {//9lines
         String currentUrl = wd.getCurrentUrl().trim();
         String compareUrl = url;
-
         if (currentUrl.endsWith("/") && !compareUrl.trim().endsWith("/")) {
             compareUrl = compareUrl.trim() + "/";
         }
         if (!currentUrl.endsWith("/") && compareUrl.trim().endsWith("/")) {
             compareUrl = compareUrl.substring(0, compareUrl.length() - 2);
         }
-
         return (currentUrl.equals(compareUrl));
     }
 
@@ -36,29 +34,21 @@ public class NavigationUtilities {
         return wd;
     }
 
-    public static WebDriver getUrlAndWaitFooter(WebDriver wd, String url) {
-
+    public static WebDriver getUrlAndWaitFooter(WebDriver wd, String url) { //3lines
         wd = getUrl(wd, url);
-
-        Wait.notTooMuch(wd).until(ExpectedConditions.presenceOfElementLocated(FOOTER));
-
+        Wait.waitForPageLoaded(wd);
+     //   Wait.notTooMuch(wd).until(ExpectedConditions.presenceOfElementLocated(FOOTER));
         return wd;
     }
 
-    public static WebDriver toCoursesHome(WebDriver wd) throws ElementNotFoundException {
-
+    public static WebDriver toCoursesHome(WebDriver wd) throws ElementNotFoundException { //3lines
         WebElement button = Wait.aLittle(wd).until(ExpectedConditions.presenceOfElementLocated(COURSES_BUTTON));
-
         wd = Click.element(wd, COURSES_BUTTON);
-
         Wait.notTooMuch(wd).until(ExpectedConditions.presenceOfElementLocated(COURSESDASHBOARD_TITLE));
-
         return wd;
     }
 
     public static WebElement getOption(List<WebElement> options, String find, FindOption type, String attribute) {
-
-
         for (WebElement option : options) {
             switch (type) {
                 case CLASS:
@@ -79,9 +69,7 @@ public class NavigationUtilities {
                     break;
             }
         }
-
         return null;
-
     }
 
 
