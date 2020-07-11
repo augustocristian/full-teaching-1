@@ -225,6 +225,7 @@ public class BaseLoggedTest {
         Assert.assertEquals(userNameField.getAttribute("value"), userEmail);
         Assert.assertEquals(userPassField.getAttribute("value"), userPass);
         user.getDriver().findElement(By.id("log-in-btn")).click();
+        Wait.waitForPageLoaded(user.getDriver());
         user.waitUntil(ExpectedConditions.elementToBeClickable(By.id(("course-list"))), "Course list not present");
         try {
             userName = UserUtilities.getUserName(user.getDriver(), true, APP_URL);
